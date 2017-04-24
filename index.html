@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>PacMan</title>
-    <script type="text/javascript" src="jquery-2.0.0.js"></script>
-    <script src="js/JavaScriptCode.js"></script>
+    <script src="jquery-3.2.1.min.js"></script>
+    <script src="JavaScriptCode.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
 <header>
-    <div id="header">
+    <div class="divFillParent" >
         <h1>
             PACMAN
 
@@ -20,17 +20,43 @@
         </p>
     </div>
 </header>
-<div>
- <a></a>
-</div>
-<div>
-    canvas
-    <canvas>
+<nav>
+    <div class="divFillParent">
+        <a onclick="ShowSection('Welcome')">Welcome</a>
+        <a onclick="ShowSection('Register')">Register</a>
+        <a onclick="ShowSection('Login')">Login</a>
+        <a onclick="ShowSection('About')">About</a>
+    </div>
+</nav>
 
-    </canvas>
-</div>
+<section>
+    <div id="Welcome" class="divOverlapping">
+        welcome
+        <canvas>
+
+        </canvas>
+    </div>
+    <div  id="Register" class="divOverlapping">
+        register
+        <canvas>
+
+        </canvas>
+    </div>
+    <div id="Login" class="divOverlapping">
+        login
+        <canvas>
+
+        </canvas>
+    </div>
+    <div id="About" class="divOverlapping">
+        about
+        <canvas>
+
+        </canvas>
+    </div>
+</section>
 <footer>
-    <div>
+    <div class="divFillParent">
         stav
     </div>
 </footer>

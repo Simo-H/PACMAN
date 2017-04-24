@@ -1,4 +1,58 @@
-#header
+html, body {
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+}
+header
 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+}
+section
+{
+
+}
+canvas
+{
+    height:100%;
+    width:100%;
+}
+nav
+{
+    position: absolute;
+    top:100px;
+    left:0;
+    height:50px;
+    width: 100%;
+}
+
+footer
+{
+    position: absolute;
     border: solid black 5px;
+    top: 763px;
+    left: 0;
+    height: 100px;
+    width: 100%;
+}
+.divFillParent
+{
+    border: dashed blue 1px;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.divOverlapping
+{
+    border: dotted red 1px;
+    position: absolute;
+    top:150px;
+    left:0;
+    height:613px;
+    width: 100%;
 }
