@@ -246,20 +246,20 @@ function Draw() {
     var center = new Object();
      for (var i = 0; i < 18; i++) {
         for (var j = 0; j < 13 ;j++) {
-            ctx.x = i * 10 + 10;
-            ctx.y = j *10 + 10;
+            ctx.x = i * 17 ;
+            ctx.y = j *12;
 
            if (staticBoard[i][j] == 0) {
 
                ctx.beginPath();
-               ctx.rect(ctx.x,ctx.y,10,10,5);
+               ctx.rect(ctx.x,ctx.y,17,12,5);
                ctx.fillStyle = "blue";
                ctx.fill();
 
             }
             else if (staticBoard[i][j] == 1) {
                ctx.beginPath();
-               ctx.rect(ctx.x,ctx.y,10,10,5);
+               ctx.rect(ctx.x,ctx.y,17,12,5);
                ctx.fillStyle = "red";
                ctx.fill();
             }
@@ -274,8 +274,8 @@ function DrawDynamicBoard() {
     var center = new Object();
     for (var i = 0; i < 18; i++) {
         for (var j = 0; j < 13 ;j++) {
-            ctx.x = i * 10 + 10;
-            ctx.y = j *10 + 10;
+            ctx.x = i * 17 ;
+            ctx.y = j *12 ;
 
             // if (dynamicBoard[i][j] == 0) {
             //
@@ -289,7 +289,7 @@ function DrawDynamicBoard() {
                 if(pacmanPlayer.lastDircetion=="right")
                 {
 
-                    ctx.arc(ctx.x,ctx.y, 5, 0, 2 * Math.PI); // circle
+                    ctx.arc(ctx.x +6 ,ctx.y+6, 5, 0, 2 * Math.PI); // circle
                     ctx.fillStyle = "pink"; //color
                     ctx.fill();
                 }
