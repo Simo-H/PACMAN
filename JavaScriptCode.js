@@ -4,6 +4,8 @@
 $( document ).ready(function() {
     pageLoaded();
     buildBoard();
+    buildynamicBoard(2);
+    DrawDynamicBoard();
     Draw();
 });
 //Game vars
@@ -238,6 +240,7 @@ function buildBoard() {
 }
 
 function Draw() {
+
     var canvas = document.getElementById("mCanvas");
     var ctx = canvas.getContext("2d");
     var center = new Object();
@@ -266,7 +269,7 @@ function Draw() {
 
 function DrawDynamicBoard() {
 
-    var canvas = document.getElementById("mCanvas");
+    var canvas = document.getElementById("m2Canvas");
     var ctx = canvas.getContext("2d");
     var center = new Object();
     for (var i = 0; i < 18; i++) {
@@ -274,7 +277,7 @@ function DrawDynamicBoard() {
             ctx.x = i * 10 + 10;
             ctx.y = j *10 + 10;
 
-            if (staticBoard[i][j] == 0) {
+            if (dynamicBoard[i][j] == 0) {
 
                 ctx.beginPath();
                 ctx.rect(ctx.x,ctx.y,10,10,5);
@@ -282,13 +285,14 @@ function DrawDynamicBoard() {
                 ctx.fill();
 
             }
-            else if (staticBoard[i][j] == 2) {
+            else if (dynamicBoard[i][j] == 2) {
                 if(pacman.lastDircetion=="right")
                 {
-
+                    ctx.arc(this.x, this.y, this.radius, 2*Math.PI-Math.PI*11/18, 2*Math.PI-Math.PI*7/18, true);
                 }
                 if(pacman.lastDircetion=="left")
                 {
+                    ctx.arc(this.x, this.y, this.radius, 2*Math.PI-Math.PI*10/9, 2*Math.PI-Math.PI*8/9, true);
 
                 }
 

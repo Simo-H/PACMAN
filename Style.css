@@ -58,7 +58,12 @@ footer
     height:613px;
     width: 100%;
 }
-#myCanvas
+canvas
 {
+    position: absolute;
+    width:400px;
+    height:300px;
+    top:0px;
+    left:150px;
 
 }
