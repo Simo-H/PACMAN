@@ -4,6 +4,8 @@
 $( document ).ready(function() {
     pageLoaded();
     buildBoard();
+    buildynamicBoard(2);
+    DrawDynamicBoard();
     Draw();
 });
 //Game vars
@@ -11,8 +13,8 @@ var numberOfMonsters;
 var staticBoard;
 var dynamicBoard;
 var score = 0;
-
 var pacman;
+
 
 function pacman(x,y)
 {
@@ -112,23 +114,23 @@ function checkIfMoveIsValid(x,y)
 function buildynamicBoard(numberOfMonsters) {
     dynamicBoard = new Array();
     for (var i = 0; i < 18; i++) {
-        staticBoard[i] = new Array();
+        dynamicBoard[i] = new Array();
         for (var j = 0; j < 13; j++) {
-            staticBoard[i][j] = 0;
+            dynamicBoard[i][j] = 0;
         }
     }
 
    if (numberOfMonsters>=1)
    {
-       dynamicBoard[1][1]=3
+       dynamicBoard[1][1]=3;
    }
     if (numberOfMonsters>=2)
     {
-        dynamicBoard[16][11]=4
+        dynamicBoard[16][11]=4;
     }
     if (numberOfMonsters>=3)
     {
-        dynamicBoard[1][1]=5
+        dynamicBoard[1][1]=5;
     }
 
 
@@ -261,7 +263,7 @@ function Draw() {
 
 function DrawDynamicBoard() {
 
-    var canvas = document.getElementById("mCanvas");
+    var canvas = document.getElementById("m2Canvas");
     var ctx = canvas.getContext("2d");
     var center = new Object();
     for (var i = 0; i < 18; i++) {
@@ -269,21 +271,22 @@ function DrawDynamicBoard() {
             ctx.x = i * 10 + 10;
             ctx.y = j *10 + 10;
 
-            if (staticBoard[i][j] == 0) {
+            if (dynamicBoard[i][j] == 0) {
 
                 ctx.beginPath();
                 ctx.rect(ctx.x,ctx.y,10,10,5);
-                ctx.fillStyle = "transparent";
+                ctx.fillStyle = "tra";
                 ctx.fill();
 
             }
-            else if (staticBoard[i][j] == 2) {
+            else if (dynamicBoard[i][j] == 2) {
                 if(pacman.lastDircetion=="right")
                 {
-
+                    ctx.arc(this.x, this.y, this.radius, 2*Math.PI-Math.PI*11/18, 2*Math.PI-Math.PI*7/18, true);
                 }
                 if(pacman.lastDircetion=="left")
                 {
+                    ctx.arc(this.x, this.y, this.radius, 2*Math.PI-Math.PI*10/9, 2*Math.PI-Math.PI*8/9, true);
 
                 }
 
