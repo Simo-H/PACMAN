@@ -7,7 +7,7 @@ $( document ).ready(function() {
     Draw();
 });
 //Game vars
-
+var numberOfMonsters;
 var staticBoard;
 var dynamicBoard;
 var score = 0;
@@ -109,6 +109,40 @@ function checkIfMoveIsValid(x,y)
     return true;
 }
 
+function buildynamicBoard(numberOfMonsters) {
+    dynamicBoard = new Array();
+    for (var i = 0; i < 18; i++) {
+        staticBoard[i] = new Array();
+        for (var j = 0; j < 13; j++) {
+            staticBoard[i][j] = 0;
+        }
+    }
+
+   if (numberOfMonsters>=1)
+   {
+       dynamicBoard[1][1]=3
+   }
+    if (numberOfMonsters>=2)
+    {
+        dynamicBoard[16][11]=4
+    }
+    if (numberOfMonsters>=3)
+    {
+        dynamicBoard[1][1]=5
+    }
+
+
+    var bool= false;
+    while (!bool)
+    {
+        var x = Math.floor((Math.random() * 17) + 1);
+        var y = Math.floor((Math.random() * 12) + 1);
+        if(staticBoard[x][y]!=1 && dynamicBoard[x][y]==0){bool=true}
+    }
+    dynamicBoard[x][y]=2;
+
+
+}
 function buildBoard() {
     staticBoard = new Array();
     for (var i = 0; i < 18; i++) {
@@ -117,19 +151,19 @@ function buildBoard() {
             staticBoard[i][j] = 0;
         }
     }
-        for (var j = 0; j < 13; j++) {
-            staticBoard[0][j] = 1;
-        }
-         for (var j = 0; j < 13; j++) {
-            staticBoard[17][j] = 1;
-         }
+    for (var j = 0; j < 13; j++) {
+        staticBoard[0][j] = 1;
+    }
+    for (var j = 0; j < 13; j++) {
+        staticBoard[17][j] = 1;
+    }
 
-        for (var j = 0; j < 18; j++) {
-            staticBoard[j][0] = 1;
-        }
-        for (var j = 0; j < 18; j++) {
-            staticBoard[j][12] = 1;
-        }
+    for (var j = 0; j < 18; j++) {
+        staticBoard[j][0] = 1;
+    }
+    for (var j = 0; j < 18; j++) {
+        staticBoard[j][12] = 1;
+    }
     staticBoard[2][2] = 1;
     staticBoard[2][3] = 1;
     staticBoard[3][3] = 1;
@@ -220,6 +254,51 @@ function Draw() {
                ctx.rect(ctx.x,ctx.y,10,10,5);
                ctx.fillStyle = "red";
                ctx.fill();
+            }
+        }
+    }
+}
+
+function DrawDynamicBoard() {
+
+    var canvas = document.getElementById("mCanvas");
+    var ctx = canvas.getContext("2d");
+    var center = new Object();
+    for (var i = 0; i < 18; i++) {
+        for (var j = 0; j < 13 ;j++) {
+            ctx.x = i * 10 + 10;
+            ctx.y = j *10 + 10;
+
+            if (staticBoard[i][j] == 0) {
+
+                ctx.beginPath();
+                ctx.rect(ctx.x,ctx.y,10,10,5);
+                ctx.fillStyle = "transparent";
+                ctx.fill();
+
+            }
+            else if (staticBoard[i][j] == 2) {
+                if(pacman.lastDircetion=="right")
+                {
+
+                }
+                if(pacman.lastDircetion=="left")
+                {
+
+                }
+
+            }
+            else if (staticBoard[i][j] == 3) {
+
+
+            }
+            else if (staticBoard[i][j] == 4) {
+
+
+            }
+            else if (staticBoard[i][j] == 5) {
+
+
             }
         }
     }
