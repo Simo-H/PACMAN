@@ -9,7 +9,8 @@ $( document ).ready(function() {
 //Game vars
 
 var staticBoard;
-var  dynamicBoard;
+var dynamicBoard;
+var score = 0;
 
 var pacman;
 
@@ -23,6 +24,29 @@ function pacman(x,y)
         this.lastDirection = direction;
         moveCharacter(direction,this);
     }
+    this.eat = function ()
+    {
+        var ball = staticBoard[this.x,this.y];
+        switch (ball)
+        {
+            case 6:
+            {
+                score+=5;
+                break;
+            }
+            case 7:
+            {
+                score+=15;
+                break;
+            }
+            case 8:
+            {
+                score+=25;
+                break;
+            }
+        }
+        staticBoard[this.x,this.y] = 0;
+    }
 }
 
 function moveCharacter(direction,character)
@@ -33,9 +57,13 @@ function moveCharacter(direction,character)
         {
             if(checkIfMoveIsValid(character.x,character.y-1))
             {
-                staticBoard[character.x][character.y] = 0;
+                dynamicBoard[character.x][character.y] = 0;
                 character.y = character.y-1;
-                staticBoard[character.x][character.y] = character.code;
+                dynamicBoard[character.x][character.y] = character.code;
+                if(character.code == 2 && staticBoard[character.x,character.y]!=0)
+                {
+                    character.eat();
+                }
             }
             break;
         }
@@ -43,9 +71,9 @@ function moveCharacter(direction,character)
         {
             if(checkIfMoveIsValid(character.x,character.y+1))
             {
-                staticBoard[character.x][character.y] = 0;
+                dynamicBoard[character.x][character.y] = 0;
                 character.y = character.y+1;
-                staticBoard[character.x][character.y] = character.code;
+                dynamicBoard[character.x][character.y] = character.code;
             }
 
             break;
@@ -54,9 +82,9 @@ function moveCharacter(direction,character)
         {
             if(checkIfMoveIsValid(character.x-1,character.y))
             {
-                staticBoard[character.x][character.y] = 0;
+                dynamicBoard[character.x][character.y] = 0;
                 character.x = character.x-1;
-                staticBoard[character.x][character.y] = character.code;
+                dynamicBoard[character.x][character.y] = character.code;
             }
             break;
         }
@@ -64,9 +92,9 @@ function moveCharacter(direction,character)
         {
             if(checkIfMoveIsValid(character.x+1,character.y))
             {
-                staticBoard[character.x][character.y] = 0;
+                dynamicBoard[character.x][character.y] = 0;
                 character.x = character.x+1;
-                staticBoard[character.x][character.y] = character.code;
+                dynamicBoard[character.x][character.y] = character.code;
             }
             break;
         }
