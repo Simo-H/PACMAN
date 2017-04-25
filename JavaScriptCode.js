@@ -14,6 +14,12 @@ var score = 0;
 
 var pacman;
 
+function canvasToMatrix(x,y)
+{
+    var canvas = document.getElementById("mCanvas");
+    var ctx = canvas.getContext("2d");
+    return {widthOfCell: Math.floor(canvas.width/13),heightOfCell: Math.floor(canvas.height/18)    }
+}
 function pacman(x,y)
 {
     this.x = x;
@@ -232,7 +238,6 @@ function buildBoard() {
 }
 
 function Draw() {
-
     var canvas = document.getElementById("mCanvas");
     var ctx = canvas.getContext("2d");
     var center = new Object();
