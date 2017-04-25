@@ -9,7 +9,75 @@ $( document ).ready(function() {
 //Game vars
 
 var board;
+var pacman;
 
+function pacman(x,y)
+{
+    this.x = x;
+    this.y = y;
+    this.code = 2;
+    this.lastDircetion;
+    this.move = function (direction) {
+        this.lastDirection = direction;
+        moveCharacter(direction,this);
+    }
+}
+
+function moveCharacter(direction,character)
+{
+    switch (direction)
+    {
+        case "up":
+        {
+            if(checkIfMoveIsValid(character.x,character.y-1))
+            {
+                board[character.x][character.y] = 0;
+                character.y = character.y-1;
+                board[character.x][character.y] = character.code;
+            }
+            break;
+        }
+        case "down":
+        {
+            if(checkIfMoveIsValid(character.x,character.y+1))
+            {
+                board[character.x][character.y] = 0;
+                character.y = character.y+1;
+                board[character.x][character.y] = character.code;
+            }
+
+            break;
+        }
+        case "left":
+        {
+            if(checkIfMoveIsValid(character.x-1,character.y))
+            {
+                board[character.x][character.y] = 0;
+                character.x = character.x-1;
+                board[character.x][character.y] = character.code;
+            }
+            break;
+        }
+        case "right":
+        {
+            if(checkIfMoveIsValid(character.x+1,character.y))
+            {
+                board[character.x][character.y] = 0;
+                character.x = character.x+1;
+                board[character.x][character.y] = character.code;
+            }
+            break;
+        }
+    }
+}
+function checkIfMoveIsValid(x,y)
+{
+    if(board[x][y] == 1 || x<0 || x>12 || y<0 || y>17)
+    {
+        return false;
+    }
+    return true;
+}
 
 function buildBoard() {
     board = new Array();
@@ -19,7 +87,6 @@ function buildBoard() {
             board[i][j] = 0;
         }
     }
-
         for (var j = 0; j < 13; j++) {
             board[0][j] = 1;
         }
@@ -39,14 +106,10 @@ function buildBoard() {
     board[3][4] = 1;
     board[3][5] = 1;
     board[4][5] = 1;
-
     board[4][1] = 1;
     board[1][5] = 1;
     board[1][7] = 1;
     board[2][10] = 1;
-
-
-
     board[3][7] = 1;
     board[3][8] = 1;
     board[4][7] = 1;
@@ -86,7 +149,6 @@ function buildBoard() {
     board[11][2] = 1;
     board[12][3] = 1;
     board[13][1] = 1;
-
     board[7][2] = 1;
     board[15][2] = 1;
     board[15][3] = 1;
@@ -98,33 +160,20 @@ function buildBoard() {
     board[8][10] = 1;
     board[9][10] = 1;
     board[10][10] = 1;
-
     board[16][5] = 1;
     board[16][7] = 1;
     board[15][10] = 1;
     board[12][11] = 1;
     board[13][11] = 1;
-
-
-    // board[14][1] = 1;
-
-
-
-
-
 }
-
-    /* ------------ End Pre-Build Walls  ------------ */
-
-
 
 function Draw() {
 
     var canvas = document.getElementById("mCanvas");
     var ctx = canvas.getContext("2d");
     var center = new Object();
-     for (var i = 0; i < 19; i++) {
-        for (var j = 0; j < 14 ;j++) {
+     for (var i = 0; i < 18; i++) {
+        for (var j = 0; j < 13 ;j++) {
             ctx.x = i * 10 + 10;
             ctx.y = j *10 + 10;
 
@@ -141,9 +190,6 @@ function Draw() {
                ctx.rect(ctx.x,ctx.y,10,10,5);
                ctx.fillStyle = "red";
                ctx.fill();
-                    content.fillStyle="#FF0000";
-                    content.fillRect(i*5,j*5,5,5);
-                    break;
             }
         }
     }
@@ -182,14 +228,6 @@ function fillPointsBalls(numberOfPointsBalls) {
             }
         }
     }
-
-
-              ;
-            }
-        }
-    }
-
-
 }
 
 //Layout functions
