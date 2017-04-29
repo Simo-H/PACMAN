@@ -40,13 +40,13 @@ function UpdateCanvases()
     var keyPress = GetKeyPressed();
     switch (keyPress)
     {
-        case 1: moveCharacter("up",pacmanPlayer);
+        case 1: pacmanPlayer.move("up");
             break;
-        case 2: moveCharacter("down",pacmanPlayer);
+        case 2: pacmanPlayer.move("down");
             break;
-        case 3: moveCharacter("left",pacmanPlayer);
+        case 3: pacmanPlayer.move("left");
             break;
-        case 4: moveCharacter("right",pacmanPlayer);
+        case 4: pacmanPlayer.move("right");
             break;
     }
     DrawDynamicBoard();
@@ -70,7 +70,7 @@ function pacman(x,y)
     this.x = x;
     this.y = y;
     this.code = 2;
-    this.lastDircetion = "left";
+    this.lastDirection = "left";
     this.mouth="open";
     this.move = function (direction) {
         this.lastDirection = direction;
@@ -331,7 +331,7 @@ function DrawDynamicBoard() {
             //
             // }
             if (dynamicBoard[i][j] == 2) {
-                if(pacmanPlayer.lastDircetion=="right")
+                if(pacmanPlayer.lastDirection=="right")
                 {
                     if(pacmanPlayer.mouth=="open") {
                         ctx.beginPath();
@@ -367,7 +367,7 @@ function DrawDynamicBoard() {
                     }
 
                 }
-                 if(pacmanPlayer.lastDircetion=="left")
+                 if(pacmanPlayer.lastDirection=="left")
                  {
                      if(pacmanPlayer.mouth=="open") {
                          ctx.beginPath();
@@ -404,6 +404,84 @@ function DrawDynamicBoard() {
                          ctx.beginPath();
                          pacmanPlayer.mouth=="open";}
                  }
+                if(pacmanPlayer.lastDirection=="up")
+                {
+                    if(pacmanPlayer.mouth=="open") {
+                        ctx.beginPath();
+
+                        ctx.arc(ctx.x, ctx.y, 15,1.75 * Math.PI, 1.25 * Math.PI, false); // half circle
+                        ctx.lineTo(ctx.x, ctx.y);
+
+                        ctx.fillStyle = "yellow"; //color
+                        ctx.fill();
+                        ctx.beginPath();
+
+                        ctx.arc(ctx.x-6, ctx.y+4 ,3,0,2 * Math.PI); // circle
+                        ctx.fillStyle = "black"; //color
+                        ctx.fill();
+                        ctx.beginPath();
+
+                        ctx.arc(ctx.x-6, ctx.y+4 ,1.5,0,1.2 * Math.PI); // circle
+                        ctx.fillStyle = "white"; //color
+                        ctx.fill();
+                        ctx.beginPath();
+                        pacmanPlayer.mouth=="close";
+                    }
+                    if(pacmanPlayer.mouth=="close") {
+                        ctx.beginPath();
+                        ctx.arc(ctx.x, ctx.y, 15, 0, 2 * Math.PI); // half circle
+                        ctx.lineTo(ctx.x, ctx.y);
+                        ctx.fillStyle = "yellow"; //color
+                        ctx.fill();
+                        ctx.beginPath();
+                        ctx.arc(ctx.x, ctx.y , 1.5, 0, 2 * Math.PI); // circle
+                        ctx.fillStyle = "black"; //color
+                        ctx.fill();
+                        ctx.arc(ctx.x, ctx.y-6 ,1.5,0,1.2 * Math.PI); // circle
+                        ctx.fillStyle = "white"; //color
+                        ctx.fill();
+                        ctx.beginPath();
+                        pacmanPlayer.mouth=="open";}
+                }
+                if(pacmanPlayer.lastDirection=="down")
+                {
+                    if(pacmanPlayer.mouth=="open") {
+                        ctx.beginPath();
+
+                        ctx.arc(ctx.x, ctx.y, 15,0.75 * Math.PI,0.25* Math.PI, false); // half circle
+                        ctx.lineTo(ctx.x, ctx.y);
+
+                        ctx.fillStyle = "yellow"; //color
+                        ctx.fill();
+                        ctx.beginPath();
+
+                        ctx.arc(ctx.x-7, ctx.y ,3,0,2 * Math.PI); // circle
+                        ctx.fillStyle = "black"; //color
+                        ctx.fill();
+                        ctx.beginPath();
+
+                        ctx.arc(ctx.x-7, ctx.y ,1.5,0,1.2 * Math.PI); // circle
+                        ctx.fillStyle = "white"; //color
+                        ctx.fill();
+                        ctx.beginPath();
+                        pacmanPlayer.mouth=="close";
+                    }
+                    if(pacmanPlayer.mouth=="close") {
+                        ctx.beginPath();
+                        ctx.arc(ctx.x, ctx.y, 15, 0, 2 * Math.PI); // half circle
+                        ctx.lineTo(ctx.x, ctx.y);
+                        ctx.fillStyle = "yellow"; //color
+                        ctx.fill();
+                        ctx.beginPath();
+                        ctx.arc(ctx.x, ctx.y , 1.5, 0, 2 * Math.PI); // circle
+                        ctx.fillStyle = "black"; //color
+                        ctx.fill();
+                        ctx.arc(ctx.x, ctx.y-6 ,1.5,0,1.2 * Math.PI); // circle
+                        ctx.fillStyle = "white"; //color
+                        ctx.fill();
+                        ctx.beginPath();
+                        pacmanPlayer.mouth=="open";}
+                }
 
             }
             if (dynamicBoard[i][j] == 3)
