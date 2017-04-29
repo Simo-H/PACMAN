@@ -41,12 +41,16 @@ function UpdateCanvases()
     switch (keyPress)
     {
         case 1: pacmanPlayer.move("up");
+            keysDown = {};
             break;
         case 2: pacmanPlayer.move("down");
+            keysDown = {};
             break;
         case 3: pacmanPlayer.move("left");
+            keysDown = {};
             break;
         case 4: pacmanPlayer.move("right");
+            keysDown = {};
             break;
     }
     DrawDynamicBoard();
