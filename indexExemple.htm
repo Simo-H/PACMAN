@@ -54,8 +54,7 @@
                 addEventListener("keydown", function (e) {
                     keysDown[e.keyCode] = true;
                 }, false);
-                addEventListener("keyup", function (e) {
-                    keysDown[e.keyCode] = false;
+                addEventListener("keyup", function (e) {                    keysDown[e.keyCode] = false;
                 }, false);
                 interval=setInterval(UpdatePosition, 250);
             }

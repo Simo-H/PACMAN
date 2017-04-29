@@ -7,6 +7,7 @@ $( document ).ready(function() {
     buildynamicBoard(2);
     DrawDynamicBoard();
     Draw();
+    main();
 });
 //Game vars
 var numberOfMonsters;
@@ -20,6 +21,49 @@ function canvasToMatrix(x,y)
     var canvas = document.getElementById("mCanvas");
     var ctx = canvas.getContext("2d");
     return {widthOfCell: Math.floor(canvas.width/13),heightOfCell: Math.floor(canvas.height/18)    }
+}
+function main()
+{
+    //do stuff
+
+    keysDown = {};
+    addEventListener("keydown", function (e) {
+        keysDown[e.keyCode] = true;
+    }, false);
+    addEventListener("keyup", function (e) {
+        keysDown[e.keyCode] = false;
+    }, false);
+    interval=setInterval(UpdateCanvases, 100);
+}
+function UpdateCanvases()
+{
+    var keyPress = GetKeyPressed();
+    switch (keyPress)
+    {
+        case 1: moveCharacter("up",pacmanPlayer);
+            break;
+        case 2: moveCharacter("down",pacmanPlayer);
+            break;
+        case 3: moveCharacter("left",pacmanPlayer);
+            break;
+        case 4: moveCharacter("right",pacmanPlayer);
+            break;
+    }
+    DrawDynamicBoard();
+}
+function GetKeyPressed() {
+    if (keysDown[38]) {
+        return 1;
+    }
+    if (keysDown[40]) {
+        return 2;
+    }
+    if (keysDown[37]) {
+        return 3;
+    }
+    if (keysDown[39]) {
+        return 4;
+    }
 }
 function pacman(x,y)
 {
@@ -109,7 +153,7 @@ function moveCharacter(direction,character)
 }
 function checkIfMoveIsValid(x,y)
 {
-    if(staticBoard[x][y] == 1 || x<0 || x>12 || y<0 || y>17)
+    if(staticBoard[x][y] == 1 || x<0 || x>17 || y<0 || y>12)
     {
         return false;
     }
@@ -246,8 +290,8 @@ function Draw() {
     var center = new Object();
      for (var i = 0; i < 18; i++) {
         for (var j = 0; j < 13 ;j++) {
-            ctx.x = i * 10 + 10;
-            ctx.y = j *10 + 10;
+            ctx.x = i * 10;
+            ctx.y = j *10;
 
            if (staticBoard[i][j] == 0) {
 
@@ -274,8 +318,8 @@ function DrawDynamicBoard() {
     var center = new Object();
     for (var i = 0; i < 18; i++) {
         for (var j = 0; j < 13 ;j++) {
-            ctx.x = i * 10 + 10;
-            ctx.y = j *10 + 10;
+            ctx.x = i * 10;
+            ctx.y = j *10;
 
             // if (dynamicBoard[i][j] == 0) {
             //
@@ -289,7 +333,7 @@ function DrawDynamicBoard() {
                 if(pacmanPlayer.lastDircetion=="right")
                 {
 
-                    ctx.arc(ctx.x,ctx.y, 5, 0, 2 * Math.PI); // circle
+                    ctx.arc(ctx.x+4,ctx.y+4, 4, 0, 2 * Math.PI); // circle
                     ctx.fillStyle = "pink"; //color
                     ctx.fill();
                 }
