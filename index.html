@@ -9,35 +9,89 @@
 </head>
 <body>
 <header>
-    <div class="divFillParent" >
+    <div class="divFillParent"   >
         <h1>
-            PACMAN
-
+            <img  class="imgheder" src="logo.jpg" >
         </h1>
-        <img src="">
-        <p>
-            Made by Simo Hanouna & Stav Lutzky
-        </p>
     </div>
 </header>
 <nav>
-    <div class="divFillParent">
-        <a onclick="ShowSection('Welcome')">Welcome</a>
-        <a onclick="ShowSection('Register')">Register</a>
-        <a onclick="ShowSection('Login')">Login</a>
-        <a onclick="ShowSection('About')">About</a>
+    <div class="divFillParent" id="menu">
+        <p align="center">
+         <a class="fontmenu" onclick="ShowSection('Welcome')">Welcome</a>|
+        <a class="fontmenu" onclick="ShowSection('Register')">Register</a>|
+        <a class="fontmenu" onclick="ShowSection('Login')">Login</a>|
+        <a class="fontmenu" onclick="ShowSection('About')">About</a>
+        </p>
     </div>
 </nav>
 
 <section>
+
+    <div id="FINISHGAME" class="divOverlapping">
+        <div>
+            detales
+            <text id="name" type="text" />,
+
+
+        </div>
+    </div>
     <div id="Welcome" class="divOverlapping">
-        welcome
-        <canvas id="mCanvas"  height="600" width="600"
+
+        <div>
+            welcome
+            <text id="name" type="text" />,
+
+
+        </div>
+        <canvas  id="game over"  class="canvas"   height="600" width="600"
+                 style="border:1px solid #d3d3d3; z-index: 15">
+        </canvas>
+        <canvas  id="mCanvas"  class="canvas"   height="600" width="600"
                 style="border:1px solid #d3d3d3; z-index: 0">
         </canvas>
-        <canvas id="m2Canvas" height="600" width="600"
+        <canvas id="m2Canvas" class="canvas" height="600" width="600"
                 style="border:1px solid #d3d3d3; z-index: 10">
         </canvas>
+
+        <canvas id="food"  class="canvas" height="600" width="600"
+                style="border:1px solid #d3d3d3; z-index: 1">
+        </canvas>
+
+        <canvas id="Bonus" class="canvas"  height="600" width="600"
+                style="border:1px solid #d3d3d3; z-index: 3">
+        </canvas>
+
+        <canvas id="ghost1"  class="canvas" height="600" width="600"
+                style="border:1px solid #d3d3d3; z-index: 3">
+        </canvas>
+        <canvas id="ghost2"  class="canvas" height="600" width="600"
+                style="border:1px solid #d3d3d3; z-index: 4">
+        </canvas>
+        <canvas id="ghost3"  class="canvas" height="600" width="600"
+                style="border:1px solid #d3d3d3; z-index: 5">
+        </canvas>
+
+
+        <canvas id="life"  class="canvas" height="600" width="600"
+                style="border:1px solid #d3d3d3; z-index: 10">
+            <img id="hart1" src="hart.png" width="60" height="120" style="position: relative;  top: 0; left: 540px ; ">
+            <img  id="hart2" src="hart.png" style="position: relative; top: 130px ; left: 540px;"/>
+            <img id="hart3" src="hart.png" style="position: absolute; top: 260px; left: 540px;"/>
+
+        </canvas>
+
+
+        <div>
+            SCORE:
+            <input id="lblScore" type="text" />
+            <br/>
+            TIME:
+            <input id="lblTime" type="text" />
+            <br/>
+            <canvas id="canvas" height="600" width="600"></canvas>
+        </div>
+
     </div>
     <div  id="Register" class="divOverlapping">
         register
@@ -53,8 +107,9 @@
     </div>
 </section>
 <footer>
-    <div class="divFillParent">
-        stav
+    <div class="divFillParent"  >
+       <p class="fontfooter" >  Contact Us| E-mail :<a>stav@gmail.com</a> </p>
+
     </div>
 </footer>
 </body>
