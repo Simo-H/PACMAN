@@ -25,7 +25,7 @@
 		Start();
 			
             function Start() {
-                staticBoard = new Array();
+                LOGICstaticBoard = new Array();
                 score = 0;
                 pac_color="yellow";
                 var cnt =50;
@@ -76,7 +76,7 @@
              function findRandomEmptyCell(board){
              	var i = Math.floor((Math.random() * 9) + 1);
              	var j = Math.floor((Math.random() * 9) + 1);
-    			while(staticBoard[i][j]!=0)
+    			while(LOGICstaticBoard[i][j]!=0)
     			{
              		i = Math.floor((Math.random() * 9) + 1);
              		j = Math.floor((Math.random() * 9) + 1);
@@ -100,7 +100,7 @@
             }
 
             function Draw() {
-            	canvas.width=canvas.width; //clean staticBoard
+            	canvas.width=canvas.width; //clean LOGICstaticBoard
                 lblScore.value = score;
                 lblTime.value = time_elapsed;
                 for (var i = 0; i < 10; i++) {
@@ -108,7 +108,7 @@
                         var center = new Object();
                         center.x = i * 60 + 30;
                         center.y = j * 60 + 30;
-                        if (staticBoard[i][j] == 2) {
+                        if (LOGICstaticBoard[i][j] == 2) {
                             context.beginPath();
                             context.arc(center.x, center.y, 30, 0.15 * Math.PI, 1.85 * Math.PI); // half circle
                             context.lineTo(center.x, center.y);
@@ -118,13 +118,13 @@
                             context.arc(center.x + 5, center.y - 15, 5, 0, 2 * Math.PI); // circle
                             context.fillStyle = "black"; //color
                             context.fill();
-                        } else if (staticBoard[i][j] == 1) {
+                        } else if (LOGICstaticBoard[i][j] == 1) {
                             context.beginPath();
                             context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
                             context.fillStyle = "black"; //color 
                             context.fill();
                         }
-                        else if (staticBoard[i][j] == 4) {
+                        else if (LOGICstaticBoard[i][j] == 4) {
                             context.beginPath();
                             context.rect(center.x-30, center.y-30, 60, 60);
                             context.fillStyle = "grey"; //color 
@@ -137,41 +137,41 @@
             }
 
             function UpdatePosition() {
-            	staticBoard[shape.i][shape.j]=0;
+            	LOGICstaticBoard[shape.i][shape.j]=0;
                 var x = GetKeyPressed()
                 if(x==1)
                 {
-                	if(shape.j>0 && staticBoard[shape.i][shape.j-1]!=4)
+                	if(shape.j>0 && LOGICstaticBoard[shape.i][shape.j-1]!=4)
                 	{
                 		shape.j--;
                 	}
                 }
                 if(x==2)
                 {
-                	if(shape.j<9 && staticBoard[shape.i][shape.j+1]!=4)
+                	if(shape.j<9 && LOGICstaticBoard[shape.i][shape.j+1]!=4)
                 	{
                 		shape.j++;
                 	}
                 }
                 if(x==3)
                 {
-                	if(shape.i>0 && staticBoard[shape.i-1][shape.j]!=4)
+                	if(shape.i>0 && LOGICstaticBoard[shape.i-1][shape.j]!=4)
                 	{
                 		shape.i--;
                 	}
                 }
                 if(x==4)
                 {
-                	if(shape.i<9 && staticBoard[shape.i+1][shape.j]!=4)
+                	if(shape.i<9 && LOGICstaticBoard[shape.i+1][shape.j]!=4)
                 	{
                 		shape.i++;
                 	}
                 }
-                if(staticBoard[shape.i][shape.j]==1)
+                if(LOGICstaticBoard[shape.i][shape.j]==1)
                 {
                 	score++;
                 }
-                staticBoard[shape.i][shape.j]=2;
+                LOGICstaticBoard[shape.i][shape.j]=2;
                 var currentTime=new Date();
                 time_elapsed=(currentTime-start_time)/1000;
             	if(score>=20&&time_elapsed<=10)

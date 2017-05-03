@@ -7,7 +7,7 @@ $( document ).ready(function() {
     buildBoard();
     buildynamicBoardPacman();
     buildFoodBoard(PiecesOfFood);
-    buildGhostBoards(numberOfMonsters);
+    buildGhostBoards(numberOfGhosts);
     buildLifeBord();
     buildBonusBord();
     start_time= new Date();
@@ -25,21 +25,21 @@ $( document ).ready(function() {
 var score=0;
 var time_elapsed;
 var start_time;
-var numberOfMonsters=3;
+var numberOfGhosts=3;
 var PiecesOfFood=50;
 var PiecesOfFoodLeft=50;
-var staticBoard;
-var dynamicBoard;
-var FoodBoard;
-var ghosr1Bord;
-var ghosr2Bord;
-var ghosr3Bord;
+var LOGICstaticBoard;
+var LOGICpacmanBoard;
+var LOGICpointsBoard;
+var LOGICghost1Board;
+var LOGICghost2Board;
+var LOGICghost3Board;
 var lifeBord;
-var BonusBord
+var LOGICmovingBonusBoard
 var ghost1;
 var ghost2;
 var ghost3;
-var pacmanPlayer;
+var PacmanPlayer;
 var MrBonus;
 var didntChange="true";
 
@@ -73,13 +73,13 @@ function main()
 }
 
 function chackBonus() {
-    if(pacmanPlayer.x==MrBonus.x&&pacmanPlayer.y==MrBonus.y)
+    if(PacmanPlayer.x==MrBonus.x&&PacmanPlayer.y==MrBonus.y)
     {
-        pacmanPlayer.getBonus="true";
-        BonusBord[MrBonus.x][MrBonus.y]=0
+        PacmanPlayer.getBonus="true";
+        LOGICmovingBonusBoard[MrBonus.x][MrBonus.y]=0
 
     }
-    if(pacmanPlayer.hart==0){
+    if(PacmanPlayer.hart==0){
         loseMessage();
 
 
@@ -91,19 +91,19 @@ function pacmanupdate() {
     var keyPress = GetKeyPressed();
     switch (keyPress) {
         case 1:
-            pacmanPlayer.move("up");
+            PacmanPlayer.move("up");
             keysDown = {};
             break;
         case 2:
-            pacmanPlayer.move("down");
+            PacmanPlayer.move("down");
             keysDown = {};
             break;
         case 3:
-            pacmanPlayer.move("left");
+            PacmanPlayer.move("left");
             keysDown = {};
             break;
         case 4:
-            pacmanPlayer.move("right");
+            PacmanPlayer.move("right");
             keysDown = {};
             break;
     }
@@ -111,7 +111,7 @@ function pacmanupdate() {
     DrawFoodBoard();
 
 
-    if(pacmanPlayer.getBonus=="true" && didntChange=="true")
+    if(PacmanPlayer.getBonus=="true" && didntChange=="true")
     {
         didntChange="false";
         score+=50;
@@ -174,25 +174,25 @@ function ghost(num,x,y)
             while (!bool) {
                 x = Math.floor((Math.random() * 17));
                 y=Math.floor((Math.random() * 13));
-                if (staticBoard[x][y] != 1 && dynamicBoard[x][y] == 0) {
+                if (LOGICstaticBoard[x][y] != 1 && LOGICpacmanBoard[x][y] == 0) {
                     bool = true
                 }
             }
 
             if(checkIfMoveIsValid(this.x,this.y-1 )&& (this.dir!="down")){
-                 up=Math.sqrt(Math.pow( (this.x - (pacmanPlayer.x )) ,2)+Math.pow( (this.y-1) -pacmanPlayer.y,2));
+                 up=Math.sqrt(Math.pow( (this.x - (PacmanPlayer.x )) ,2)+Math.pow( (this.y-1) -PacmanPlayer.y,2));
             }
             //down
             if(checkIfMoveIsValid(this.x,this.y+1)&& (this.dir!="up")){
-                down=Math.sqrt(Math.pow( (this.x - (pacmanPlayer.x )) ,2)+Math.pow( (this.y+1) -pacmanPlayer.y,2));
+                down=Math.sqrt(Math.pow( (this.x - (PacmanPlayer.x )) ,2)+Math.pow( (this.y+1) -PacmanPlayer.y,2));
             }
             //right
             if(checkIfMoveIsValid(this.x+1,this.y)&& (this.dir!="left")){
-                 right=Math.sqrt((Math.pow( (this.x +1)- (pacmanPlayer.x )) ,2)+Math.pow( (this.y) -pacmanPlayer.y,2));
+                 right=Math.sqrt((Math.pow( (this.x +1)- (PacmanPlayer.x )) ,2)+Math.pow( (this.y) -PacmanPlayer.y,2));
             }
             //left
             if(checkIfMoveIsValid(this.x-1,this.y)&&(this.dir !="right")){
-                 left=Math.sqrt((Math.pow( (this.x +1)- (pacmanPlayer.x )) ,2)+Math.pow( (this.y) -pacmanPlayer.y,2));
+                 left=Math.sqrt((Math.pow( (this.x +1)- (PacmanPlayer.x )) ,2)+Math.pow( (this.y) -PacmanPlayer.y,2));
 
             }
             var minDist = Math.min(left, right, up, down);
@@ -223,24 +223,24 @@ function ghost(num,x,y)
 
       /*  this.moveNextStep1= function(x,y)
         {
-            if( dynamicBoard[x][y]==3 ){
+            if( LOGICpacmanBoard[x][y]==3 ){
                 return firstStep;
             }
 
-            if(checkIfMoveIsValid(this.x,this.y-1&& dynamicBoard[x][y-1]!=3 )){
+            if(checkIfMoveIsValid(this.x,this.y-1&& LOGICpacmanBoard[x][y-1]!=3 )){
                 this.moveNextStep2(this.x,this.y-1,"up");
             }
             //down
-            if(checkIfMoveIsValid(this.x,this.y+1)&&  dynamicBoard[x][y+1]!=3){
+            if(checkIfMoveIsValid(this.x,this.y+1)&&  LOGICpacmanBoard[x][y+1]!=3){
                this.moveNextStep2(this.x,this.y+1,"down");
 
             }
             //right
-            if(checkIfMoveIsValid(this.x+1,this.y)&&  dynamicBoard[x+1][y]!=3){
+            if(checkIfMoveIsValid(this.x+1,this.y)&&  LOGICpacmanBoard[x+1][y]!=3){
                this. moveNextStep(this.x+1,this.y,"right");
 
             }
-            if(checkIfMoveIsValid(this.x-1,this.y)&&  dynamicBoard[x-1][y]!=3){
+            if(checkIfMoveIsValid(this.x-1,this.y)&&  LOGICpacmanBoard[x-1][y]!=3){
                 this.moveNextStep2(this.x-1,this.y,"left");
 
             }
@@ -250,25 +250,25 @@ function ghost(num,x,y)
 
        /* this.moveNextStep2= function(x,y,first)
         {
-            if( dynamicBoard[x][y]==3 ){
+            if( LOGICpacmanBoard[x][y]==3 ){
                 moveCharacter(this.dir,first);
                 return;
             }
 
-            if(checkIfMoveIsValid(this.x,this.y-1&& dynamicBoard[x][y-1]!=3 )){
+            if(checkIfMoveIsValid(this.x,this.y-1&& LOGICpacmanBoard[x][y-1]!=3 )){
                this. moveNextStep2(this.x,this.y-1,"up");
             }
             //down
-            if(checkIfMoveIsValid(this.x,this.y+1)&&  dynamicBoard[x][y+1]!=3){
+            if(checkIfMoveIsValid(this.x,this.y+1)&&  LOGICpacmanBoard[x][y+1]!=3){
                 this.moveNextStep2(this.x,this.y+1,"down");
 
             }
             //right
-            if(checkIfMoveIsValid(this.x+1,this.y)&&  dynamicBoard[x+1][y]!=3){
+            if(checkIfMoveIsValid(this.x+1,this.y)&&  LOGICpacmanBoard[x+1][y]!=3){
                 this.moveNextStep2(this.x+1,this.y,"right");
 
             }
-            if(checkIfMoveIsValid(this.x-1,this.y)&&  dynamicBoard[x-1][y]!=3){
+            if(checkIfMoveIsValid(this.x-1,this.y)&&  LOGICpacmanBoard[x-1][y]!=3){
                 this.moveNextStep2(this.x-1,this.y,"left");
 
             }
@@ -334,7 +334,7 @@ function pacman(x,y)
 
     this.eat = function ()
     {
-        var ball = FoodBoard[this.x][this.y];
+        var ball = LOGICpointsBoard[this.x][this.y];
 
         lblScore.value = score;
         switch (ball)
@@ -361,7 +361,7 @@ function pacman(x,y)
         }
 
 
-        FoodBoard[this.x][this.y] = 0;
+        LOGICpointsBoard[this.x][this.y] = 0;
         DrawFoodBoard();
 
     }
@@ -378,38 +378,38 @@ function moveCharacter(direction,character)
 
                 if(character.code == 2)
                 {
-                    dynamicBoard[character.x][character.y] = 0;
+                    LOGICpacmanBoard[character.x][character.y] = 0;
                     character.y = character.y-1;
-                    dynamicBoard[character.x][character.y] = character.code;
+                    LOGICpacmanBoard[character.x][character.y] = character.code;
                 }
-                if(character.code == 2 && staticBoard[character.x,character.y]!=0)
+                if(character.code == 2 && LOGICstaticBoard[character.x,character.y]!=0)
                 {
                     character.eat();
                 }
 
                 if(character.code == 3)
                 {
-                    ghosr1Bord[character.x][character.y] = 0;
+                    LOGICghost1Board[character.x][character.y] = 0;
                     character.y = character.y-1;
-                    ghosr1Bord[character.x][character.y] = character.code;
+                    LOGICghost1Board[character.x][character.y] = character.code;
                 }
                 if(character.code == 4)
                 {
-                    ghosr2Bord[character.x][character.y] = 0;
+                    LOGICghost2Board[character.x][character.y] = 0;
                     character.y = character.y-1;
-                    ghosr2Bord[character.x][character.y] = character.code;
+                    LOGICghost2Board[character.x][character.y] = character.code;
                 }
                 if(character.code == 5)
                 {
-                    ghosr3Bord[character.x][character.y] = 0;
+                    LOGICghost3Board[character.x][character.y] = 0;
                     character.y = character.y-1;
-                    ghosr3Bord[character.x][character.y] = character.code;
+                    LOGICghost3Board[character.x][character.y] = character.code;
                 }
                 if(character.code == 9)
                 {
-                    BonusBord[character.x][character.y] = 0;
+                    LOGICmovingBonusBoard[character.x][character.y] = 0;
                     character.y = character.y-1;
-                    BonusBord[character.x][character.y] = 1;
+                    LOGICmovingBonusBoard[character.x][character.y] = 1;
                 }
 
 
@@ -421,34 +421,34 @@ function moveCharacter(direction,character)
             if(checkIfMoveIsValid(character.x,character.y+1))
             {
                 if(character.code == 2){
-                dynamicBoard[character.x][character.y] = 0;
+                LOGICpacmanBoard[character.x][character.y] = 0;
                 character.y = character.y+1;
-                dynamicBoard[character.x][character.y] = character.code;
+                LOGICpacmanBoard[character.x][character.y] = character.code;
                 }
-                if(character.code == 2 && staticBoard[character.x,character.y]!=0)
+                if(character.code == 2 && LOGICstaticBoard[character.x,character.y]!=0)
                 {
                     character.eat();
                 }
                 if(character.code == 3){
-                    ghosr1Bord[character.x][character.y] = 0;
+                    LOGICghost1Board[character.x][character.y] = 0;
                     character.y = character.y+1;
-                    ghosr1Bord[character.x][character.y] = character.code;
+                    LOGICghost1Board[character.x][character.y] = character.code;
                 }
                 if(character.code == 4){
-                    ghosr2Bord[character.x][character.y] = 0;
+                    LOGICghost2Board[character.x][character.y] = 0;
                     character.y = character.y+1;
-                    ghosr2Bord[character.x][character.y] = character.code;
+                    LOGICghost2Board[character.x][character.y] = character.code;
                 }
                 if(character.code == 5){
-                    ghosr3Bord[character.x][character.y] = 0;
+                    LOGICghost3Board[character.x][character.y] = 0;
                     character.y = character.y+1;
-                    ghosr3Bord[character.x][character.y] = character.code;
+                    LOGICghost3Board[character.x][character.y] = character.code;
                 }
                 if(character.code == 9)
                 {
-                    BonusBord[character.x][character.y] = 0;
+                    LOGICmovingBonusBoard[character.x][character.y] = 0;
                     character.y = character.y+1;
-                    BonusBord[character.x][character.y] = 1;
+                    LOGICmovingBonusBoard[character.x][character.y] = 1;
                 }
 
             }
@@ -460,31 +460,31 @@ function moveCharacter(direction,character)
             if(checkIfMoveIsValid(character.x-1,character.y))
             {
                 if(character.code == 2){
-                dynamicBoard[character.x][character.y] = 0;
+                LOGICpacmanBoard[character.x][character.y] = 0;
                 character.x = character.x-1;
-                dynamicBoard[character.x][character.y] = character.code;}
+                LOGICpacmanBoard[character.x][character.y] = character.code;}
 
-                if(character.code == 2 && staticBoard[character.x,character.y]!=0)
+                if(character.code == 2 && LOGICstaticBoard[character.x,character.y]!=0)
                 {
                     character.eat();
                 }
                 if(character.code == 3){
-                    ghosr1Bord[character.x][character.y] = 0;
+                    LOGICghost1Board[character.x][character.y] = 0;
                     character.x = character.x-1;
-                    ghosr1Bord[character.x][character.y] = character.code;}
+                    LOGICghost1Board[character.x][character.y] = character.code;}
                 if(character.code == 4){
-                    ghosr2Bord[character.x][character.y] = 0;
+                    LOGICghost2Board[character.x][character.y] = 0;
                     character.x = character.x-1;
-                    ghosr2Bord[character.x][character.y] = character.code;}
+                    LOGICghost2Board[character.x][character.y] = character.code;}
                 if(character.code == 5){
-                    ghosr3Bord[character.x][character.y] = 0;
+                    LOGICghost3Board[character.x][character.y] = 0;
                     character.x = character.x-1;
-                    ghosr3Bord[character.x][character.y] = character.code;}
+                    LOGICghost3Board[character.x][character.y] = character.code;}
                 if(character.code == 9)
                 {
-                    BonusBord[character.x][character.y] = 0;
+                    LOGICmovingBonusBoard[character.x][character.y] = 0;
                     character.x = character.x-1;
-                    BonusBord[character.x][character.y] = 1;
+                    LOGICmovingBonusBoard[character.x][character.y] = 1;
                 }
             }
             break;
@@ -494,30 +494,30 @@ function moveCharacter(direction,character)
             if(checkIfMoveIsValid(character.x+1,character.y))
             {
                 if(character.code == 2){
-                dynamicBoard[character.x][character.y] = 0;
+                LOGICpacmanBoard[character.x][character.y] = 0;
                 character.x = character.x+1;
-                dynamicBoard[character.x][character.y] = character.code;}
-                if(character.code == 2 && staticBoard[character.x,character.y]!=0)
+                LOGICpacmanBoard[character.x][character.y] = character.code;}
+                if(character.code == 2 && LOGICstaticBoard[character.x,character.y]!=0)
                 {
                     character.eat();
                 }
                 if(character.code == 3){
-                    ghosr1Bord[character.x][character.y] = 0;
+                    LOGICghost1Board[character.x][character.y] = 0;
                     character.x = character.x+1;
-                    ghosr1Bord[character.x][character.y] = character.code;}
+                    LOGICghost1Board[character.x][character.y] = character.code;}
                 if(character.code == 4){
-                    ghosr2Bord[character.x][character.y] = 0;
+                    LOGICghost2Board[character.x][character.y] = 0;
                     character.x = character.x+1;
-                    ghosr2Bord[character.x][character.y] = character.code;}
+                    LOGICghost2Board[character.x][character.y] = character.code;}
                 if(character.code == 5){
-                    ghosr3Bord[character.x][character.y] = 0;
+                    LOGICghost3Board[character.x][character.y] = 0;
                     character.x = character.x+1;
-                    ghosr3Bord[character.x][character.y] = character.code;}
+                    LOGICghost3Board[character.x][character.y] = character.code;}
                 if(character.code == 9)
                 {
-                    BonusBord[character.x][character.y] = 0;
+                    LOGICmovingBonusBoard[character.x][character.y] = 0;
                     character.x = character.x+1;
-                    BonusBord[character.x][character.y] = 1;
+                    LOGICmovingBonusBoard[character.x][character.y] = 1;
                 }
             }
             break;
@@ -528,7 +528,7 @@ function moveCharacter(direction,character)
 
 function checkIfMoveIsValid(x,y)
 {
-    if(staticBoard[x][y] == 1 || x<0 || x>17 || y<0 || y>12)
+    if(LOGICstaticBoard[x][y] == 1 || x<0 || x>17 || y<0 || y>12)
     {
         return false;
     }
@@ -536,11 +536,11 @@ function checkIfMoveIsValid(x,y)
 }
 
 function buildynamicBoardPacman(numberOfMonsters) {
-    dynamicBoard = new Array();
+    LOGICpacmanBoard = new Array();
     for (var i = 0; i < 18; i++) {
-        dynamicBoard[i] = new Array();
+        LOGICpacmanBoard[i] = new Array();
         for (var j = 0; j < 13; j++) {
-            dynamicBoard[i][j] = 0;
+            LOGICpacmanBoard[i][j] = 0;
         }
     }
     var x;
@@ -549,51 +549,51 @@ function buildynamicBoardPacman(numberOfMonsters) {
     while (!bool) {
         x = Math.floor((Math.random() * 17));
         y = Math.floor((Math.random() * 12));
-        if (staticBoard[x][y] != 1 && dynamicBoard[x][y] == 0) {
+        if (LOGICstaticBoard[x][y] != 1 && LOGICpacmanBoard[x][y] == 0) {
             bool = true
         }
     }
-    pacmanPlayer=new pacman(x,y);
-    dynamicBoard[x][y] = 2;
+    PacmanPlayer=new pacman(x,y);
+    LOGICpacmanBoard[x][y] = 2;
 }
 
 function buildGhostBoards(numberOfMonsters) {
-    ghosr1Bord = new Array();
+    LOGICghost1Board = new Array();
     for (var i = 0; i < 18; i++) {
-        ghosr1Bord[i] = new Array();
+        LOGICghost1Board[i] = new Array();
         for (var j = 0; j < 13; j++) {
-            ghosr1Bord[i][j] = 0;
+            LOGICghost1Board[i][j] = 0;
         }
     }
-    ghosr2Bord = new Array();
+    LOGICghost2Board = new Array();
     for (var i = 0; i < 18; i++) {
-        ghosr2Bord[i] = new Array();
+        LOGICghost2Board[i] = new Array();
         for (var j = 0; j < 13; j++) {
-            ghosr2Bord[i][j] = 0;
+            LOGICghost2Board[i][j] = 0;
         }
     }
-    ghosr3Bord = new Array();
+    LOGICghost3Board = new Array();
     for (var i = 0; i < 18; i++) {
-        ghosr3Bord[i] = new Array();
+        LOGICghost3Board[i] = new Array();
         for (var j = 0; j < 13; j++) {
-            ghosr3Bord[i][j] = 0;
+            LOGICghost3Board[i][j] = 0;
         }
     }
 
     if (numberOfMonsters>=1)
     {
         ghost1=new ghost(3,1,1);
-        ghosr1Bord[1][1]=3;
+        LOGICghost1Board[1][1]=3;
     }
     if (numberOfMonsters>=2)
     {
         ghost2=new ghost(4,16,11);
-        ghosr2Bord[16][11]=4;
+        LOGICghost2Board[16][11]=4;
     }
     if (numberOfMonsters>=3)
     {
         ghost3=new ghost(5,16,1);
-        ghosr3Bord[16][1]=5;
+        LOGICghost3Board[16][1]=5;
     }
 
 
@@ -601,128 +601,129 @@ function buildGhostBoards(numberOfMonsters) {
 }
 
 function buildBoard() {
-    staticBoard = new Array();
+    LOGICstaticBoard = new Array();
     for (var i = 0; i < 18; i++) {
-        staticBoard[i] = new Array();
+        LOGICstaticBoard[i] = new Array();
         for (var j = 0; j < 13; j++) {
-            staticBoard[i][j] = 0;
+            LOGICstaticBoard[i][j] = 0;
         }
     }
     for (var j = 0; j < 13; j++) {
-        staticBoard[0][j] = 1;
+        LOGICstaticBoard[0][j] = 1;
     }
     for (var j = 0; j < 13; j++) {
-        staticBoard[17][j] = 1;
+        LOGICstaticBoard[17][j] = 1;
     }
 
     for (var j = 0; j < 18; j++) {
-        staticBoard[j][0] = 1;
+        LOGICstaticBoard[j][0] = 1;
     }
     for (var j = 0; j < 18; j++) {
-        staticBoard[j][12] = 1;
+        LOGICstaticBoard[j][12] = 1;
     }
-    staticBoard[2][2] = 1;
-    staticBoard[2][3] = 1;
-    staticBoard[3][3] = 1;
-    staticBoard[3][4] = 1;
-    staticBoard[3][5] = 1;
-    staticBoard[4][5] = 1;
-    staticBoard[4][1] = 1;
-    staticBoard[1][5] = 0;
-    staticBoard[1][7] = 0;
-    staticBoard[2][10] = 1;
-    staticBoard[3][7] = 1;
-    staticBoard[3][8] = 1;
-    staticBoard[4][7] = 1;
-    staticBoard[4][8] = 1;
-    staticBoard[4][9] = 1;
-    staticBoard[4][11] = 1;
-    staticBoard[5][11] = 1;
-    staticBoard[5][8] = 1;
-    staticBoard[5][9] = 1;
-    staticBoard[6][8] = 1;
-    staticBoard[7][8] = 1;
-    staticBoard[5][3] = 1;
-    staticBoard[6][2] = 1;
-    staticBoard[5][9] = 1;
-    staticBoard[6][8] = 1;
-    staticBoard[7][8] = 1;
-    staticBoard[6][5] = 1;
-    staticBoard[6][6] = 1;
-    staticBoard[7][6] = 1;
-    staticBoard[8][6] = 1;
-    staticBoard[9][6] = 1;
-    staticBoard[10][6] = 1;
-    staticBoard[11][6] = 1;
-    staticBoard[11][5] = 1;
-    staticBoard[10][8] = 1;
-    staticBoard[11][8] = 1;
-    staticBoard[12][8] = 1;
-    staticBoard[13][8] = 1;
-    staticBoard[14][8] = 1;
-    staticBoard[12][9] = 1;
-    staticBoard[13][9] = 1;
-    staticBoard[13][7] = 1;
-    staticBoard[14][7] = 1;
-    staticBoard[7][4] = 0;
-    staticBoard[10][4] = 0;
-    staticBoard[10][2] = 1;
-    staticBoard[11][2] = 1;
-    staticBoard[12][3] = 1;
-    staticBoard[13][1] = 1;
-    staticBoard[7][2] = 1;
-    staticBoard[15][2] = 1;
-    staticBoard[15][3] = 1;
-    staticBoard[14][3] = 1;
-    staticBoard[14][4] = 1;
-    staticBoard[14][5] = 1;
-    staticBoard[13][5] = 1;
-    staticBoard[7][10] = 1;
-    staticBoard[8][10] = 1;
-    staticBoard[9][10] = 1;
-    staticBoard[10][10] = 1;
-    staticBoard[16][5] = 0;
-    staticBoard[16][7] = 0;
-    staticBoard[15][10] = 1;
-    staticBoard[12][11] = 1;
-    staticBoard[13][11] = 1;
+    LOGICstaticBoard[2][2] = 1;
+    LOGICstaticBoard[2][3] = 1;
+    LOGICstaticBoard[3][3] = 1;
+    LOGICstaticBoard[3][4] = 1;
+    LOGICstaticBoard[3][5] = 1;
+    LOGICstaticBoard[4][5] = 1;
+    LOGICstaticBoard[4][1] = 1;
+    LOGICstaticBoard[1][5] = 0;
+    LOGICstaticBoard[1][7] = 0;
+    LOGICstaticBoard[2][10] = 1;
+    LOGICstaticBoard[3][7] = 1;
+    LOGICstaticBoard[3][8] = 1;
+    LOGICstaticBoard[4][7] = 1;
+    LOGICstaticBoard[4][8] = 1;
+    LOGICstaticBoard[4][9] = 1;
+    LOGICstaticBoard[4][11] = 1;
+    LOGICstaticBoard[5][11] = 1;
+    LOGICstaticBoard[5][8] = 1;
+    LOGICstaticBoard[5][9] = 1;
+    LOGICstaticBoard[6][8] = 1;
+    LOGICstaticBoard[7][8] = 1;
+    LOGICstaticBoard[5][3] = 1;
+    LOGICstaticBoard[6][2] = 1;
+    LOGICstaticBoard[5][9] = 1;
+    LOGICstaticBoard[6][8] = 1;
+    LOGICstaticBoard[7][8] = 1;
+    LOGICstaticBoard[6][5] = 1;
+    LOGICstaticBoard[6][6] = 1;
+    LOGICstaticBoard[7][6] = 1;
+    LOGICstaticBoard[8][6] = 1;
+    LOGICstaticBoard[9][6] = 1;
+    LOGICstaticBoard[10][6] = 1;
+    LOGICstaticBoard[11][6] = 1;
+    LOGICstaticBoard[11][5] = 1;
+    LOGICstaticBoard[10][8] = 1;
+    LOGICstaticBoard[11][8] = 1;
+    LOGICstaticBoard[12][8] = 1;
+    LOGICstaticBoard[13][8] = 1;
+    LOGICstaticBoard[14][8] = 1;
+    LOGICstaticBoard[12][9] = 1;
+    LOGICstaticBoard[13][9] = 1;
+    LOGICstaticBoard[13][7] = 1;
+    LOGICstaticBoard[14][7] = 1;
+    LOGICstaticBoard[7][4] = 0;
+    LOGICstaticBoard[10][4] = 0;
+    LOGICstaticBoard[10][2] = 1;
+    LOGICstaticBoard[11][2] = 1;
+    LOGICstaticBoard[12][3] = 1;
+    LOGICstaticBoard[13][1] = 1;
+    LOGICstaticBoard[7][2] = 1;
+    LOGICstaticBoard[15][2] = 1;
+    LOGICstaticBoard[15][3] = 1;
+    LOGICstaticBoard[14][3] = 1;
+    LOGICstaticBoard[14][4] = 1;
+    LOGICstaticBoard[14][5] = 1;
+    LOGICstaticBoard[13][5] = 1;
+    LOGICstaticBoard[7][10] = 1;
+    LOGICstaticBoard[8][10] = 1;
+    LOGICstaticBoard[9][10] = 1;
+    LOGICstaticBoard[10][10] = 1;
+    LOGICstaticBoard[16][5] = 0;
+    LOGICstaticBoard[16][7] = 0;
+    LOGICstaticBoard[15][10] = 1;
+    LOGICstaticBoard[12][11] = 1;
+    LOGICstaticBoard[13][11] = 1;
 }
 
 function buildFoodBoard(PiecesOfFood) {
-    FoodBoard = new Array();
+    LOGICpointsBoard = new Array();
     for (var i = 0; i < 18; i++) {
-        FoodBoard[i] = new Array();
+        LOGICpointsBoard[i] = new Array();
         for (var j = 0; j < 13; j++) {
-            FoodBoard[i][j] = 0;
+            LOGICpointsBoard[i][j] = 0;
         }
     }
     fillPointsBalls(PiecesOfFood);
 
 }
 
+
 function Draw() {
 
     var canvas = document.getElementById("mCanvas");
     var ctx = canvas.getContext("2d");
     var center = new Object();
-     for (var i = 0; i < 18; i++) {
+    for (var i = 0; i < 18; i++) {
         for (var j = 0; j < 13 ;j++) {
             ctx.x = i * 30 ;
             ctx.y = j *30;
 
-           if (staticBoard[i][j] == 0) {
+            if (LOGICstaticBoard[i][j] == 0) {
 
-               ctx.beginPath();
-               ctx.rect(ctx.x,ctx.y,30,30,0);
-               ctx.fillStyle = "blue";
-               ctx.fill();
+                ctx.beginPath();
+                ctx.rect(ctx.x,ctx.y,30,30,0);
+                ctx.fillStyle = "blue";
+                ctx.fill();
 
             }
-            else if (staticBoard[i][j] == 1) {
-               ctx.beginPath();
-               ctx.rect(ctx.x,ctx.y,30,30,0);
-               ctx.fillStyle = "red";
-               ctx.fill();
+            else if (LOGICstaticBoard[i][j] == 1) {
+                ctx.beginPath();
+                ctx.rect(ctx.x,ctx.y,30,30,0);
+                ctx.fillStyle = "red";
+                ctx.fill();
             }
         }
     }
@@ -737,13 +738,13 @@ function DrawDynamicBoard() {
     var center = new Object();
     for (var i = 0; i < 18; i++) {
         for (var j = 0; j < 13 ;j++) {
-           ctx.x = i * 30+15 ;
-           ctx.y = j *30+15;
+            ctx.x = i * 30+15 ;
+            ctx.y = j *30+15;
 
-            if (dynamicBoard[i][j] == 2) {
-                if(pacmanPlayer.lastDirection=="right")
+            if (LOGICpacmanBoard[i][j] == 2) {
+                if(PacmanPlayer.lastDirection=="right")
                 {
-                    if(pacmanPlayer.mouth=="open") {
+                    if(PacmanPlayer.mouth=="open") {
                         ctx.beginPath();
                         ctx.arc(ctx.x, ctx.y, 15,0.25 * Math.PI, 1.75 * Math.PI, false); // half circle
                         ctx.lineTo(ctx.x, ctx.y);
@@ -761,9 +762,9 @@ function DrawDynamicBoard() {
                         ctx.fill();
                         ctx.beginPath();
 
-                        pacmanPlayer.mouth="close";
+                        PacmanPlayer.mouth="close";
                     }
-                    else if(pacmanPlayer.mouth=="close") {
+                    else if(PacmanPlayer.mouth=="close") {
                         ctx.beginPath();
                         ctx.arc(ctx.x, ctx.y, 15,0.10 * Math.PI, 1.90 * Math.PI, false); // half circle
                         ctx.lineTo(ctx.x, ctx.y);
@@ -780,53 +781,53 @@ function DrawDynamicBoard() {
                         ctx.fillStyle = "white"; //color
                         ctx.fill();
                         ctx.beginPath();
-                        pacmanPlayer.mouth="open";
+                        PacmanPlayer.mouth="open";
                     }
 
                 }
-                 else if(pacmanPlayer.lastDirection=="left")
-                 {
-                     if(pacmanPlayer.mouth=="open") {
-                         ctx.beginPath();
-                         ctx.arc(ctx.x, ctx.y, 15,0.75 * Math.PI, 1.25 * Math.PI, true); // half circle
-                         ctx.lineTo(ctx.x, ctx.y);
-                         ctx.fillStyle = "yellow"; //color
-                         ctx.fill();
-                         ctx.beginPath();
-
-                         ctx.arc(ctx.x, ctx.y-6 ,3,0,2 * Math.PI); // circle
-                         ctx.fillStyle = "black"; //color
-                         ctx.fill();
-                         ctx.beginPath();
-
-                         ctx.arc(ctx.x, ctx.y-6 ,1.5,0,1.2 * Math.PI); // circle
-                         ctx.fillStyle = "white"; //color
-                         ctx.fill();
-                         ctx.beginPath();
-                         pacmanPlayer.mouth="close";
-                     }
-                     else if(pacmanPlayer.mouth=="close") {
-                         ctx.beginPath();
-                         ctx.arc(ctx.x, ctx.y, 15,0.90 * Math.PI, 1.10 * Math.PI, true); // half circle
-                         ctx.lineTo(ctx.x, ctx.y);
-                         ctx.fillStyle = "yellow"; //color
-                         ctx.fill();
-                         ctx.beginPath();
-
-                         ctx.arc(ctx.x, ctx.y-6 ,3,0,2 * Math.PI); // circle
-                         ctx.fillStyle = "black"; //color
-                         ctx.fill();
-                         ctx.beginPath();
-
-                         ctx.arc(ctx.x, ctx.y-6 ,1.5,0,1.2 * Math.PI); // circle
-                         ctx.fillStyle = "white"; //color
-                         ctx.fill();
-                         ctx.beginPath();
-                         pacmanPlayer.mouth="open";}
-                 }
-                else if(pacmanPlayer.lastDirection=="up")
+                else if(PacmanPlayer.lastDirection=="left")
                 {
-                    if(pacmanPlayer.mouth=="open") {
+                    if(PacmanPlayer.mouth=="open") {
+                        ctx.beginPath();
+                        ctx.arc(ctx.x, ctx.y, 15,0.75 * Math.PI, 1.25 * Math.PI, true); // half circle
+                        ctx.lineTo(ctx.x, ctx.y);
+                        ctx.fillStyle = "yellow"; //color
+                        ctx.fill();
+                        ctx.beginPath();
+
+                        ctx.arc(ctx.x, ctx.y-6 ,3,0,2 * Math.PI); // circle
+                        ctx.fillStyle = "black"; //color
+                        ctx.fill();
+                        ctx.beginPath();
+
+                        ctx.arc(ctx.x, ctx.y-6 ,1.5,0,1.2 * Math.PI); // circle
+                        ctx.fillStyle = "white"; //color
+                        ctx.fill();
+                        ctx.beginPath();
+                        PacmanPlayer.mouth="close";
+                    }
+                    else if(PacmanPlayer.mouth=="close") {
+                        ctx.beginPath();
+                        ctx.arc(ctx.x, ctx.y, 15,0.90 * Math.PI, 1.10 * Math.PI, true); // half circle
+                        ctx.lineTo(ctx.x, ctx.y);
+                        ctx.fillStyle = "yellow"; //color
+                        ctx.fill();
+                        ctx.beginPath();
+
+                        ctx.arc(ctx.x, ctx.y-6 ,3,0,2 * Math.PI); // circle
+                        ctx.fillStyle = "black"; //color
+                        ctx.fill();
+                        ctx.beginPath();
+
+                        ctx.arc(ctx.x, ctx.y-6 ,1.5,0,1.2 * Math.PI); // circle
+                        ctx.fillStyle = "white"; //color
+                        ctx.fill();
+                        ctx.beginPath();
+                        PacmanPlayer.mouth="open";}
+                }
+                else if(PacmanPlayer.lastDirection=="up")
+                {
+                    if(PacmanPlayer.mouth=="open") {
                         ctx.beginPath();
                         ctx.arc(ctx.x, ctx.y, 15,1.25 * Math.PI, 1.75 * Math.PI, true); // half circle
                         ctx.lineTo(ctx.x, ctx.y);
@@ -843,9 +844,9 @@ function DrawDynamicBoard() {
                         ctx.fillStyle = "white"; //color
                         ctx.fill();
                         ctx.beginPath();
-                        pacmanPlayer.mouth="close";
+                        PacmanPlayer.mouth="close";
                     }
-                    else if(pacmanPlayer.mouth=="close") {
+                    else if(PacmanPlayer.mouth=="close") {
                         ctx.beginPath();
                         ctx.arc(ctx.x, ctx.y, 15,1.4 * Math.PI, 1.6 * Math.PI, true); // half circle
                         ctx.lineTo(ctx.x, ctx.y);
@@ -862,11 +863,11 @@ function DrawDynamicBoard() {
                         ctx.fillStyle = "white"; //color
                         ctx.fill();
                         ctx.beginPath();
-                        pacmanPlayer.mouth="open";}
+                        PacmanPlayer.mouth="open";}
                 }
-               else if(pacmanPlayer.lastDirection=="down")
+                else if(PacmanPlayer.lastDirection=="down")
                 {
-                    if(pacmanPlayer.mouth=="open") {
+                    if(PacmanPlayer.mouth=="open") {
                         ctx.beginPath();
                         ctx.arc(ctx.x, ctx.y, 15,0.25 * Math.PI, 0.75 * Math.PI, true); // half circle
                         ctx.lineTo(ctx.x, ctx.y);
@@ -883,9 +884,9 @@ function DrawDynamicBoard() {
                         ctx.fillStyle = "white"; //color
                         ctx.fill();
                         ctx.beginPath();
-                        pacmanPlayer.mouth="close";
+                        PacmanPlayer.mouth="close";
                     }
-                    else if(pacmanPlayer.mouth=="close") {
+                    else if(PacmanPlayer.mouth=="close") {
                         ctx.beginPath();
                         ctx.arc(ctx.x, ctx.y, 15, 0.4 * Math.PI, 0.6 * Math.PI, true); // half circle
                         ctx.lineTo(ctx.x, ctx.y);
@@ -902,7 +903,7 @@ function DrawDynamicBoard() {
                         ctx.fillStyle = "white"; //color
                         ctx.fill();
                         ctx.beginPath();
-                        pacmanPlayer.mouth = "open";
+                        PacmanPlayer.mouth = "open";
                     }
                 }
 
@@ -916,7 +917,6 @@ function DrawDynamicBoard() {
     time_elapsed=(currentTime-start_time)/1000;
     lblTime.value=time_elapsed;
 }
-
 function fillPointsBalls(numberOfPointsBalls) {
     var ball5points = 0.6*numberOfPointsBalls;
     var ball15points = 0.3*numberOfPointsBalls;
@@ -928,21 +928,21 @@ function fillPointsBalls(numberOfPointsBalls) {
             {
                 if(Math.random() > 0.5)
                 {
-                    if(ball5points > 0 && dynamicBoard[j][i]!=2 && staticBoard[j][i]==0)
+                    if(ball5points > 0 && LOGICpacmanBoard[j][i]!=2 && LOGICstaticBoard[j][i]==0)
                     {
-                        FoodBoard[j][i] = 6;
+                        LOGICpointsBoard[j][i] = 6;
                         ball5points--;
                         counter--;
                     }
-                    else if(ball15points > 0 && dynamicBoard[j][i]!=2 && staticBoard[j][i]==0)
+                    else if(ball15points > 0 && LOGICpacmanBoard[j][i]!=2 && LOGICstaticBoard[j][i]==0)
                     {
-                        FoodBoard[j][i] = 7;
+                        LOGICpointsBoard[j][i] = 7;
                         ball15points--;
                         counter--;
                     }
-                    else if ( bal25points > 0 &&dynamicBoard[j][i]!=2 && staticBoard[j][i]==0)
+                    else if ( bal25points > 0 &&LOGICpacmanBoard[j][i]!=2 && LOGICstaticBoard[j][i]==0)
                     {
-                        FoodBoard[j][i] = 8;
+                        LOGICpointsBoard[j][i] = 8;
                         bal25points--;
                         counter--;
                     }
@@ -988,7 +988,7 @@ function DrawFoodBoard() {
             ctx.y = j * 30 + 15;
 
 
-            if (FoodBoard[i][j] == 6) {
+            if (LOGICpointsBoard[i][j] == 6) {
                 ctx.fillStyle = "red";
                 ctx.beginPath();
                 ctx.arc(ctx.x, ctx.y, 7, 0, 2 * Math.PI); // half circle
@@ -1004,7 +1004,7 @@ function DrawFoodBoard() {
                 ctx.fill();
                 ctx.closePath();
             }
-            if (FoodBoard[i][j] == 7) {
+            if (LOGICpointsBoard[i][j] == 7) {
                 ctx.fillStyle = "#ff9933";
                 ctx.beginPath();
                 ctx.arc(ctx.x, ctx.y, 8, 0, 2 * Math.PI); // half circle
@@ -1020,7 +1020,7 @@ function DrawFoodBoard() {
                 ctx.fill();
                 ctx.closePath();
             }
-            if (FoodBoard[i][j] == 8) {
+            if (LOGICpointsBoard[i][j] == 8) {
                 ctx.fillStyle = "#00ffff";
                 ctx.beginPath();
                 ctx.arc(ctx.x, ctx.y, 9, 0, 2 * Math.PI); // half circle
@@ -1067,7 +1067,7 @@ function DrawGhostBoards() {
             ctx2.y = (j * 30)+15;
             ctx3.x = (i * 30)+15;
             ctx3.y = (j * 30)+15;
-            if (ghosr1Bord[i][j] == 3) {
+            if (LOGICghost1Board[i][j] == 3) {
 
                 ctx1.arc(ctx1.x, ctx1.y ,15,0, Math.PI,true); // circle
                 ctx1.fillStyle = "green"; //color
@@ -1092,7 +1092,7 @@ function DrawGhostBoards() {
                 ctx1.beginPath();
 
             }
-            if (ghosr2Bord[i][j] == 4) {
+            if (LOGICghost2Board[i][j] == 4) {
                 ctx2.arc(ctx2.x, ctx2.y ,15,0, Math.PI,true); // circle
                 ctx2.fillStyle = "green"; //color
                 ctx2.fill();
@@ -1115,7 +1115,7 @@ function DrawGhostBoards() {
                 ctx2.fill();
                 ctx2.beginPath();
             }
-            if (ghosr3Bord[i][j] == 5) {
+            if (LOGICghost3Board[i][j] == 5) {
                 ctx3.arc(ctx3.x, ctx3.y ,15,0, Math.PI,true); // circle
                 ctx3.fillStyle = "green"; //color
                 ctx3.fill();
@@ -1171,7 +1171,7 @@ function buildLifeBord() {
             // ctx.closePath();
             // ctx.fill();
             ctx.drawImage(img,540+15, i*60+30,30,30);
-           /* image.src = 'hart.png';
+           /* image.src = 'heart.png';
             ctx.drawImage(image, 540, j*30, 30, 30);*/
 
         }
@@ -1179,15 +1179,15 @@ function buildLifeBord() {
  }
 
 function buildBonusBord() {
-    BonusBord= new Array();
+    LOGICmovingBonusBoard= new Array();
     for (var i = 0; i < 18; i++) {
-        BonusBord[i] = new Array();
+        LOGICmovingBonusBoard[i] = new Array();
         for (var j = 0; j < 13; j++) {
-            BonusBord[i][j] = 0;
+            LOGICmovingBonusBoard[i][j] = 0;
         }
     }
 
-    BonusBord[1][11] = 1;
+    LOGICmovingBonusBoard[1][11] = 1;
     MrBonus= new bonus(9,1,11);
 
 }
@@ -1197,7 +1197,7 @@ function DrowBonus()
     var canvas = document.getElementById("Bonus");
     var ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    if(pacmanPlayer.getBonus=="false") {
+    if(PacmanPlayer.getBonus=="false") {
 
 
         var center = new Object();
@@ -1207,7 +1207,7 @@ function DrowBonus()
                 ctx.y = j * 30 + 15;
 
 
-                if (BonusBord[i][j] == 1) {
+                if (LOGICmovingBonusBoard[i][j] == 1) {
                     ctx.fillStyle = "#66ff66";
                     ctx.beginPath();
                     ctx.arc(ctx.x, ctx.y, 15, 0, 2 * Math.PI); // half circle
@@ -1233,24 +1233,24 @@ function DrowBonus()
 
 }
 function ChackLife() {
-    if((pacmanPlayer.x==ghost1.x&&pacmanPlayer.y==ghost1.y)||
-        (pacmanPlayer.x==ghost2.x&&pacmanPlayer.y==ghost2.y)||
-        (pacmanPlayer.x==ghost3.x&&pacmanPlayer.y==ghost3.y)
+    if((PacmanPlayer.x==ghost1.x&&PacmanPlayer.y==ghost1.y)||
+        (PacmanPlayer.x==ghost2.x&&PacmanPlayer.y==ghost2.y)||
+        (PacmanPlayer.x==ghost3.x&&PacmanPlayer.y==ghost3.y)
     )
     {
-        if(pacmanPlayer.hart=="3")
+        if(PacmanPlayer.hart=="3")
         {
             lifeBord[2]="0";
         }
-        if(pacmanPlayer.hart=="2")
+        if(PacmanPlayer.hart=="2")
         {
             lifeBord[1]="0";
         }
-        if(pacmanPlayer.hart=="1")
+        if(PacmanPlayer.hart=="1")
         {
             lifeBord[0]="0";
         }
-        pacmanPlayer.hart--;
+        PacmanPlayer.hart--;
     }
 }
 
