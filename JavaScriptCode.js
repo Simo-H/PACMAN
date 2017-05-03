@@ -65,7 +65,7 @@ function main()
     }, false);
    /* newPlaceBonus();*/
     setInterval(function(){UpdateCanvases();}, 400);
-    setInterval(function(){pacmanupdate();}, 100);
+    setInterval(function(){pacmanupdate();}, 400);
     setInterval(function(){chackBonus();}, 20);
 
 
@@ -1148,6 +1148,7 @@ function buildLifeBord() {
     lifeBord[1]= 1;
     lifeBord[2]= 1;
 }
+
  function DrawLifeBord() {
      //var ctx = document.querySelector("canvas").getContext("2d");
      var image = new Image();
@@ -1185,44 +1186,10 @@ function buildBonusBord() {
             BonusBord[i][j] = 0;
         }
     }
-   /* var x;
-    var y;
-    var bool = false;
-    while (!bool) {
-        x = Math.floor((Math.random() * 17));
-        y = Math.floor((Math.random() * 12));
-        if (staticBoard[x][y] != 1 && dynamicBoard[x][y] == 0) {
-            bool = true
-        }
-    }*/
+
     BonusBord[1][11] = 1;
     MrBonus= new bonus(9,1,11);
 
-}
-function newPlaceBonus()
-{
-
-   /* BonusBord= new Array();
-    for (var i = 0; i < 18; i++) {
-        BonusBord[i] = new Array();
-        for (var j = 0; j < 13; j++) {
-            BonusBord[i][j] = 0;
-        }
-    }
-
-    var x;
-    var y;
-    var bool = false;
-    while (!bool) {
-        x = Math.floor((Math.random() * 17));
-        y = Math.floor((Math.random() * 12));
-        if (staticBoard[x][y] != 1 && dynamicBoard[x][y] == 0) {
-            bool = true
-        }
-    }
-    BonusBord[x][y] = 1;
-
-    DrowBonus();*/
 }
 
 function DrowBonus()
@@ -1286,24 +1253,69 @@ function ChackLife() {
         pacmanPlayer.hart--;
     }
 }
-function loseMessage(){
+
+function loseMessage() {
     //draw popup
     var canvas = document.getElementById("game over");
     var ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
     ctx.fillStyle = "black";
     ctx.strokeStyle = "red";
-    ctx.lineWidth=5;
-    ctx.fillRect(600/2-100, 600/2, 200, 100);
-    ctx.strokeRect(600/2-100, 600/2, 200, 100);
+    ctx.lineWidth = 5;
+
+    ctx.fillRect(600 / 2 - 100, 600 / 2 - 150, 200, 100);
+    ctx.strokeRect(600 / 2 - 100, 600 / 2 - 150, 200, 100);
 
     //write message
-    ctx.textAlign="center";
+    ctx.textAlign = "center";
     ctx.fillStyle = "red";
     ctx.font = "26px monospace";
-    ctx.fillText("GAME OVER", 600/2, 600/2+7);
+    ctx.fillText("You Lost!", 600 / 2, 600 / 2 -100);
     ctx.font = "12px monospace";
-    ctx.fillText("press R to play again", 600/2, 600/2+28);
+    ctx.fillText("press R to play again", 600 / 2, 600 / 2 -80);
+
 }
 
+function timeUpMessege()
+{
+    //draw popup
+    var canvas = document.getElementById("game over");
+    var ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (score>"150") {
+        ctx.fillStyle = "#33ccff";
+        ctx.strokeStyle = "#3333ff";
+        ctx.lineWidth = 5;
+
+        ctx.fillRect(600 / 2 - 100, 600 / 2 - 150, 200, 100);
+        ctx.strokeRect(600 / 2 - 100, 600 / 2 - 150, 200, 100);
+
+        //write message
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#000000";
+        ctx.font = "26px monospace";
+        ctx.fillText("You Lost!", 600 / 2, 600 / 2 - 100);
+        ctx.font = "12px monospace";
+        ctx.fillText("press R to play again", 600 / 2, 600 / 2 - 80);
+    }
+    else
+    {
+        ctx.fillStyle = "#33ccff";
+        ctx.strokeStyle = "#3333ff";
+        ctx.lineWidth = 5;
+
+        ctx.fillRect(600 / 2 - 100, 600 / 2 - 150, 200, 100);
+        ctx.strokeRect(600 / 2 - 100, 600 / 2 - 150, 200, 100);
+
+        //write message
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#000000";
+        ctx.font = "26px monospace";
+        ctx.fillText("You Can Do Better "+score, 600 / 2, 600 / 2 - 100);
+        ctx.font = "12px monospace";
+        ctx.fillText("press R to play again", 600 / 2, 600 / 2 - 80);
+    }
+
+}
 
