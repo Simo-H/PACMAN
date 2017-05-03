@@ -1149,30 +1149,32 @@ function buildLifeBord() {
     lifeBord[2]= 1;
 }
  function DrawLifeBord() {
-     var ctx = document.querySelector("canvas").getContext("2d");
+     //var ctx = document.querySelector("canvas").getContext("2d");
      var image = new Image();
 
      var canvas = document.getElementById("life");
      var ctx = canvas.getContext("2d");
      ctx.clearRect(0, 0, canvas.width, canvas.height);
+     var img = new Image();
+     img.src = "hart.png";
+
 
      for (var i=0;i<3;i++)
     {
         if(lifeBord[i]==1)
         {
-            ctx.fillStyle = "#66ff66";
-            ctx.beginPath();
-            ctx.arc(540+30, i*60+30, 30, 0, 2 * Math.PI); // half circle
-            ctx.lineTo(ctx.x, ctx.y);
-            ctx.closePath();
-            ctx.fill();
-
+            // ctx.fillStyle = "#66ff66";
+            // ctx.beginPath();
+            // ctx.arc(540+30, i*60+30, 30, 0, 2 * Math.PI); // half circle
+            // ctx.lineTo(ctx.x, ctx.y);
+            // ctx.closePath();
+            // ctx.fill();
+            ctx.drawImage(img,540+15, i*60+30,30,30);
            /* image.src = 'hart.png';
             ctx.drawImage(image, 540, j*30, 30, 30);*/
 
         }
     }
-
  }
 
 function buildBonusBord() {
