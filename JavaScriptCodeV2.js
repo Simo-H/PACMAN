@@ -9,13 +9,15 @@ $(document).ready(function () {
 
 });
 var game;
+var bfs;
 var height;
 var width;
 // --------------------------- MAIN ---------------------------------------//
 
 function main() {
-    game = new GAME(3, 50, 2000);
+    game = new GAME(1, 50, 2000);
     game.INIT();
+
     //do stuff
 
     keysDown = {};
@@ -87,7 +89,9 @@ function Update() {
             keysDown = {};
             break;
     }
+    game.ghost1.BFSMoveNextStep();
     game.DrawLOGICpacmanBoard();
+    game.DrawLOGICghostsBoard();
 
 }
 // ---------------------------- CLASSES ----------------------------------  //
@@ -255,15 +259,15 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
         }
 
         if (this.numberOfGhosts >= 1) {
-            this.ghost1 = new GHOST(3, 1, 1);
+            this.ghost1 = new GHOST(3, 1, 1,2,14);
             this.LOGICghost1Board[1][1] = 3;
         }
         if (this.numberOfGhosts >= 2) {
-            this.ghost2 = new GHOST(4, 16, 11);
+            this.ghost2 = new GHOST(4, 16, 11,2,14);
             this.LOGICghost2Board[16][11] = 4;
         }
         if (this.numberOfGhosts >= 3) {
-            this.ghost3 = new GHOST(5, 16, 1);
+            this.ghost3 = new GHOST(5, 16, 1,2,14);
             this.LOGICghost3Board[16][1] = 5;
         }
 
@@ -287,7 +291,7 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
                 bool = true
             }
         }
-        this.PacmanPlayer = new PACMAN(x, y, 3,1, 14);
+        this.PacmanPlayer = new PACMAN(x, y, 3,15, 14);
         this.LOGICpacmanBoard[x][y] = 2;
     }
     this.buildLOGICpointsBoard = function (numberOfPointsBalls) {
@@ -612,8 +616,7 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
 
         if (numberOfGhosts > 1) {
             ctx2.x = this.ghost2.CanvasX;
-            ;
-            ctx2.y = this.ghost2.CanvasXY;
+            ctx2.y = this.ghost2.CanvasY;
             ctx2.arc(ctx2.x, ctx2.y, 15, 0, Math.PI, true); // circle
             ctx2.fillStyle = "green"; //color
             ctx2.fill();
@@ -761,26 +764,30 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
     this.moveCharacter = function (direction, character) {
         switch (direction) {
             case "up": {
-                if (this.CANVAScheckifMoveIsValid(character.CanvasX, character.CanvasY - character.speed - character.radius)) {
-                    this.UpdateCharacterPosition(character.CanvasX, character.CanvasY - character.speed - character.radius, character);
+                if ((this.CANVAScheckifMoveIsValid(character.CanvasX - character.radius, character.CanvasY - character.speed - character.radius))
+                && (this.CANVAScheckifMoveIsValid(character.CanvasX + character.radius, character.CanvasY - character.speed - character.radius))) {
+                    this.UpdateCharacterPosition(character.CanvasX, character.CanvasY - character.speed, character);
                 }
                 break;
             }
             case "down": {
-                if (this.CANVAScheckifMoveIsValid(character.CanvasX, character.CanvasY + character.speed + character.radius)) {
-                    this.UpdateCharacterPosition(character.CanvasX, character.CanvasY + character.speed + character.radius, character);
+                if ((this.CANVAScheckifMoveIsValid(character.CanvasX - character.radius, character.CanvasY + character.speed + character.radius))
+                && (this.CANVAScheckifMoveIsValid(character.CanvasX + character.radius, character.CanvasY + character.speed + character.radius))) {
+                    this.UpdateCharacterPosition(character.CanvasX, character.CanvasY + character.speed, character);
                 }
                 break;
             }
             case "left": {
-                if (this.CANVAScheckifMoveIsValid(character.CanvasX - character.speed - character.radius, character.CanvasY)) {
-                    this.UpdateCharacterPosition(character.CanvasX - character.speed - character.radius, character.CanvasY, character);
+                if ((this.CANVAScheckifMoveIsValid(character.CanvasX - character.speed - character.radius, character.CanvasY - character.radius))
+                    &&(this.CANVAScheckifMoveIsValid(character.CanvasX - character.speed - character.radius, character.CanvasY + character.radius))) {
+                    this.UpdateCharacterPosition(character.CanvasX - character.speed, character.CanvasY, character);
                 }
                 break;
             }
             case "right": {
-                if (this.CANVAScheckifMoveIsValid(character.CanvasX + character.speed + character.radius, character.CanvasY, character)) {
-                    this.UpdateCharacterPosition(character.CanvasX + character.speed + character.radius, character.CanvasY, character);
+                if ((this.CANVAScheckifMoveIsValid(character.CanvasX + character.speed + character.radius, character.CanvasY - character.radius ))
+                    &&(this.CANVAScheckifMoveIsValid(character.CanvasX + character.speed + character.radius, character.CanvasY + character.radius))) {
+                    this.UpdateCharacterPosition(character.CanvasX + character.speed, character.CanvasY, character);
                 }
                 break;
             }
@@ -859,14 +866,16 @@ function PACMAN(x, y, hearts, speed, radius) {
 // ------------------------ GHOST CLASS ----------------------------------- //
 function GHOST(num, x, y, speed, radius) {
     this.radius = radius;
-    this.CanvasX;
-    this.CanvasY;
+    this.CanvasX = (width) * (x + 0.5);
+    this.CanvasY = (height) * (y + 0.5);
     this.speed = speed;
     this.x = x;
     this.y = y;
     this.code = num;
     this.dir;
-
+    this.lastMove;
+    this.counterRight = width/this.speed;
+    this.counterUp = height/this.speed;
     this.moveNextStep = function () {
         var left = 18;
         var right = 18;
@@ -922,6 +931,22 @@ function GHOST(num, x, y, speed, radius) {
         }
         game.moveCharacter(this.dir, this);
 
+    }
+
+    this.BFSMoveNextStep = function ()
+    {
+
+        var start = new STATE(this.x,this.y,null,null)
+        var goal = new STATE(game.PacmanPlayer.x,game.PacmanPlayer.y);
+        bfs = new BFS(start,goal);
+        var nextMove = bfs.findNextMove();
+
+        if(nextMove == "left" || nextMove == "right")
+        {
+            if(counter)
+            {}
+        }
+        game.moveCharacter(nextMove,this);
     }
     /*  this.moveNextStep1= function(x,y)
      {
@@ -1021,5 +1046,80 @@ function BONUS(num, x, y, speed, radius) {
     }
 
 }
+
+
+// --------------------------- BFS ----------------------------------------- //
+function BFS(Start, Goal)
+{
+    this.queue = new Array();
+    this.start = Start;
+    this.goal = Goal;
+    this.Matrix =$.extend(true, [], game.LOGICstaticBoard);
+
+    this.BFScheckValidMove = function (x, y) {
+        if (this.Matrix[x][y] == 1 || x < 0 || x > 17 || y < 0 || y > 12) {
+            return false;
+        }
+        return true;
+    }
+    // this.BFScheckCanvasValidMove = function (CanvasX, CanvasY) {
+    //     var pos = this.canvasToMatrix(CanvasX, CanvasY);
+    //     return this.LOGICcheckIfMoveIsValid(pos.X, pos.Y);
+    // }
+    this.openNextStates = function (state)
+    {
+        var queue = new Array();
+        if(this.BFScheckValidMove(state.x,state.y-1))
+            queue.push(new STATE(state.x,state.y-1,state,"up"));
+        if(this.BFScheckValidMove(state.x,state.y+1))
+            queue.push(new STATE(state.x,state.y+1,state,"down"));
+        if(this.BFScheckValidMove(state.x-1,state.y))
+            queue.push(new STATE(state.x-1,state.y,state,"left"));
+        if(this.BFScheckValidMove(state.x+1,state.y))
+            queue.push(new STATE(state.x+1,state.y,state,"right"));
+        return queue;
+    }
+
+    this.findNextMove = function ()
+    {
+        this.queue.unshift(this.start);
+        while(this.queue.length > 0)
+        {
+            var currentState = this.queue.pop();
+            this.Matrix[currentState.x][currentState.y] = 1;
+            if(currentState.isGoalState(this.goal))
+            {
+                while(currentState.cameFrom.cameFrom != null)
+                    currentState = currentState.cameFrom;
+                return currentState.direction;
+            }
+            var a = new Array();
+            a = this.openNextStates(currentState);
+            for(var i = 0;i<a.length;i++)
+            {
+                this.queue.unshift(a[i]);
+            }
+        }
+    }
+}
+
+// -------------------------- STATE CLASS ---------------------------------- //
+
+function STATE(x,y,cameFrom,direction)
+{
+    this.x = x;
+    this.y = y;
+    this.cameFrom = cameFrom;
+    this.direction = direction;
+    var queue = [];
+
+    this.isGoalState = function (goal)
+    {
+        if(this.x == goal.x && this.y == goal.y)
+            return true;
+        return false;
+    }
+}
+
 
 
