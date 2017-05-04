@@ -28,20 +28,11 @@
 
 <section>
 
-    <div id="FINISHGAME" class="divOverlapping">
-        <div>
-            detales
-            <text id="name" type="text" />,
-
-
-        </div>
-    </div>
     <div id="Welcome" class="divOverlapping">
 
         <div>
-            welcome
-            <text id="name" type="text" />,
 
+            <text id="Welcome name" type="text" />
 
         </div>
         <canvas  id="game over"  class="canvas"   height="390" width="540"
@@ -91,13 +82,18 @@
 
     </div>
     <div  id="Register" class="divOverlapping">
-        register
+        <a class="a">Sign Up</a>
 
     </div>
-    <div id="Login" class="divOverlapping">
-        login
 
-    </div>
+        <div id="Login" class="divOverlapping">
+            <div class="form">
+                <input id="name" type="text" placeholder="username" />
+                <input id="password" type="password" placeholder="password"/>
+                <button onclick="ClickLogin()">Login</button>
+            </div>
+        </div>
+
     <div id="About" class="divOverlapping">
         about
 

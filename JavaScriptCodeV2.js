@@ -8,6 +8,8 @@ $(document).ready(function () {
     main();
 
 });
+var usernameArray=new Array();
+var passwordArray=new Array();
 var game;
 var bfs;
 var height;
@@ -93,6 +95,16 @@ function Update() {
     game.DrawLOGICpacmanBoard();
     game.DrawLOGICghostsBoard();
 
+}
+
+document.getElementById("mainlogin").onclick = function() {ClickLogin()};
+function ClickLogin() {
+    var usernameLogin=document.getElementById("name").value;
+    var passwordLogin=document.getElementById("password").value;
+
+    if(usernameLogin=="test2017" && passwordLogin=="test2017" ||usernameLogin=="a" && passwordLogin=="a"  )
+        document.getElementById("Welcome name").textContent = "Welcome "+ usernameLogin;
+        ShowSection('Welcome');
 }
 // ---------------------------- CLASSES ----------------------------------  //
 
@@ -1120,6 +1132,3 @@ function STATE(x,y,cameFrom,direction)
         return false;
     }
 }
-
-
-

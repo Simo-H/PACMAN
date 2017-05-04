@@ -5,6 +5,13 @@ html, body {
     left:0;
     right:0;
 }
+.login {
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+}
 header
 {
     position: absolute;
@@ -74,7 +81,11 @@ footer
     height:613px;
     width: 100%;
     align-items: center;
+    background-color: lightblue;
 }
+
+
+
 .canvas
 {
     padding: 0;
@@ -130,5 +141,48 @@ footer
 #menu
 {
     background-color: lightgrey;
+
+}
+
+.form {
+
+    position: relative;
+    z-index: 1;
+    background: #FFFFFF;
+    max-width: 360px;
+    margin: 0 auto 100px;
+    padding: 45px;
+    text-align: center;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    background-color: lightgrey;
+    top:100px;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
+    margin-top: auto;
+}
+.a {
+
+    text-decoration: none;
+    padding: 15px;
+    background: gray;
+    color: white;
+    font-size: 20px;
+    width:5%;
+    text-align: center;
+   cursor: pointer;
+    transition: .5s ease;
+    position: absolute;
+    margin: auto;
+    position: absolute;
+    top: 30px;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+
 
 }
