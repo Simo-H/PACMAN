@@ -17,7 +17,7 @@ var width;
 // --------------------------- MAIN ---------------------------------------//
 
 function main() {
-    game = new GAME(1, 50, 2000);
+    game = new GAME(3, 50, 2000);
     game.INIT();
 
     //do stuff
@@ -92,8 +92,15 @@ function Update() {
             break;
     }
     game.ghost1.BFSMoveNextStep();
+    game.ghost2.BFSMoveNextStep();
+    game.ghost3.BFSMoveNextStep();
+    game.MRbonus.BonusMoveNextStep();
     game.DrawLOGICpacmanBoard();
     game.DrawLOGICghostsBoard();
+    game.DrawLOGICmovingBonusBoard();
+    game.CheckIfPacmanIsEaten();
+
+
 
 }
 
@@ -827,7 +834,25 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
         var pos = this.canvasToMatrix(CanvasX, CanvasY);
         return this.LOGICcheckIfMoveIsValid(pos.X, pos.Y);
     }
-
+    this.CheckIfPacmanIsEaten = function () {
+        if((game.PacmanPlayer.x==game.ghost1.x&&game.PacmanPlayer.y==game.ghost1.y)||
+            (game.PacmanPlayer.x==game.ghost2.x&&game.PacmanPlayer.y==game.ghost2.y)||
+            (game.PacmanPlayer.x==ghost3.x&&game.PacmanPlayer.y==game.ghost3.y))
+        {
+            this.PacmanPlayer.hearts--;
+            //STAV - do box READY? 3 .. 2 .. 1 .. GO
+            this.buildLOGICGhostBoards(this.numberOfGhosts);
+            this.buildLOGICpacmanBoard();
+            this.DrawHearts();
+        }
+    }
+    this.CheckifPacmanEatenBonus = function ()
+    {
+        if(game.PacmanPlayer.x == game.MRbonus.x && game.PacmanPlayer.y == game.MRbonus.y)
+        {
+            game.BonusAlreadyEaten = "true";
+        }
+    }
 }
 
 // -----------------------  PACMAN CLASS ---------------------------------- //
@@ -886,8 +911,8 @@ function GHOST(num, x, y, speed, radius) {
     this.code = num;
     this.dir;
     this.lastMove;
-    this.counterRight = width/this.speed;
-    this.counterUp = height/this.speed;
+    this.counterRight = 0;
+    this.counterUp = 0;
     this.moveNextStep = function () {
         var left = 18;
         var right = 18;
@@ -948,15 +973,36 @@ function GHOST(num, x, y, speed, radius) {
     this.BFSMoveNextStep = function ()
     {
 
-        var start = new STATE(this.x,this.y,null,null)
-        var goal = new STATE(game.PacmanPlayer.x,game.PacmanPlayer.y);
-        bfs = new BFS(start,goal);
-        var nextMove = bfs.findNextMove();
-
-        if(nextMove == "left" || nextMove == "right")
+        if(this.counterRight == 0 && this.counterUp == 0)
         {
-            if(counter)
-            {}
+            var start = new STATE(this.x,this.y,null,null)
+            var goal = new STATE(game.PacmanPlayer.x,game.PacmanPlayer.y);
+            bfs = new BFS(start,goal);
+            var nextMove = bfs.findNextMove();
+            this.lastMove = nextMove;
+            if(nextMove == "left" || nextMove == "right")
+            {
+                this.counterRight = (width/this.speed) - 1;
+
+            }
+            else
+            {
+                this.counterUp = (height/this.speed) - 1;
+
+            }
+        }
+        else
+        {
+            if(this.lastMove == "left" || this.lastMove == "right")
+            {
+                this.counterRight-= 1;
+                var nextMove = this.lastMove;
+            }
+            else
+            {
+                this.counterUp-= 1;
+                var nextMove = this.lastMove;
+            }
         }
         game.moveCharacter(nextMove,this);
     }
@@ -1023,13 +1069,16 @@ function BONUS(num, x, y, speed, radius) {
     this.CanvasY = (height) * (y + 0.5);
     this.code = num;
     this.dir;
-    this.laststep;
-
+    this.lastMove;
+    this.counterUp = 0;
+    this.counterRight = 0;
+    this.queue;
     this.moveNextStep = function () {
         var x;
         var y;
-        var bool = false;
-        while (!bool) {
+        while (!game.BonusAlreadyEaten) {
+
+            game.checkIfMoveIsValid()
             var size = Math.floor((Math.random() * 4));
 
 
@@ -1056,7 +1105,58 @@ function BONUS(num, x, y, speed, radius) {
         }
 
     }
+    this.BonusCheckValidMove = function (x, y) {
+        if (game.LOGICstaticBoard[x][y] == 1 || x < 0 || x > 17 || y < 0 || y > 12) {
+            return false;
+        }
+        return true;
+    }
+    this.chooseNextMove = function () {
+        this.queue = new Array();
+        if(this.BonusCheckValidMove(this.x,this.y+1) && this.lastMove != "up")
+            this.queue.push("down");
+        if(this.BonusCheckValidMove(this.x,this.y-1) && this.lastMove != "down")
+            this.queue.push("up");
+        if(this.BonusCheckValidMove(this.x+1,this.y) && this.lastMove != "left")
+            this.queue.push("right");
+        if(this.BonusCheckValidMove(this.x-1,this.y) && this.lastMove != "right")
+            this.queue.push("left");
+        var choose = Math.floor(Math.random()*this.queue.length);
+        return this.queue[choose];
+    }
+    this.BonusMoveNextStep = function ()
+    {
 
+        if(this.counterRight == 0 && this.counterUp == 0)
+        {
+            var nextMove = this.chooseNextMove();
+            this.lastMove = nextMove;
+            if(nextMove == "left" || nextMove == "right")
+            {
+                this.counterRight = (width/this.speed) - 1;
+
+            }
+            else
+            {
+                this.counterUp = (height/this.speed) - 1;
+
+            }
+        }
+        else
+        {
+            if(this.lastMove == "left" || this.lastMove == "right")
+            {
+                this.counterRight-= 1;
+                var nextMove = this.lastMove;
+            }
+            else
+            {
+                this.counterUp-= 1;
+                var nextMove = this.lastMove;
+            }
+        }
+        game.moveCharacter(nextMove,this);
+    }
 }
 
 
@@ -1101,7 +1201,7 @@ function BFS(Start, Goal)
             this.Matrix[currentState.x][currentState.y] = 1;
             if(currentState.isGoalState(this.goal))
             {
-                while(currentState.cameFrom.cameFrom != null)
+                while(currentState.cameFrom != null && currentState.cameFrom.cameFrom != null)
                     currentState = currentState.cameFrom;
                 return currentState.direction;
             }
