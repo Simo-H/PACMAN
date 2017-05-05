@@ -110,6 +110,16 @@ footer
    // left:150px;*/
 
 }
+.canvasbotton {
+    padding: 0;
+    margin: auto;
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
 
 .fontfooter
 {
@@ -160,29 +170,56 @@ footer
     padding-right: 0;
     margin-left: auto;
     margin-right: auto;
-    margin-left: auto;
-    margin-right: auto;
     margin-bottom: auto;
     margin-top: auto;
+    border-radius: 25px;
+
 }
-.a {
+.formChoice {
 
-    text-decoration: none;
-    padding: 15px;
-    background: gray;
-    color: white;
-    font-size: 20px;
-    width:5%;
+    position: relative;
+    z-index: 1;
+    background: #FFFFFF;
+    max-width: 360px;
+    margin: 0 auto 100px;
+    padding: 45px;
     text-align: center;
-   cursor: pointer;
-    transition: .5s ease;
-    position: absolute;
-    margin: auto;
-    position: absolute;
-    top: 30px;
-    bottom: 30px;
-    left: 0;
-    right: 0;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    background-color: lightgrey;
+    top: 100px;
+    border-radius: 25px;
+}
+
+.fontchice
+{
+    font-family: Arial;
+    font-size: 90%;
+    color: black;
+    text-align: center;
+    font-weight: 600;
+
+}
+.button {
+
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
 
 
+}
+.button:hover {background-color: #3e8e41}
+
+.button:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
 }

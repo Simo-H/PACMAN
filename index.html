@@ -29,15 +29,25 @@
 <section>
 
     <div id="Welcome" class="divOverlapping">
+        welcome
+        <canvas class="canvasbotton">
+            <button class="button"  onclick="gotoRegister()">Register</button>
+            <button class="button" onclick="gotoLogin()">Login</button>
+        </canvas>
+    </div>
+
+    <div id="Game" class="divOverlapping">
 
         <div>
 
             <text id="Welcome name" type="text" />
 
         </div>
-        <canvas  id="game over"  class="canvas"   height="390" width="540"
-                 style="border:1px solid #d3d3d3; z-index: 15">
+
+        <canvas  id="countDoun"  class="canvas"   height="390" width="540"
+                 style="border:1px solid #d3d3d3; z-index: 0">
         </canvas>
+
         <canvas  id="mCanvas"  class="canvas"   height="390" width="540"
                 style="border:1px solid #d3d3d3; z-index: 0">
         </canvas>
@@ -79,25 +89,62 @@
             <br/>
             <canvas id="canvas" height="600" width="600"></canvas>
         </div>
-
     </div>
+
     <div  id="Register" class="divOverlapping">
-        <a class="a">Sign Up</a>
+        <!--<a class="a">Sign Up</a>-->
 
     </div>
 
-        <div id="Login" class="divOverlapping">
+    <div id="Login" class="divOverlapping">
             <div class="form">
-                <input id="name" type="text" placeholder="username" />
+               <input id="name" type="text" placeholder="username" />
                 <input id="password" type="password" placeholder="password"/>
                 <button onclick="ClickLogin()">Login</button>
+
             </div>
+    </div>
+
+    <div id="choice" class="divOverlapping">
+        <div class="formChoice">
+
+            <h1 class="fontchice" style="font-weight: 800;">Please select your preferences:</br></h1>
+
+               <h2 class="fontchice">Number of ghosts:</h2>
+                <form>
+                    <select  id="Numberofghosts"  size="3">
+                        <option value="1">1</option>
+                        <option  value="2">2</option>
+                        <option  value="3">3</option>
+                    </select>
+                </form>
+            <h3 class="fontchice">Preferred playing time:</h3>
+                <form>
+
+                    <select id="timeOfGame"  size="3">
+                        <option  value="60"> 60 seconds (high level)</option>
+                        <option  value="90">90 seconds (medium level)</option>
+                        <option  value="120">120 Seconds (Beginners)</option>
+                    </select>
+                </form>
+            <h4 class="fontchice">Number of balls in the game:</h4>
+                <input id="50-90" type="text" placeholder="number between 50 to 90"/></br>
+                <button onclick="StartGame()">Start Play</button>
+                <button onclick="ToMenu()">Exit</button>
         </div>
+    </div>
+
 
     <div id="About" class="divOverlapping">
         about
 
     </div>
+
+    <div id="GameOver" class="divOverlapping">
+        <button class="buttonMewGame"  onclick="NewGame()">New Game</button>
+            game over
+    </div>
+
 </section>
 <footer>
     <div class="divFillParent"  >

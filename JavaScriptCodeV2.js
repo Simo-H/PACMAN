@@ -5,19 +5,20 @@ $(document).ready(function () {
     height = (document.getElementById("mCanvas").height) / 13;
     width = (document.getElementById("mCanvas").width) / 18;
     pageLoaded();
-    main();
+
 
 });
 var usernameArray=new Array();
 var passwordArray=new Array();
+pageLoaded();
 var game;
 var bfs;
 var height;
 var width;
 // --------------------------- MAIN ---------------------------------------//
 
-function main() {
-    game = new GAME(3, 50, 2000);
+function main(Ghosts,Balls,time) {
+    game = new GAME(Ghosts,Balls,time*1000);
     game.INIT();
 
     //do stuff
@@ -49,6 +50,12 @@ function ShowSection(id) {
     var Login = document.getElementById('Login');
     Login.style.visibility = "hidden";
     var About = document.getElementById('About');
+    About.style.visibility = "hidden";
+    var About = document.getElementById('choice');
+    About.style.visibility = "hidden";
+    var About = document.getElementById('Game');
+    About.style.visibility = "hidden";
+    var About = document.getElementById('GameOver');
     About.style.visibility = "hidden";
 
     //Show selected
@@ -104,15 +111,68 @@ function Update() {
 
 }
 
-document.getElementById("mainlogin").onclick = function() {ClickLogin()};
-function ClickLogin() {
-    var usernameLogin=document.getElementById("name").value;
-    var passwordLogin=document.getElementById("password").value;
+// document.getElementById("mainlogin").onclick = function() {ClickLogin()};
 
-    if(usernameLogin=="test2017" && passwordLogin=="test2017" ||usernameLogin=="a" && passwordLogin=="a"  )
-        document.getElementById("Welcome name").textContent = "Welcome "+ usernameLogin;
-        ShowSection('Welcome');
+function ClickLogin() {
+
+    if (document.getElementById("name").value!="" && document.getElementById("password").value!="") {
+        var usernameLogin = document.getElementById("name").value;
+        var passwordLogin = document.getElementById("password").value;
+
+        if (usernameLogin == "test2017" && passwordLogin == "test2017" || usernameLogin == "a" && passwordLogin == "a") {
+            document.getElementById("Welcome name").textContent = "Welcome " + usernameLogin;
+            ShowSection('choice');
+
+        }
+        else  {
+            alert("Invalid username or password");
+        }
+    }
+    else{
+        alert("Invalid username or password");
+
+    }
 }
+
+function StartGame()
+{
+    if((document.getElementById("Numberofghosts").value!='')&&(document.getElementById("timeOfGame").value!='')&&(document.getElementById("50-90").value!='')&&((document.getElementById("50-90").value<=90)&&( document.getElementById("50-90").value>=50)))
+    {
+        var x = document.getElementById("Numberofghosts");
+        var  Number_of_ghosts=x.options[x.selectedIndex].value;
+        var y = document.getElementById("timeOfGame");
+        var  timeOfGame=y.options[y.selectedIndex].value;
+        var num=document.getElementById("50-90").value;
+
+        main(Number_of_ghosts,document.getElementById("50-90").value,timeOfGame);
+
+    }
+    else{
+    alert("Invalid number of balls, please try again");
+
+    }
+}
+
+    function ToMenu()
+    {
+        ShowSection("Welcome");
+
+    }
+
+    function NewGame() {
+        ShowSection("choice");
+
+    }
+
+    function gotoRegister() {
+        ShowSection("Register");
+    }
+
+    function gotoLogin() {
+        ShowSection("Login");
+
+    }
+
 // ---------------------------- CLASSES ----------------------------------  //
 
 // -----------------------  GAME CLASS  ----------------------------------- //
@@ -725,6 +785,7 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
     // ------------------------------------- GAME Methods ------------------------------------------------- //
 
     this.INIT = function () {
+        ShowSection("Game");
         //initialization of all boards
         this.buildLOGICstaticBoard();
         this.buildLOGICpacmanBoard();
