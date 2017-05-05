@@ -19,7 +19,8 @@ var startTime;
 // --------------------------- MAIN ---------------------------------------//
 
 function main(Ghosts,Balls,time) {
-    game = new GAME(Ghosts,Balls,time*1000);
+    game = new GAME(Ghosts,Balls,parseInt(time));
+    $("#lblTime").val(time);
     game.INIT();
     startTime = new Date();
     var audio = new Audio('Pacman Dubstep Remix.mp3');
@@ -34,7 +35,7 @@ function main(Ghosts,Balls,time) {
         keysDown[e.keyCode] = false;
     }, false);
     /* newPlaceBonus();*/
-    setInterval(function () {
+    interval = setInterval(function () {
         Update();
     }, 50);
 
@@ -104,6 +105,8 @@ function Update() {
     if($("#lblTime").val() == 0)
     {
         //STAV END GAME
+        window.clearInterval(interval);
+        gameOver("time");
     }
     game.ghost1.BFSMoveNextStep();
     game.ghost2.BFSMoveNextStep();
@@ -168,7 +171,10 @@ function StartGame()
         ShowSection("Welcome");
 
     }
-
+    function gameOver(reason)
+    {
+        ShowSection("GameOver");
+    }
     function NewGame() {
         ShowSection("choice");
 
@@ -901,6 +907,11 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
             this.buildLOGICpacmanBoard();
             this.DrawHearts();
             this.SOUND_pacmanDead.play();
+            if(this.PacmanPlayer.hearts == 0)
+            {
+                window.clearInterval(interval);
+                gameOver("NoHeartsLeft");
+            }
         }
     }
     this.CheckifPacmanEatenBonus = function (){
@@ -967,6 +978,11 @@ function PACMAN(x, y, hearts, speed, radius) {
                 game.SOUND_eatMoreTime.play();
                 break;
             }
+        }
+        if(game.Score >= 150)
+        {
+            window.clearInterval(interval);
+            gameOver("win");
         }
         game.LOGICpointsBoard[this.x][this.y] = 0;
         //game.DrawLOGICpointsBoard();
