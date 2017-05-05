@@ -838,6 +838,7 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
         {
             this.BonusAlreadyEaten = "true";
             this.LOGICmovingBonusBoard[this.MRbonus.x][this.MRbonus.y] = 0;
+            game.SOUND_moreLife.play();
             this.DrawLOGICmovingBonusBoard();
             this.Score += 50;
         }
@@ -887,7 +888,7 @@ function PACMAN(x, y, hearts, speed, radius) {
             }
             case 11: {
                 this.hearts++;
-                game.SOUND_moreLife.play();
+                game.SOUND_eatMoreTime.play();
                 break;
             }
             case 22:
