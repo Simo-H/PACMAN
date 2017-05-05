@@ -4,20 +4,26 @@
 $(document).ready(function () {
     height = (document.getElementById("mCanvas").height) / 13;
     width = (document.getElementById("mCanvas").width) / 18;
+
     pageLoaded();
     main();
 
 });
+
 var game;
 var bfs;
 var height;
 var width;
+var startTime;
+
 // --------------------------- MAIN ---------------------------------------//
 
 function main() {
-    game = new GAME(3, 50, 2000);
+    game = new GAME(3, 50, 60);
     game.INIT();
-
+    startTime = new Date();
+    var audio = new Audio('Pacman Dubstep Remix.mp3');
+    audio.play();
     //do stuff
 
     keysDown = {};
@@ -89,16 +95,23 @@ function Update() {
             keysDown = {};
             break;
     }
+    if($("#lblTime").val() == 0)
+    {
+        //STAV END GAME
+    }
     game.ghost1.BFSMoveNextStep();
     game.ghost2.BFSMoveNextStep();
     game.ghost3.BFSMoveNextStep();
-    game.MRbonus.BonusMoveNextStep();
+    if(game.BonusAlreadyEaten == "false")
+        game.MRbonus.BonusMoveNextStep();
     game.DrawLOGICpacmanBoard();
     game.DrawLOGICghostsBoard();
     game.DrawLOGICmovingBonusBoard();
     game.CheckIfPacmanIsEaten();
-
-
+    game.CheckifPacmanEatenBonus();
+    $("#lblScore").val(game.Score);
+    $("#lblTime").val(Math.floor(game.Time - (new Date()-startTime)/1000));
+    game.DrawLOGICpointsBoard();
 
 }
 // ---------------------------- CLASSES ----------------------------------  //
@@ -113,7 +126,7 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
     this.ghost3;
     this.BonusAlreadyEaten = "false";
     this.Score = 0;
-    this.TimesLeft = TimerOfGame;
+    this.Time = TimerOfGame;
     this.numberOfGhosts = numberOfGhosts;
     this.NumberOfPointsBalls = numberOfPointsBalls;
     this.LOGICstaticBoard;
@@ -123,6 +136,14 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
     this.LOGICghost3Board;
     this.LOGICpointsBoard;
     this.LOGICmovingBonusBoard;
+
+    //Sounds
+
+    this.SOUND_eatPoint = new Audio('pacman_chomp.wav');
+    this.SOUND_pacmanDead = new Audio('pacman_death.wav');
+    this.SOUND_eatMoreTime = new Audio('pacman_eatfruit.wav');
+    this.SOUND_moreLife = new Audio('pacman_extrapac.wav');
+    //images
 
 
     // ----------------------------------------- Build Boards Methods  -------------------------------------- //
@@ -217,7 +238,8 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
         var ball5points = 0.6 * numberOfPointsBalls;
         var ball15points = 0.3 * numberOfPointsBalls;
         var bal25points = 0.1 * numberOfPointsBalls;
-        var counter = numberOfPointsBalls;
+        var specials = 2;
+        var counter = numberOfPointsBalls + 2;
         while (counter > 0) {
             for (var i = 0; i < 13; i++) {
                 for (var j = 0; j < 18; j++) {
@@ -235,6 +257,18 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
                         else if (bal25points > 0 && this.LOGICpacmanBoard[j][i] != 2 && this.LOGICstaticBoard[j][i] == 0) {
                             this.LOGICpointsBoard[j][i] = 8;
                             bal25points--;
+                            counter--;
+                        }
+                        else if(specials == 2 && this.LOGICpacmanBoard[j][i] != 2 && this.LOGICstaticBoard[j][i] == 0)
+                        {
+                            this.LOGICpointsBoard[j][i] = 11;
+                            specials--;
+                            counter--;
+                        }
+                        else if(specials == 1 && this.LOGICpacmanBoard[j][i] != 2 && this.LOGICstaticBoard[j][i] == 0 )
+                        {
+                            this.LOGICpointsBoard[j][i] = 22;
+                            specials--;
                             counter--;
                         }
                     }
@@ -378,7 +412,7 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
                 ctx.fill();
                 ctx.beginPath();
 
-                this.PacmanPlayer.mouth = "close";
+
             }
             else if (this.PacmanPlayer.mouth == "close") {
                 ctx.beginPath();
@@ -397,7 +431,7 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
                 ctx.fillStyle = "white"; //color
                 ctx.fill();
                 ctx.beginPath();
-                this.PacmanPlayer.mouth = "open";
+
             }
 
         }
@@ -419,7 +453,7 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
                 ctx.fillStyle = "white"; //color
                 ctx.fill();
                 ctx.beginPath();
-                this.PacmanPlayer.mouth = "close";
+
             }
             else if (this.PacmanPlayer.mouth == "close") {
                 ctx.beginPath();
@@ -438,7 +472,7 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
                 ctx.fillStyle = "white"; //color
                 ctx.fill();
                 ctx.beginPath();
-                this.PacmanPlayer.mouth = "open";
+
             }
         }
         else if (this.PacmanPlayer.lastDirection == "up") {
@@ -478,7 +512,7 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
                 ctx.fillStyle = "white"; //color
                 ctx.fill();
                 ctx.beginPath();
-                this.PacmanPlayer.mouth = "open";
+
             }
         }
         else if (this.PacmanPlayer.lastDirection == "down") {
@@ -499,7 +533,7 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
                 ctx.fillStyle = "white"; //color
                 ctx.fill();
                 ctx.beginPath();
-                this.PacmanPlayer.mouth = "close";
+
             }
             else if (this.PacmanPlayer.mouth == "close") {
                 ctx.beginPath();
@@ -518,7 +552,7 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
                 ctx.fillStyle = "white"; //color
                 ctx.fill();
                 ctx.beginPath();
-                this.PacmanPlayer.mouth = "open";
+
             }
         }
 
@@ -583,6 +617,24 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
                     ctx.fill();
                     ctx.closePath();
                 }
+                if (this.LOGICpointsBoard[i][j] == 11)
+                {
+                    var img1 = new Image();
+                    var posx = ctx.x -width/2;
+                    var posy = ctx.y - height/2;
+                    img1.src = "heart.png";
+                    ctx.drawImage(img1,posx, posy,25,25);
+                }
+                if (this.LOGICpointsBoard[i][j] == 22)
+                {
+                    var img2 = new Image();
+                    var posx = ctx.x -width/2;
+                    var posy = ctx.y - height/2;
+                    img2.src = "cherry_bonus-0.png";
+                    ctx.drawImage(img2, posx, posy, 25, 25);
+                }
+
+
 
             }
         }
@@ -597,83 +649,29 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
         var canvas3 = document.getElementById("ghost3");
         var ctx3 = canvas3.getContext("2d");
         ctx3.clearRect(0, 0, canvas3.width, canvas3.height);
-        ctx1.x = this.ghost1.CanvasX;
-        ctx1.y = this.ghost1.CanvasY;
-        ctx1.arc(ctx1.x, ctx1.y, 15, 0, Math.PI, true); // circle
-        ctx1.fillStyle = "green"; //color
-        ctx1.fill();
-        ctx1.beginPath();
-        ctx1.arc(ctx1.x + 5, ctx1.y + 5, 4, 0, 2 * Math.PI); // circle
-        ctx1.fillStyle = "white"; //color
-        ctx1.fill();
-        ctx1.beginPath();
-        ctx1.arc(ctx1.x - 4, ctx1.y + 5, 4, 0, 2 * Math.PI); // circle
-        ctx1.fillStyle = "white"; //color
-        ctx1.fill();
-        ctx1.beginPath();
-        ctx1.arc(ctx1.x + 5, ctx1.y + 5, 2, 0, 2 * Math.PI); // circle
-        ctx1.fillStyle = "black"; //color
-        ctx1.fill();
-        ctx1.beginPath();
-        ctx1.arc(ctx1.x - 4, ctx1.y + 5, 2, 0, 2 * Math.PI); // circle
-        ctx1.fillStyle = "black"; //color
-        ctx1.fill();
-        ctx1.beginPath();
-
-
+        ctx1.x = this.ghost1.CanvasX - width/2;
+        ctx1.y = this.ghost1.CanvasY - height/2;
+        var ghost1Img = new Image();
+        ghost1Img.src = "ghost1.png";
+        var ghost2Img = new Image();
+        ghost2Img.src = "ghost2-0.png";
+        var ghost3Img = new Image();
+        ghost3Img.src = "pacman3-0.png";
+        ctx1.drawImage(ghost1Img, ctx1.x,ctx1.y, 30, 30);
         if (numberOfGhosts > 1) {
-            ctx2.x = this.ghost2.CanvasX;
-            ctx2.y = this.ghost2.CanvasY;
-            ctx2.arc(ctx2.x, ctx2.y, 15, 0, Math.PI, true); // circle
-            ctx2.fillStyle = "green"; //color
-            ctx2.fill();
-            ctx2.beginPath();
-            ctx2.arc(ctx2.x + 5, ctx2.y + 5, 4, 0, 2 * Math.PI); // circle
-            ctx2.fillStyle = "white"; //color
-            ctx2.fill();
-            ctx2.beginPath();
-            ctx2.arc(ctx2.x - 4, ctx2.y + 5, 4, 0, 2 * Math.PI); // circle
-            ctx2.fillStyle = "white"; //color
-            ctx2.fill();
-            ctx2.beginPath();
-            ctx2.arc(ctx2.x + 5, ctx2.y + 5, 2, 0, 2 * Math.PI); // circle
-            ctx2.fillStyle = "black"; //color
-            ctx2.fill();
-            ctx2.beginPath();
-            ctx2.arc(ctx2.x - 4, ctx2.y + 5, 2, 0, 2 * Math.PI); // circle
-            ctx2.fillStyle = "black"; //color
-            ctx2.fill();
-            ctx2.beginPath();
+            ctx2.x = this.ghost2.CanvasX - width/2;;
+            ctx2.y = this.ghost2.CanvasY - height/2;
+            ctx2.drawImage(ghost2Img, ctx2.x,ctx2.y, 30, 30);
         }
         if (numberOfGhosts > 2) {
-            ctx3.x = this.ghost3.CanvasX;
-            ctx3.y = this.ghost3.CanvasY;
-            ctx3.arc(ctx3.x, ctx3.y, 15, 0, Math.PI, true); // circle
-            ctx3.fillStyle = "green"; //color
-            ctx3.fill();
-            ctx3.beginPath();
-            ctx3.arc(ctx3.x + 5, ctx3.y + 5, 4, 0, 2 * Math.PI); // circle
-            ctx3.fillStyle = "white"; //color
-            ctx3.fill();
-            ctx3.beginPath();
-            ctx3.arc(ctx3.x - 4, ctx3.y + 5, 4, 0, 2 * Math.PI); // circle
-            ctx3.fillStyle = "white"; //color
-            ctx3.fill();
-            ctx3.beginPath();
-            ctx3.arc(ctx3.x + 5, ctx3.y + 5, 2, 0, 2 * Math.PI); // circle
-            ctx3.fillStyle = "black"; //color
-            ctx3.fill();
-            ctx3.beginPath();
-            ctx3.arc(ctx3.x - 4, ctx3.y + 5, 2, 0, 2 * Math.PI); // circle
-            ctx3.fillStyle = "black"; //color
-            ctx3.fill();
-            ctx3.beginPath();
+            ctx3.x = this.ghost3.CanvasX - width/2;;
+            ctx3.y = this.ghost3.CanvasY - height/2;
+            ctx3.drawImage(ghost3Img, ctx3.x,ctx3.y, 30, 30);
+
         }
     }
     this.DrawHearts = function () {
         //var ctx = document.querySelector("canvas").getContext("2d");
-        var image = new Image();
-
         var canvas = document.getElementById("life");
         var ctx = canvas.getContext("2d");
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -832,13 +830,16 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
             this.buildLOGICGhostBoards(this.numberOfGhosts);
             this.buildLOGICpacmanBoard();
             this.DrawHearts();
+            this.SOUND_pacmanDead.play();
         }
     }
-    this.CheckifPacmanEatenBonus = function ()
-    {
-        if(game.PacmanPlayer.x == game.MRbonus.x && game.PacmanPlayer.y == game.MRbonus.y)
+    this.CheckifPacmanEatenBonus = function (){
+        if(this.PacmanPlayer.x == this.MRbonus.x && this.PacmanPlayer.y == this.MRbonus.y && this.BonusAlreadyEaten == "false")
         {
-            game.BonusAlreadyEaten = "true";
+            this.BonusAlreadyEaten = "true";
+            this.LOGICmovingBonusBoard[this.MRbonus.x][this.MRbonus.y] = 0;
+            this.DrawLOGICmovingBonusBoard();
+            this.Score += 50;
         }
     }
 }
@@ -859,31 +860,45 @@ function PACMAN(x, y, hearts, speed, radius) {
     this.mouth = "open";
     this.move = function (direction) {
         this.lastDirection = direction;
-
+        if(this.mouth == "close")
+            this.mouth = "open";
+        else
+            this.mouth = "close";
         game.moveCharacter(direction, this);
     }
 
     this.eat = function () {
         var ball = game.LOGICpointsBoard[this.x][this.y];
-
-        lblScore.value = game.Score;
         switch (ball) {
             case 6: {
                 game.Score += 5;
+                game.SOUND_eatPoint.play();
                 break;
             }
             case 7: {
                 game.Score += 15;
+                game.SOUND_eatPoint.play();
                 break;
             }
             case 8: {
                 game.Score += 25;
+                game.SOUND_eatPoint.play();
+                break;
+            }
+            case 11: {
+                this.hearts++;
+                game.SOUND_moreLife.play();
+                break;
+            }
+            case 22:
+            {
+                game.Time+=15;
+                game.SOUND_eatMoreTime.play();
                 break;
             }
         }
         game.LOGICpointsBoard[this.x][this.y] = 0;
-        game.DrawLOGICpointsBoard();
-        lblScore = game.Score;
+        //game.DrawLOGICpointsBoard();
 
     }
 }
