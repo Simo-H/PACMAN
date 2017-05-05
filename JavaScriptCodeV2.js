@@ -10,7 +10,6 @@ $(document).ready(function () {
 });
 var usernameArray=new Array();
 var passwordArray=new Array();
-pageLoaded();
 var game;
 var bfs;
 var height;
@@ -154,8 +153,8 @@ function StartGame()
         var y = document.getElementById("timeOfGame");
         var  timeOfGame=y.options[y.selectedIndex].value;
         var num=document.getElementById("50-90").value;
+        main(Number_of_ghosts,parseInt(num),timeOfGame);
 
-        main(Number_of_ghosts,document.getElementById("50-90").value,timeOfGame);
 
     }
     else{
@@ -309,7 +308,7 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
         var ball15points = 0.3 * numberOfPointsBalls;
         var bal25points = 0.1 * numberOfPointsBalls;
         var specials = 2;
-        var counter = numberOfPointsBalls + 2;
+        var counter = numberOfPointsBalls + specials;
         while (counter > 0) {
             for (var i = 0; i < 13; i++) {
                 for (var j = 0; j < 18; j++) {
