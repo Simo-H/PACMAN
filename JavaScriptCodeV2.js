@@ -106,7 +106,16 @@ function Update() {
     {
         //STAV END GAME
         window.clearInterval(interval);
-        gameOver("time");
+        if(game.Score >= 150)
+        {
+            window.clearInterval(interval);
+            gameOver("win");
+        }
+        else
+        {
+            gameOver("better");
+
+        }
     }
     game.ghost1.BFSMoveNextStep();
     game.ghost2.BFSMoveNextStep();
@@ -910,7 +919,7 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
             if(this.PacmanPlayer.hearts == 0)
             {
                 window.clearInterval(interval);
-                gameOver("NoHeartsLeft");
+                gameOver("lose");
             }
         }
     }
@@ -979,11 +988,7 @@ function PACMAN(x, y, hearts, speed, radius) {
                 break;
             }
         }
-        if(game.Score >= 150)
-        {
-            window.clearInterval(interval);
-            gameOver("win");
-        }
+
         game.LOGICpointsBoard[this.x][this.y] = 0;
         //game.DrawLOGICpointsBoard();
 
