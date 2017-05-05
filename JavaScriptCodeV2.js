@@ -9,8 +9,7 @@ $(document).ready(function () {
 
 });
 var usernameArray=new Array();
-var passwordArray=new Array();
-pageLoaded();
+var passwordArray=new Array()
 var game;
 var bfs;
 var height;
@@ -794,6 +793,27 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
         this.DrawLOGICghostsBoard();
         this.DrawHearts();
         this.DrawLOGICmovingBonusBoard();
+
+        for (var i=0;i<3;i++)
+        {
+            var canvas = document.getElementById("Game");
+            var ctx = canvas.getContext("2d");
+            ctx.fillStyle = "black";
+            ctx.strokeStyle = "green";
+            ctx.lineWidth=5;
+            ctx.fillRect(CANVAS_WIDTH/2-150, CANVAS_HEIGHT/2-40, 300, 100);
+            ctx.strokeRect(CANVAS_WIDTH/2-150, CANVAS_HEIGHT/2-40, 300, 100);
+
+            //write message
+            ctx.textAlign="center";
+            ctx.fillStyle = "white";
+            ctx.font = "16px monospace";
+            ctx.fillText("Congratulations, you won!", CANVAS_HEIGHT/2, CANVAS_HEIGHT/2+6);
+            ctx.font = "12px monospace";
+            ctx.fillText("press R to play again", CANVAS_HEIGHT/2, CANVAS_HEIGHT/2+28);
+
+
+        }
     }
     this.UpdateCharacterPosition = function (CanvasX, CanvasY, character) {
         character.CanvasY = CanvasY;
