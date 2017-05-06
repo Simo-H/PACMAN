@@ -223,6 +223,9 @@ function StartGame()
 
     }
 }
+function ReGame() {
+    ShowSection("choice");
+}
 
     function ToMenu()
     {
