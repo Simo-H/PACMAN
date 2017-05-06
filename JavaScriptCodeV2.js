@@ -2,11 +2,19 @@
  * Created by Simo on 03/05/2017.
  */
 $(document).ready(function () {
+    // var windowWidth = $(window).width();
+    // var windowHeight = $(window).height();
+    // // $("#mCanvas").height = windowHeight/2;
+    // // $("#mCanvas").width = windowWidth/2;
+    // var a = $("#mCanvas");
+    // var ctx = a[0].getContext('2d');
+    // ctx.canvas.width = windowWidth/2;
+    // ctx.canvas.height = windowHeight/2;
+    //$(".canvas").style.height = windowHeight/2;
+    //$(".canvas").style.width = windowWidth/2;
     height = (document.getElementById("mCanvas").height) / 13;
     width = (document.getElementById("mCanvas").width) / 18;
     pageLoaded();
-
-
 });
 var usernameArray=new Array();
 var passwordArray=new Array();
@@ -15,6 +23,7 @@ var bfs;
 var height;
 var width;
 var startTime;
+var audio;
 
 // --------------------------- MAIN ---------------------------------------//
 
@@ -23,7 +32,7 @@ function main(Ghosts,Balls,time) {
     $("#lblTime").val(time);
     game.INIT();
     startTime = new Date();
-    var audio = new Audio('Pacman Dubstep Remix.mp3');
+    audio = new Audio('Pacman Dubstep Remix.mp3');
     audio.play();
     //do stuff
 
@@ -118,8 +127,10 @@ function Update() {
         }
     }
     game.ghost1.BFSMoveNextStep();
-    game.ghost2.BFSMoveNextStep();
-    game.ghost3.BFSMoveNextStep();
+    if(game.numberOfGhosts >1)
+        game.ghost2.BFSMoveNextStep();
+    if(game.numberOfGhosts > 2)
+        game.ghost3.BFSMoveNextStep();
     if(game.BonusAlreadyEaten == "false")
         game.MRbonus.BonusMoveNextStep();
     game.DrawLOGICpacmanBoard();
@@ -130,7 +141,7 @@ function Update() {
     $("#lblScore").val(game.Score);
     $("#lblTime").val(Math.floor(game.Time - (new Date()-startTime)/1000));
     game.DrawLOGICpointsBoard();
-
+    game.DrawHearts();
 }
 
 // document.getElementById("mainlogin").onclick = function() {ClickLogin()};
@@ -165,7 +176,7 @@ function StartGame()
         var y = document.getElementById("timeOfGame");
         var  timeOfGame=y.options[y.selectedIndex].value;
         var num=document.getElementById("50-90").value;
-        main(Number_of_ghosts,parseInt(num),timeOfGame);
+        main(parseInt(Number_of_ghosts),parseInt(num),timeOfGame);
 
 
     }
@@ -182,6 +193,7 @@ function StartGame()
     }
     function gameOver(reason)
     {
+        audio.stop();
         ShowSection("GameOver");
     }
     function NewGame() {
@@ -398,7 +410,7 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
 
 
     }
-    this.buildLOGICpacmanBoard = function () {
+    this.buildLOGICpacmanBoard = function (hearts) {
         this.LOGICpacmanBoard = new Array();
         for (var i = 0; i < 18; i++) {
             this.LOGICpacmanBoard[i] = new Array();
@@ -416,7 +428,7 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
                 bool = true
             }
         }
-        this.PacmanPlayer = new PACMAN(x, y, 3,15, 14);
+        this.PacmanPlayer = new PACMAN(x, y, hearts,15, 14);
         this.LOGICpacmanBoard[x][y] = 2;
     }
     this.buildLOGICpointsBoard = function (numberOfPointsBalls) {
@@ -764,7 +776,7 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
 
 
         for (var i = 0; i < this.PacmanPlayer.hearts; i++) {
-            ctx.drawImage(img, 540 + 15, i * 60 + 30, 30, 30);
+            ctx.drawImage(img, 600 + 15, i * 60 + 30, 30, 30);
         }
     }
     this.DrawLOGICmovingBonusBoard = function () {
@@ -798,7 +810,7 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
         ShowSection("Game");
         //initialization of all boards
         this.buildLOGICstaticBoard();
-        this.buildLOGICpacmanBoard();
+        this.buildLOGICpacmanBoard(3);
         this.buildLOGICpointsBoard(this.NumberOfPointsBalls);
         this.buildLOGICGhostBoards(this.numOf);
         this.buildLOGICbonusBoard();
@@ -906,21 +918,51 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
         return this.LOGICcheckIfMoveIsValid(pos.X, pos.Y);
     }
     this.CheckIfPacmanIsEaten = function () {
-        if((game.PacmanPlayer.x==game.ghost1.x&&game.PacmanPlayer.y==game.ghost1.y)||
-            (game.PacmanPlayer.x==game.ghost2.x&&game.PacmanPlayer.y==game.ghost2.y)||
-            (game.PacmanPlayer.x==ghost3.x&&game.PacmanPlayer.y==game.ghost3.y))
+        switch (this.numberOfGhosts)
         {
-            this.PacmanPlayer.hearts--;
-            //STAV - do box READY? 3 .. 2 .. 1 .. GO
-            this.buildLOGICGhostBoards(this.numberOfGhosts);
-            this.buildLOGICpacmanBoard();
-            this.DrawHearts();
-            this.SOUND_pacmanDead.play();
-            if(this.PacmanPlayer.hearts == 0)
+            case 3:
             {
-                window.clearInterval(interval);
-                gameOver("lose");
+                if((game.PacmanPlayer.x==game.ghost1.x&&game.PacmanPlayer.y==game.ghost1.y)||
+                    (game.PacmanPlayer.x==game.ghost2.x&&game.PacmanPlayer.y==game.ghost2.y)||
+                    (game.PacmanPlayer.x==game.ghost3.x&&game.PacmanPlayer.y==game.ghost3.y))
+                {
+                    var hearts = this.PacmanPlayer.hearts--;
+                    //STAV - do box READY? 3 .. 2 .. 1 .. GO
+                    this.buildLOGICGhostBoards(this.numberOfGhosts);
+                    this.buildLOGICpacmanBoard(this.PacmanPlayer.hearts);
+                    this.DrawHearts();
+                    this.SOUND_pacmanDead.play();
+                }
+                break;
             }
+            case 2:
+            {
+                if((game.PacmanPlayer.x==game.ghost1.x&&game.PacmanPlayer.y==game.ghost1.y)||
+                    (game.PacmanPlayer.x==game.ghost2.x&&game.PacmanPlayer.y==game.ghost2.y))
+                {
+                    var hearts = this.PacmanPlayer.hearts--;
+                    //STAV - do box READY? 3 .. 2 .. 1 .. GO
+                    this.buildLOGICGhostBoards(this.numberOfGhosts);
+                    this.buildLOGICpacmanBoard(this.PacmanPlayer.hearts);
+                    this.DrawHearts();
+                    this.SOUND_pacmanDead.play();
+                }
+            }
+            case 1:
+                if((game.PacmanPlayer.x==game.ghost1.x&&game.PacmanPlayer.y==game.ghost1.y))
+                {
+                    var hearts = this.PacmanPlayer.hearts--;
+                    //STAV - do box READY? 3 .. 2 .. 1 .. GO
+                    this.buildLOGICGhostBoards(this.numberOfGhosts);
+                    this.buildLOGICpacmanBoard(this.PacmanPlayer.hearts);
+                    this.DrawHearts();
+                    this.SOUND_pacmanDead.play();
+                }
+        }
+        if(this.PacmanPlayer.hearts == 0)
+        {
+            window.clearInterval(interval);
+            gameOver("lose");
         }
     }
     this.CheckifPacmanEatenBonus = function (){
