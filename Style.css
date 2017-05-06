@@ -85,6 +85,17 @@ footer
     background-color: lightblue;
 }
 
+.divOverlapping2
+{
+    border: dotted red 1px;
+    position: absolute;
+    top:15vh;
+    left:0;
+    height:75vh;
+    width: 100%;
+    align-items: center;
+    background-color: lightblue;
+}
 
 
 .canvas
@@ -238,5 +249,20 @@ footer
     box-shadow: 0 5px #666;
     transform: translateY(4px);
 }
-.transparent{
-background-color : transparent;}
+
+
+form
+{
+    max-width: 600px;
+    text-align: center;
+    margin: 20px ;}
+
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}

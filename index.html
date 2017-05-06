@@ -95,7 +95,26 @@
     </div>
 
     <div  id="Register" class="divOverlapping">
-        <!--<a class="a">Sign Up</a>-->
+        <form  >
+            <fieldset>
+                <legend>Personal information:</legend>
+                <label for="name">User name*  :</label>
+                <input type="text" id="input-user" placeholder="User name"></br></br>
+                <label for="name">Password*   :</label>
+                <input type="password" id="password-input" placeholder="password"></br></br>
+                <label for="name">First name* :</label>
+                <input type="text" id="input-name" placeholder="name"></br></br>
+                <label for="name">Last name*  :</label>
+                <input type="text" id="password-Last" placeholder="Last name"></br></br>
+                <label type="email">Your e-mail*:</label>
+                <input type="email" id="input-email" placeholder="Email address"></br></br>
+                <label type="email"> Date of birth*:</label>
+                <input type="date" name="bday" max="1917-5-6" min="1900-01-01"><br><br>
+                <button onclick="ClickRegister()">Submit</button>
+
+            </fieldset>
+
+        </form>
 
     </div>
 
@@ -144,8 +163,7 @@
     </div>
 
 
-    <div id="YouLost" class="divOverlapping transparent">
-        <button  onclick="NewGame()">New Game</button>
+    <div id="YouLost" class="divOverlapping">
         <div class="formChoice">
 
             <h1 class="fontchice" style="font-weight: 800;">You Lost</br></h1>
@@ -155,8 +173,7 @@
         </div>
     </div>
 
-    <div id="You can do better" class="divOverlapping transparent">
-        <button  onclick="NewGame()">New Game</button>
+    <div id="You can do better" class="divOverlapping">
         <div class="formChoice">
 
             <h1 class="fontchice" style="font-weight: 800;">You can do better..</br></h1>
@@ -167,8 +184,7 @@
         </div>
     </div>
 
-    <div id="We have a Winner" class="divOverlapping transparent" >
-        <button class="buttonMewGame"  onclick="NewGame()">New Game</button>
+    <div id="We have a Winner" class="divOverlapping" >
         <div class="formChoice">
 
             <h1 class="fontchice" style="font-weight: 800;">We have a Winner!!!</br></h1>

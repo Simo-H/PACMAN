@@ -57,7 +57,7 @@ function main(Ghosts,Balls,time) {
     sleep(1000);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    ShowSection("Game");*/
+    ShowSection("Game");
 
     startTime = new Date();
 
