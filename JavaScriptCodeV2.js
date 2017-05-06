@@ -25,6 +25,8 @@ var height;
 var width;
 var startTime;
 var audio;
+audio = new Audio('Pacman Dubstep Remix.mp3');
+var audioWin = new Audio('D.J. Khaled - All I do is Win (short version chorus).mp3');
 
 // --------------------------- MAIN ---------------------------------------//
 
@@ -76,6 +78,7 @@ function main(Ghosts,Balls,time) {
 }
 
 function pageLoaded() {
+
     ShowSection('Welcome');
 }
 
@@ -104,9 +107,11 @@ function ShowSection(id) {
         About.style.visibility = "hidden";
     }
     //Show selected
+    audio.pause();
+    audioWin.pause();
     var selected = document.getElementById(id);
-    selected.style.visibility = "visible";
 
+    selected.style.visibility = "visible";
 }
 
 function GetKeyPressed() {
@@ -226,8 +231,29 @@ function StartGame()
     }
     function gameOver(reason)
     {
+        clearInterval(interval);
+        switch (reason)
+        {
+            case "win":
+            {
+                ShowSection("We have a Winner");
+                audioWin.play();
+                break;
+            }
+            case "better":
+            {
+                $("#point").text(game.Score);
+                ShowSection("You can do better");
+                break;
+            }
+            case "lose":
+            {
+                ShowSection("YouLost");
+                break;
+            }
 
-        ShowSection("GameOver");
+        }
+
     }
     function NewGame() {
         ShowSection("choice");
