@@ -85,7 +85,7 @@ function pageLoaded() {
 
 function ShowSection(id) {
     //hide all
-    if (id!="rsg"||id!="YouLost"||id!="You can do better"||id!="We have a Winner") {
+    if (id!="rsg" && id!="YouLost" && id!="You can do better"&& id!="We have a Winner") {
         var Welcome = document.getElementById('Welcome');
         Welcome.style.visibility = "hidden";
         var Register = document.getElementById('Register');
@@ -107,6 +107,7 @@ function ShowSection(id) {
         var About = document.getElementById('YouLost');
         About.style.visibility = "hidden";
     }
+
     //Show selected
     audio.pause();
     audioWin.pause();
