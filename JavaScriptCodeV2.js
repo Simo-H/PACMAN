@@ -25,6 +25,7 @@ var height;
 var width;
 var startTime;
 var audio;
+var interval;
 audio = new Audio('Pacman Dubstep Remix.mp3');
 var audioWin = new Audio('D.J. Khaled - All I do is Win (short version chorus).mp3');
 
@@ -109,6 +110,8 @@ function ShowSection(id) {
     //Show selected
     audio.pause();
     audioWin.pause();
+    clearInterval(interval);
+
     var selected = document.getElementById(id);
 
     selected.style.visibility = "visible";
