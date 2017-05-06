@@ -199,3 +199,41 @@ footer
     font-weight: 600;
 
 }
+.divOverlappingWelcome{
+    border: dotted red 1px;
+    position: absolute;
+    top:150px;
+    left:0;
+    height:613px;
+    width: 100%;
+    align-items: center;
+    background-image: url(vangoch.jpg);
+    background-size: 100%;
+
+}
+
+.button {
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #66ccff;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 2px #999;
+    position: absolute;
+
+
+}
+
+.button:hover {background-color: #0066ff}
+
+.button:active {
+    background-color: #003380;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
