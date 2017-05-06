@@ -13,14 +13,18 @@
         <h1>
             <img  class="imgheder" src="logo.png" >
         </h1>
+        <p style="font-size: 1vw;color: red"> ******   Stav Lutzky && Shimon Hanouna ****** </p>
     </div>
+
+
+
 </header>
 <nav>
     <div class="divFillParent" id="menu">
         <p align="center">
-         <a class="fontmenu" onclick="ShowSection('Welcome')">Welcome</a>|
-        <a class="fontmenu" onclick="ShowSection('Register')">Register</a>|
-        <a class="fontmenu" onclick="ShowSection('Login')">Login</a>|
+         <a class="fontmenu" onclick="ShowSection('Welcome')">Welcome |</a>
+        <a class="fontmenu" onclick="ShowSection('Register')"> Register | </a>
+        <a class="fontmenu" onclick="ShowSection('Login')"> Login | </a>
         <a class="fontmenu" onclick="ShowSection('About')">About</a>
         </p>
     </div>
@@ -31,9 +35,9 @@
     <div id="Welcome" background="vangoch.jpg" class="divOverlappingWelcome">
         welcome
 
-            <button class="button" style="left:30%; top: 50%; width:200px" onclick="gotoRegister()">Register</button>
+            <button class="button" style="left:30vw; top: 12vw; width:15vw;height: 7vw;font-size: 2.1vw;" onclick="gotoRegister()">Register</button>
 
-             <button class="button" style="right: 30%; top: 50%; width:200px" onclick="gotoLogin()">Login</button>
+             <button class="button" style="left: 55vw; top: 12vw; width:15vw;height: 7vw; font-size: 2.1vw;" onclick="gotoLogin()">Login</button>
 
     </div>
 
@@ -76,7 +80,7 @@
 
 
         <canvas id="life"  class="canvas" height="390" width="660"
-                style="border:1px dashed red; z-index: 10; top: 0;">
+                style="border:1px dashed red; z-index: 0; top: 0;">
 
         </canvas>
 
@@ -144,8 +148,7 @@
     </div>
 
 
-    <div id="YouLost" class="divOverlapping">
-        <button class="buttonMewGame"  onclick="NewGame()">New Game</button>
+    <div id="YouLost" class="divMessages">
         <div class="formChoice">
 
             <h1 class="fontchice" style="font-weight: 800;">You Lost</br></h1>
@@ -155,8 +158,7 @@
         </div>
     </div>
 
-    <div id="You can do better" class="divOverlapping">
-        <button  onclick="NewGame()">New Game</button>
+    <div id="You can do better" class="divMessages">
         <div class="formChoice">
 
             <h1 class="fontchice" style="font-weight: 800;">You can do better..</br></h1>
@@ -167,8 +169,7 @@
         </div>
     </div>
 
-    <div id="We have a Winner" class="divOverlapping" >
-        <button class="buttonMewGame"  onclick="NewGame()">New Game</button>
+    <div id="We have a Winner" class="divMessages" >
         <div class="formChoice">
 
             <h1 class="fontchice" style="font-weight: 800;">We have a Winner!!!</br></h1>

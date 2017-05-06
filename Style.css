@@ -1,3 +1,13 @@
+@font-face {
+    font-family: myFirstFont;
+    src: url(Joystix.TTF);
+    font-weight: bold;
+}
+*
+{
+    font-family: myFirstFont;
+    letter-spacing: 0.1vw;
+}
 html, body {
     position:fixed;
     top:0;
@@ -47,7 +57,8 @@ nav
     height:5vh;
     width: 100%;
     color: black;
-    background-color: white;
+    background-color: black;
+    font-size: 1.2vw;
 
 }
 
@@ -65,17 +76,17 @@ footer
 }
 .divFillParent
 {
-    border: dashed blue 1px;
+
     position: relative;
     width: 100%;
     height: 100%;
-
+    top:0;
 
 
 }
 .divOverlapping
 {
-    border: dotted red 1px;
+
     position: absolute;
     top:15vh;
     left:0;
@@ -83,6 +94,18 @@ footer
     width: 100%;
     align-items: center;
     background-color: lightblue;
+}
+.divMessages
+{
+
+    position: absolute;
+    top:15vh;
+    left:0;
+    height:75vh;
+    width: 100%;
+    align-items: center;
+    background-color: transparent;
+    z-index: 50;
 }
 
 
@@ -133,25 +156,26 @@ footer
 }
 .fontmenu
 {
-    font-family: Arial;
     font-size: 100%;
-    color: yellow;
+    color: red;
     text-align: center;
     font-weight: 800;
-
+    line-height: 0;
+    vertical-align: top;
+    cursor: pointer;
 }
 .imgheder {
     position: absolute;
-    left: 40%;
+    left: 35vw;
     top:0;
     display: block;
-    width: 20%;
+    width: 30vw;
     height: 100%;
 
 }
 #menu
 {
-    background-color: lightgrey;
+    background-color: black;
 
 }
 
@@ -201,7 +225,6 @@ footer
 
 }
 .divOverlappingWelcome{
-    border: dotted red 1px;
     position: absolute;
     top:15vh;
     left:0;
@@ -218,23 +241,24 @@ footer
     padding: 15px 25px;
     font-size: 24px;
     cursor: pointer;
+    border: 4px solid black;
     text-align: center;
     text-decoration: none;
     outline: none;
-    color: #fff;
-    background-color: #66ccff;
-    border: none;
+    color: black;
+    background-color: #ff6600;
     border-radius: 15px;
-    box-shadow: 0 2px #999;
+
+    box-shadow: 0 0.5vh black;
     position: absolute;
 
 
 }
 
-.button:hover {background-color: #0066ff}
+.button:hover {background-color: yellow}
 
 .button:active {
-    background-color: #003380;
+    background-color: yellow;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
 }
