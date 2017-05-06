@@ -32,6 +32,30 @@ function main(Ghosts,Balls,time) {
     game = new GAME(Ghosts,Balls,parseInt(time));
     $("#lblTime").val(time);
     game.INIT();
+   /* ShowSection("rsg");
+
+    var canvas = document.getElementById("rsg");
+    var ctx = canvas.getContext("2d");
+    //write message
+    ctx.textAlign="center";
+    ctx.font = "50px monospace";
+    ctx.vertAlign="top";
+    ctx.fillStyle="white";
+
+    ctx.fillText("Redy", canvas.width/2, canvas.height/2);
+   // sleep(1000);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillText("Steady", canvas.width/2, canvas.height/2);
+   // sleep(1000);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillText("Go..", canvas.width/2, canvas.height/2);
+    sleep(1000);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ShowSection("Game");*/
+
     startTime = new Date();
 
     audio.play();
@@ -57,25 +81,32 @@ function pageLoaded() {
 
 function ShowSection(id) {
     //hide all
-    var Welcome = document.getElementById('Welcome');
-    Welcome.style.visibility = "hidden";
-    var Register = document.getElementById('Register');
-    Register.style.visibility = "hidden";
-    var Login = document.getElementById('Login');
-    Login.style.visibility = "hidden";
-    var About = document.getElementById('About');
-    About.style.visibility = "hidden";
-    var About = document.getElementById('choice');
-    About.style.visibility = "hidden";
-    var About = document.getElementById('Game');
-    About.style.visibility = "hidden";
-    var About = document.getElementById('GameOver');
-    About.style.visibility = "hidden";
-    audio = new Audio('Pacman Dubstep Remix.mp3');
-    audio.stop();
+    if (id!="rsg"||id!="YouLost"||id!="You can do better"||id!="We have a Winner") {
+        var Welcome = document.getElementById('Welcome');
+        Welcome.style.visibility = "hidden";
+        var Register = document.getElementById('Register');
+        Register.style.visibility = "hidden";
+        var Login = document.getElementById('Login');
+        Login.style.visibility = "hidden";
+        var About = document.getElementById('About');
+        About.style.visibility = "hidden";
+        var About = document.getElementById('choice');
+        About.style.visibility = "hidden";
+        var About = document.getElementById('Game');
+        About.style.visibility = "hidden";
+        var About = document.getElementById('rsg');
+        About.style.visibility = "hidden";
+        var About = document.getElementById('We have a Winner');
+        About.style.visibility = "hidden";
+        var About = document.getElementById('You can do better');
+        About.style.visibility = "hidden";
+        var About = document.getElementById('YouLost');
+        About.style.visibility = "hidden";
+    }
     //Show selected
     var selected = document.getElementById(id);
     selected.style.visibility = "visible";
+
 }
 
 function GetKeyPressed() {
@@ -212,6 +243,14 @@ function StartGame()
 
     }
 
+    function sleep(milliseconds) {
+        var start = new Date().getTime();
+        for (var i = 0; i < 1e7; i++) {
+            if ((new Date().getTime() - start) > milliseconds) {
+                break;
+            }
+        }
+    }
 // ---------------------------- CLASSES ----------------------------------  //
 
 // -----------------------  GAME CLASS  ----------------------------------- //
@@ -822,7 +861,13 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
         this.DrawLOGICghostsBoard();
         this.DrawHearts();
         this.DrawLOGICmovingBonusBoard();
+
+
+
+
     }
+
+
     this.UpdateCharacterPosition = function (CanvasX, CanvasY, character) {
         character.CanvasY = CanvasY;
         character.CanvasX = CanvasX;

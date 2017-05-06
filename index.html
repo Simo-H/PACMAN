@@ -30,10 +30,10 @@
 
     <div id="Welcome" class="divOverlapping">
         welcome
-        <canvas class="canvasbotton">
-            <button class="button"  onclick="gotoRegister()">Register</button>
-            <button class="button" onclick="gotoLogin()">Login</button>
-        </canvas>
+
+            <button  onclick="gotoRegister()">Register</button>
+            <button onclick="gotoLogin()">Login</button>
+
     </div>
 
     <div id="Game" class="divOverlapping">
@@ -50,6 +50,9 @@
         </canvas>
         <canvas id="m2Canvas" class="canvas" height="390" width="540"
                 style="border:1px solid #d3d3d3; z-index: 10">
+        </canvas>
+        <canvas id="rsg" style="background-color: transparent" class="canvas" height="390" width="540"
+                style="border:1px solid #d3d3d3; z-index: 16">
         </canvas>
 
         <canvas id="food"  class="canvas" height="390" width="540"
@@ -75,6 +78,8 @@
                 style="border:1px dashed red; z-index: 10">
 
         </canvas>
+
+
 
 
         <div>
@@ -137,10 +142,42 @@
 
     </div>
 
-    <div id="GameOver" class="divOverlapping">
+
+    <div id="YouLost" class="divOverlapping">
         <button class="buttonMewGame"  onclick="NewGame()">New Game</button>
-            game over
+        <div class="formChoice">
+
+            <h1 class="fontchice" style="font-weight: 800;">You Lost</br></h1>
+            <text class="fontchice" id="point" type="text" />
+
+            <button onclick="StartGame()">Play agin</button>
+            <button onclick="ToMenu()">Exit</button>
+        </div>
     </div>
+
+    <div id="You can do better" class="divOverlapping">
+        <button  onclick="NewGame()">New Game</button>
+        <div class="formChoice">
+
+            <h1 class="fontchice" style="font-weight: 800;">You can do better..</br></h1>
+            <text class="fontchice" id="point" type="text" />
+
+            <button onclick="StartGame()">Play agin</button>
+            <button onclick="ToMenu()">Exit</button>
+        </div>
+    </div>
+
+    <div id="We have a Winner" class="divOverlapping">
+        <button class="buttonMewGame"  onclick="NewGame()">New Game</button>
+        <div class="formChoice">
+
+            <h1 class="fontchice" style="font-weight: 800;">We have a Winner!!!</br></h1>
+
+            <button onclick="StartGame()">Play agin</button>
+            <button onclick="ToMenu()">Exit</button>
+        </div>
+    </div>
+
 
 </section>
 <footer>
