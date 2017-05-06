@@ -9,7 +9,7 @@ $(document).ready(function () {
 
 });
 var usernameArray=new Array();
-var passwordArray=new Array()
+var passwordArray=new Array();
 var game;
 var bfs;
 var height;
@@ -19,7 +19,8 @@ var startTime;
 // --------------------------- MAIN ---------------------------------------//
 
 function main(Ghosts,Balls,time) {
-    game = new GAME(Ghosts,Balls,time*1000);
+    game = new GAME(Ghosts,Balls,parseInt(time));
+    $("#lblTime").val(time);
     game.INIT();
     startTime = new Date();
     var audio = new Audio('Pacman Dubstep Remix.mp3');
@@ -34,7 +35,7 @@ function main(Ghosts,Balls,time) {
         keysDown[e.keyCode] = false;
     }, false);
     /* newPlaceBonus();*/
-    setInterval(function () {
+    interval = setInterval(function () {
         Update();
     }, 50);
 
@@ -104,6 +105,17 @@ function Update() {
     if($("#lblTime").val() == 0)
     {
         //STAV END GAME
+        window.clearInterval(interval);
+        if(game.Score >= 150)
+        {
+            window.clearInterval(interval);
+            gameOver("win");
+        }
+        else
+        {
+            gameOver("better");
+
+        }
     }
     game.ghost1.BFSMoveNextStep();
     game.ghost2.BFSMoveNextStep();
@@ -153,8 +165,8 @@ function StartGame()
         var y = document.getElementById("timeOfGame");
         var  timeOfGame=y.options[y.selectedIndex].value;
         var num=document.getElementById("50-90").value;
+        main(Number_of_ghosts,parseInt(num),timeOfGame);
 
-        main(Number_of_ghosts,document.getElementById("50-90").value,timeOfGame);
 
     }
     else{
@@ -168,7 +180,10 @@ function StartGame()
         ShowSection("Welcome");
 
     }
-
+    function gameOver(reason)
+    {
+        ShowSection("GameOver");
+    }
     function NewGame() {
         ShowSection("choice");
 
@@ -308,7 +323,7 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
         var ball15points = 0.3 * numberOfPointsBalls;
         var bal25points = 0.1 * numberOfPointsBalls;
         var specials = 2;
-        var counter = numberOfPointsBalls + 2;
+        var counter = numberOfPointsBalls + specials;
         while (counter > 0) {
             for (var i = 0; i < 13; i++) {
                 for (var j = 0; j < 18; j++) {
@@ -793,27 +808,6 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
         this.DrawLOGICghostsBoard();
         this.DrawHearts();
         this.DrawLOGICmovingBonusBoard();
-
-        for (var i=0;i<3;i++)
-        {
-            var canvas = document.getElementById("Game");
-            var ctx = canvas.getContext("2d");
-            ctx.fillStyle = "black";
-            ctx.strokeStyle = "green";
-            ctx.lineWidth=5;
-            ctx.fillRect(CANVAS_WIDTH/2-150, CANVAS_HEIGHT/2-40, 300, 100);
-            ctx.strokeRect(CANVAS_WIDTH/2-150, CANVAS_HEIGHT/2-40, 300, 100);
-
-            //write message
-            ctx.textAlign="center";
-            ctx.fillStyle = "white";
-            ctx.font = "16px monospace";
-            ctx.fillText("Congratulations, you won!", CANVAS_HEIGHT/2, CANVAS_HEIGHT/2+6);
-            ctx.font = "12px monospace";
-            ctx.fillText("press R to play again", CANVAS_HEIGHT/2, CANVAS_HEIGHT/2+28);
-
-
-        }
     }
     this.UpdateCharacterPosition = function (CanvasX, CanvasY, character) {
         character.CanvasY = CanvasY;
@@ -922,6 +916,11 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
             this.buildLOGICpacmanBoard();
             this.DrawHearts();
             this.SOUND_pacmanDead.play();
+            if(this.PacmanPlayer.hearts == 0)
+            {
+                window.clearInterval(interval);
+                gameOver("lose");
+            }
         }
     }
     this.CheckifPacmanEatenBonus = function (){
@@ -989,6 +988,7 @@ function PACMAN(x, y, hearts, speed, radius) {
                 break;
             }
         }
+
         game.LOGICpointsBoard[this.x][this.y] = 0;
         //game.DrawLOGICpointsBoard();
 
