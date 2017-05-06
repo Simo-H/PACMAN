@@ -18,7 +18,7 @@ header
     top: 0;
     left: 0;
     width: 100%;
-    height: 100px;
+    height: 10vh;
     color: white;
     background-color: black;
 }
@@ -42,9 +42,9 @@ header
 nav
 {
     position: absolute;
-    top:100px;
+    top:10vh;
     left:0;
-    height:50px;
+    height:5vh;
     width: 100%;
     color: black;
     background-color: white;
@@ -55,9 +55,9 @@ footer
 {
     position: absolute;
     border: solid black 5px;
-    top: 763px;
+    bottom: 0;
     left: 0;
-    height: 100px;
+    height: 10vh;
     width: 100%;
     color: white;
     background-color: black;
@@ -71,14 +71,15 @@ footer
     height: 100%;
 
 
+
 }
 .divOverlapping
 {
     border: dotted red 1px;
     position: absolute;
-    top:150px;
+    top:15vh;
     left:0;
-    height:613px;
+    height:75vh;
     width: 100%;
     align-items: center;
     background-color: lightblue;
@@ -202,9 +203,9 @@ footer
 .divOverlappingWelcome{
     border: dotted red 1px;
     position: absolute;
-    top:150px;
+    top:15vh;
     left:0;
-    height:613px;
+    height:75vh;
     width: 100%;
     align-items: center;
     background-image: url(vangoch.jpg);
