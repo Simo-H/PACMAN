@@ -12,6 +12,7 @@ $(document).ready(function () {
     // ctx.canvas.height = windowHeight/2;
     //$(".canvas").style.height = windowHeight/2;
     //$(".canvas").style.width = windowWidth/2;
+
     height = (document.getElementById("mCanvas").height) / 13;
     width = (document.getElementById("mCanvas").width) / 18;
     pageLoaded();
@@ -32,7 +33,7 @@ function main(Ghosts,Balls,time) {
     $("#lblTime").val(time);
     game.INIT();
     startTime = new Date();
-    audio = new Audio('Pacman Dubstep Remix.mp3');
+
     audio.play();
     //do stuff
 
@@ -70,7 +71,8 @@ function ShowSection(id) {
     About.style.visibility = "hidden";
     var About = document.getElementById('GameOver');
     About.style.visibility = "hidden";
-
+    audio = new Audio('Pacman Dubstep Remix.mp3');
+    audio.stop();
     //Show selected
     var selected = document.getElementById(id);
     selected.style.visibility = "visible";
@@ -193,7 +195,7 @@ function StartGame()
     }
     function gameOver(reason)
     {
-        audio.stop();
+
         ShowSection("GameOver");
     }
     function NewGame() {
