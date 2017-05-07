@@ -117,6 +117,17 @@ footer
     z-index: 50;
 }
 
+.divOverlapping2
+{
+    border: dotted red 1px;
+    position: absolute;
+    top:15vh;
+    left:0;
+    height:75vh;
+    width: 100%;
+    align-items: center;
+    background-color: lightblue;
+}
 
 
 .canvas
@@ -432,4 +443,56 @@ option {
 select
 {
     display:inline-block; vertical-align:top; overflow:hidden;
+}
+
+
+
+form
+{
+    max-width: 600px;
+    text-align: center;
+    margin: 20px ;}
+
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}
+
+#contact label{
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+}
+#contact_submit{
+    padding-left: 100px;
+}
+#contact div{
+    margin-top: 1em;
+}
+textarea{
+    vertical-align: top;
+    height: 5em;
+}
+
+.error{
+    display: none;
+    margin-left: 10px;
+}
+
+.error_show{
+    color: #ff4236;
+    margin-left: 10px;
+}
+
+input.invalid, textarea.invalid{
+    border: 2px solid red;
+}
+
+input.valid, textarea.valid{
+    border: 2px solid green;
 }

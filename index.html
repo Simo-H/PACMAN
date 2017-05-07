@@ -64,36 +64,36 @@
 
 
         <canvas  id="mCanvas"  class="canvas"   height="390" width="540"
-                style="border:5px solid white; z-index: 0; top: 0;">
+                style="border:1px solid #d3d3d3; z-index: 0; top: 0;">
         </canvas>
         <canvas id="m2Canvas" class="canvas" height="390" width="540"
-                style=" z-index: 10; top: 0;">
+                style="border:1px solid #d3d3d3; z-index: 10; top: 0;">
         </canvas>
         <canvas id="rsg" style="background-color: transparent" class="canvas" height="390" width="540"
-                style=" z-index: 16; top: 0;">
+                style="border:1px solid #d3d3d3; z-index: 16; top: 0;">
         </canvas>
 
         <canvas id="food"  class="canvas" height="390" width="540"
-                style=" z-index: 1; top: 0;">
+                style="border:1px solid #d3d3d3; z-index: 1; top: 0;">
         </canvas>
 
         <canvas id="Bonus" class="canvas"  height="390" width="540"
-                style=" z-index: 3; top: 0;">
+                style="border:1px solid #d3d3d3; z-index: 3; top: 0;">
         </canvas>
 
         <canvas id="ghost1"  class="canvas" height="390" width="540"
-                style=" z-index: 3; top: 0;">
+                style="border:1px solid #d3d3d3; z-index: 3; top: 0;">
         </canvas>
         <canvas id="ghost2"  class="canvas" height="390" width="540"
-                style=" z-index: 4; top: 0;">
+                style="border:1px solid #d3d3d3; z-index: 4; top: 0;">
         </canvas>
         <canvas id="ghost3"  class="canvas" height="390" width="540"
-                style=" z-index: 5; top: 0;">
+                style="border:1px solid #d3d3d3; z-index: 5; top: 0;">
         </canvas>
 
 
         <canvas id="life"  class="canvas" height="390" width="660"
-                style="z-index: 0; top: 0;">
+                style="border:1px dashed red; z-index: 0; top: 0;">
 
         </canvas>
 
@@ -111,6 +111,53 @@
     <div  id="Register" class="divOverlapping">
         <!--<a class="a">Sign Up</a>-->
 
+        <form id="contact" method="post" action="">
+            <!-- user Name -->
+            <div>
+                <label for="contact_u">User Name:</label>
+                <input type="text" id="contact_u" name="u"></input>
+                <span class="error">This field is required</span>
+            </div>
+
+            <!-- PASSWORD -->
+            <div>
+                <label for="contact_P">Password:</label>
+                <input type="password"   id="contact_P" name="P" maxlength="8" size="8"></input>
+                <span class="error">This field is required</span>
+            </div>
+
+
+            <!-- Name -->
+            <div>
+                <label for="contact_name">Name:</label>
+                <input type="text" id="contact_name" name="name"></input>
+                <span class="error">This field is required</span>
+            </div>
+            <!--Last Name -->
+            <div>
+                <label for="contact_lname">Last Name:</label>
+                <input type="text" id="contact_lname" name="lname"></input>
+                <span class="error">This field is required</span>
+            </div>
+
+            <!-- Email -->
+            <div>
+                <label for="contact_email">Email:</label>
+                <input type="email" id="contact_email" name="email"></input>
+                <span class="error">A valid email address is required</span>
+            </div>
+
+            <div>
+            <label for="contact_bday"> Date of birth*:</label>
+            <input type="date"id="contact_bday" name="bday" max="2017-5-6" min="1900-01-01"><br><br>
+            <span class="error">A valid date is required</span>
+            </div>
+
+            <!-- Submit Button -->
+            <div >
+                <button id="contact_submit" type="submit">Submit</button>
+            </div>
+        </form>
     </div>
 
     <div id="Login" class="divOverlapping">
