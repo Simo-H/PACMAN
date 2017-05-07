@@ -284,6 +284,16 @@ function ReGame() {
             }
         }
     }
+
+    function ClickRegister() {
+
+
+
+    }
+$("submit").on("click", function(){
+    var userName= $("name").val
+
+});
 // ---------------------------- CLASSES ----------------------------------  //
 
 // -----------------------  GAME CLASS  ----------------------------------- //
