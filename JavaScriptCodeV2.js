@@ -123,7 +123,7 @@ var isLoggedIn = false;
 audio = new Audio('Pacman Dubstep Remix.mp3');
 var audioWin = new Audio('D.J. Khaled - All I do is Win (short version chorus).mp3');
 var audioLose = new Audio('beck-loser_cutted.mp3');
-
+var audioYouCanDoBetter = new Audio('DUBB  You Can Do Better Official Music Video_cutted.mp3');
 
 
 // --------------------------- MAIN ---------------------------------------//
@@ -213,6 +213,8 @@ function ShowSection(id) {
     audioWin.currentTime = 0;
     audioLose.pause();
     audioLose.currentTime = 0;
+    audioYouCanDoBetter.pause();
+    audioYouCanDoBetter.currentTime = 0;
     clearInterval(interval);
     if(isLoggedIn && id=="Login")
     {
@@ -301,15 +303,7 @@ function ClickLogin() {
     if (document.getElementById("name").value!="" && document.getElementById("password").value!="") {
         var usernameLogin = document.getElementById("name").value;
         var passwordLogin = document.getElementById("password").value;
-        if (usernameLogin != "test2017" && passwordLogin != "test2017" && usernameLogin != "a" && passwordLogin != "a") {
-            var index = usernameArray.indexOf(usernameLogin);
-            if (passwordArray[index] == passwordLogin) {
-                document.getElementById("Welcome name").textContent = "Welcome " + usernameLogin;
-                ShowSection('choice');
-            }
-        }
-        else
-        {
+        if ((usernameLogin == "test2017" && passwordLogin == "test2017" )|| (usernameLogin == "a" && passwordLogin == "a")) {
             if(!isLoggedIn)
             {
                 document.getElementById("Welcome name").textContent = "Welcome " + usernameLogin;
@@ -319,15 +313,27 @@ function ClickLogin() {
                 $('#WelcomeLoginButton').text("Play");
                 $('#LogOut').css("visibility", "visible");
             }
+        }
+        else
+        {
+            var index = usernameArray.indexOf(usernameLogin);
+            if (index != -1 && passwordArray[index] == passwordLogin) {
+                document.getElementById("Welcome name").textContent = "Welcome " + usernameLogin;
+                ShowSection('choice');
+                isLoggedIn = true;
+                $('#welcomeMenuText').text("Play |");
+                $('#WelcomeLoginButton').text("Play");
+                $('#LogOut').css("visibility", "visible");
+            }
             else
             {
-                ShowSection('choice');
+                alert("Wrong password or username, please try again..")
             }
         }
     }
     else
     {
-
+        alert("Please enter username and password..");
 
     }
 }
@@ -394,6 +400,7 @@ function ReGame() {
             {
                 $("#point2").text("Score : " + game.Score);
                 ShowSection("YouCanDoBetter");
+                audioYouCanDoBetter.play();
                 break;
             }
             case "lose":

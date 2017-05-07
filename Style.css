@@ -15,21 +15,11 @@ html, body {
     left:0;
     right:0;
 }
-#login {
-    display: inline-block;
-    padding: 15px 25px;
-    font-size: 24px;
-    cursor: pointer;
-    border: 4px solid black;
-    text-align: center;
-    text-decoration: none;
-    outline: none;
-    color: black;
-    background-color: #ff6600;
-    border-radius: 15px;
+#Login {
 
-    box-shadow: 0 0.5vh black;
-    position: absolute;
+    background-image: url(2675063.jpg);
+    background-size: 100% 100%;
+
 }
 header
 {
@@ -496,7 +486,7 @@ form
 }
 .registerInput
 {
-    width: 100%;
+    width: 95%;
     clear: both;
 }
 textarea{
@@ -524,5 +514,6 @@ input.valid, textarea.valid{
 #Register
 {
     background-image: url(9622.jpg);
+    background-size: 100% 100%;
 
 }
