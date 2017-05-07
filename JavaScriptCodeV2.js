@@ -106,7 +106,7 @@ $(document).ready(function () {
             password=password.val();
             passwordArray.push(password);
             ShowSection("Welcome");
-            $('#contact_u').val(" ");
+            $('#contact_u').val("");
             $('#contact_P').val("");
             $('#contact_name').val('');
             $('#contact_lname').val('');
@@ -339,7 +339,7 @@ function ClickLogin() {
             var place;
             var bool=false;
             for(var i=0;i< usernameArray.length && !bool ;i++){
-                if (passwordArray[i]==passwordLogin){bool=true; place=i;}
+                if (usernameArray[i]==usernameLogin){bool=true; place=i;}
             }
            if ( passwordArray[place] == passwordLogin) {
                 document.getElementById("Welcomename").textContent =  usernameLogin;
@@ -396,8 +396,6 @@ function ReGame() {
 
     function clickLogout()
     {
-
-        passwordArray.push("aaaaa");
         isLoggedIn = false;
         $('#welcomeMenuText').text("Login |");
         $('#WelcomeLoginButton').text("Login");
@@ -406,7 +404,7 @@ function ReGame() {
     }
     function ToMenu()
     {
-        passwordArray.push("aaaaaaa");
+
         ShowSection("Welcome");
 
     }
