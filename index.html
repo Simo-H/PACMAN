@@ -113,43 +113,43 @@
 
         <form  id="contact" method="post" action="mailto:"+contact_email.mail +"?subjet"='Mail From site'>
             <!-- user Name -->
-            <div style="align-items: left" >
-                <label style="text-align: left; width: auto;margin-left: 0"for="contact_u">User Name:</label>
-                <input style="text-align: left" type="text" id="contact_u" name="u"></input>
+            <div style="margin-bottom: 1vh" >
+                <label style="font-size: larger; text-align: left; width: auto;margin-left: 0"for="contact_u">User Name:</label>
+                <input class="registerInput" style="text-align: left" type="text" id="contact_u" name="u"></input>
                 <span class="error">This field is required</span>
             </div>
 
             <!-- PASSWORD -->
-            <div>
-                <label style="text-align: left;width: auto; margin-left: 0" for="contact_P">Password:</label>
-                <input style="text-align: left" type="password"   id="contact_P" name="P" maxlength="8" size="20"></input>
+            <div style="margin-bottom: 1vh">
+                <label style="font-size: larger; text-align: left;width: auto; margin-left: 0" for="contact_P">Password:</label>
+                <input class="registerInput" style="text-align: left" type="password"   id="contact_P" name="P" maxlength="8" size="20"></input>
                 <span class="error">This field is required</span>
             </div>
 
 
             <!-- Name -->
-            <div>
-                <label style="text-align: left;width: auto" for="contact_name">Name:</label>
+            <div style="margin-bottom: 1vh">
+                <label style="font-size: larger; text-align: left;width: auto" for="contact_name">Name:</label>
                 <input class="registerInput" style="text-align: left" type="text" id="contact_name" name="name"></input>
                 <span class="error">This field is required</span>
             </div>
             <!--Last Name -->
-            <div style="margin-left: 0">
-                <label style="text-align: left;width: auto" for="contact_lname">Last Name:</label>
-                <input style="text-align: left" type="text" id="contact_lname" name="lname"></input>
+            <div style="margin-bottom: 1vh">
+                <label style="font-size: larger; text-align: left;width: auto" for="contact_lname">Last Name:</label>
+                <input class="registerInput" style="text-align: left" type="text" id="contact_lname" name="lname"></input>
                 <span class="error">This field is required</span>
             </div>
 
             <!-- Email -->
-            <div style="">
-                <label  style="text-align: left;width: auto" for="contact_email">Email:</label>
-                <input style="text-align: left" type="email" id="contact_email" name="email"></input>
+            <div style="margin-bottom: 1vh">
+                <label  style="font-size: larger; text-align: left;width: auto" for="contact_email">Email:</label>
+                <input class="registerInput" style="text-align: left" type="email" id="contact_email" name="email"></input>
                 <span class="error">A valid email address is required</span>
             </div>
 
-            <div>
-            <label style="text-align: left;width: auto" for="contact_bday"> Date of birth*:</label>
-            <input style="text-align: left"  type="date"id="contact_bday" name="bday" max="2017-5-6" min="1900-01-01"><br><br>
+            <div style="margin-bottom: 1vh">
+            <label style="font-size: larger; text-align: left;width: auto" for="contact_bday"> Date of birth*:</label>
+            <input class="registerInput" style="text-align: left"  type="date"id="contact_bday" name="bday" max="2017-5-6" min="1900-01-01"><br><br>
             <span class="error">A valid date is required</span>
             </div>
 
