@@ -471,8 +471,28 @@ form
 #contact_submit{
     padding-left: 100px;
 }
-#contact div{
-    margin-top: 1em;
+#contact {
+    width-min:20vw ;
+    position: absolute;
+    z-index: 1;
+    margin-top: 0;
+    top:0vh;
+    border-radius: 25px;
+    display: inline-block;
+    padding: 2vh 0.1vw;
+    font-size: 0.75vw;
+    border: 4px solid black;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: black;
+    background-color: #ff6600;
+    border-radius: 15px;
+    margin: 1vh 37vw 5vh 37vw;
+    box-shadow: 0 0.5vh black;
+    height: auto;
+    width: auto;
+
 }
 textarea{
     vertical-align: top;
@@ -495,4 +515,9 @@ input.invalid, textarea.invalid{
 
 input.valid, textarea.valid{
     border: 2px solid green;
+}
+#Register
+{
+    background-image: url(9622.jpg);
+
 }

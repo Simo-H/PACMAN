@@ -121,27 +121,27 @@ function main(Ghosts,Balls,time) {
     $("#lblTime").text(time);
 
     game.INIT();
-   /* ShowSection("rsg");
+    ShowSection("rsg");
 
     var canvas = document.getElementById("rsg");
     var ctx = canvas.getContext("2d");
     //write message
-    ctx.textAlign="center";
-    ctx.font = "50px monospace";
-    ctx.vertAlign="top";
-    ctx.fillStyle="white";
-
-    ctx.fillText("Redy", canvas.width/2, canvas.height/2);
-   // sleep(1000);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    ctx.fillText("Steady", canvas.width/2, canvas.height/2);
-   // sleep(1000);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    ctx.fillText("Go..", canvas.width/2, canvas.height/2);
-    sleep(1000);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+   //  ctx.textAlign="center";
+   //  ctx.font = "50px monospace";
+   //  ctx.vertAlign="top";
+   //  ctx.fillStyle="white";
+   //
+   //  ctx.fillText("Redy", canvas.width/2, canvas.height/2);
+   // // sleep(1000);
+   //  ctx.clearRect(0, 0, canvas.width, canvas.height);
+   //
+   //  ctx.fillText("Steady", canvas.width/2, canvas.height/2);
+   // // sleep(1000);
+   //  ctx.clearRect(0, 0, canvas.width, canvas.height);
+   //
+   //  ctx.fillText("Go..", canvas.width/2, canvas.height/2);
+   //  sleep(1000);
+   //  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     ShowSection("Game");
 
@@ -157,7 +157,7 @@ function main(Ghosts,Balls,time) {
     addEventListener("keyup", function (e) {
         keysDown[e.keyCode] = false;
     }, false);
-    /* newPlaceBonus();*/
+    //newPlaceBonus();
     interval = setInterval(function () {
         Update();
     }, 50);
@@ -356,7 +356,7 @@ function ReGame() {
     function gameOver(reason)
     {
         clearInterval(interval);
-        switch ("win")
+        switch (reason)
         {
             case "win":
             {
