@@ -15,12 +15,21 @@ html, body {
     left:0;
     right:0;
 }
-.login {
-    position:fixed;
-    top:0;
-    bottom:0;
-    left:0;
-    right:0;
+#login {
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 24px;
+    cursor: pointer;
+    border: 4px solid black;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: black;
+    background-color: #ff6600;
+    border-radius: 15px;
+
+    box-shadow: 0 0.5vh black;
+    position: absolute;
 }
 header
 {
@@ -40,7 +49,6 @@ header
 
 .canvas
 {
-    border: dotted red 5px;
     position: absolute;
     top:150px;
     left:0;
@@ -86,14 +94,15 @@ footer
 }
 .divOverlapping
 {
-
     position: absolute;
     top:15vh;
     left:0;
     height:75vh;
     width: 100%;
+    margin: 0;
+    padding: 0;
     align-items: center;
-    background-color: lightblue;
+    background-color: black;
 }
 .divMessages
 {
@@ -144,10 +153,52 @@ footer
     left: 0;
     right: 0;
 }
-
+.Messages
+{
+    position: absolute;
+    z-index: 1;
+    margin: 0 auto;
+    top:10vh;
+    border-radius: 25px;
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 24px;
+    border: 4px solid black;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: black;
+    background-color: #ff6600;
+    border-radius: 15px;
+    margin: 10vh 37vw 5vh 37vw;
+    box-shadow: 0 0.5vh black;
+    height: auto;
+    width: auto;
+}
+#scoreAndTime
+{
+    position: absolute;
+    z-index: 1;
+    margin: 0 auto;
+    top:10vh;
+    border-radius: 25px;
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 24px;
+    border: 4px solid black;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: black;
+    background-color: #ff6600;
+    border-radius: 15px;
+    margin-left: 10vw;
+    box-shadow: 0 0.5vh black;
+    height: auto;
+    width: auto;
+}
 .fontfooter
 {
-    font-family: Arial;
     font-size: 100%;
     color: white;
     text-align: center;
@@ -180,50 +231,53 @@ footer
 }
 
 .form {
-
-    position: relative;
+    min-height: 20vh;
+    min-width: 20vw;
+    position: absolute;
     z-index: 1;
-    background: #FFFFFF;
-    max-width: 360px;
-    margin: 0 auto 100px;
-    padding: 45px;
-    text-align: center;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-    background-color: lightgrey;
-    top:100px;
-    padding-left: 0;
-    padding-right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: auto;
-    margin-top: auto;
+    margin: 0 auto;
+    top:10vh;
     border-radius: 25px;
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 24px;
+    border: 4px solid black;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: black;
+    background-color: #ff6600;
+    border-radius: 15px;
+    margin: 10vh 37vw 5vh 37vw;
+    box-shadow: 0 0.5vh black;
+    height: auto;
+    width: auto;
 
 }
 .formChoice {
-
-    position: relative;
+    width-min:20vw ;
+    position: absolute;
     z-index: 1;
-    background: #FFFFFF;
-    max-width: 360px;
-    margin: 0 auto 100px;
-    padding: 45px;
-    text-align: center;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-    background-color: lightgrey;
-    top: 100px;
+    margin-top: 0;
+    top:0vh;
     border-radius: 25px;
-}
-
-.fontchice
-{
-    font-family: Arial;
-    font-size: 90%;
-    color: black;
+    display: inline-block;
+    padding: 2vh 0.1vw;
+    font-size: 0.75vw;
+    border: 4px solid black;
     text-align: center;
-    font-weight: 600;
-
+    text-decoration: none;
+    outline: none;
+    color: black;
+    background-color: #ff6600;
+    border-radius: 15px;
+    margin: 1vh 37vw 5vh 37vw;
+    box-shadow: 0 0.5vh black;
+    height: auto;
+    width: auto;
 }
+
+
 .divOverlappingWelcome{
     position: absolute;
     top:15vh;
@@ -232,10 +286,71 @@ footer
     width: 100%;
     align-items: center;
     background-image: url(vangoch.jpg);
-    background-size: 100%;
+    background-size: 100% 100%;
 
 }
+.smallButton
+{
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 24px;
+    cursor: pointer;
+    border: 4px solid black;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: black;
+    background-color: yellow;
+    border-radius: 15px;
+    margin-right: 4vw;
+    margin-left: 4vw;
+    margin-top: 3.5vh;
+    box-shadow: 0 0.5vh black;
+    position: relative;
+}
+.twoSmallButtonsMessage
+{
 
+    display: inline-block;
+    padding: 0.5vh 0.5vw;
+    font-size: 1.5vw;
+    cursor: pointer;
+    border: 4px solid black;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: black;
+    background-color: yellow;
+    border-radius: 15px;
+    margin-right: 0.3vw;
+    margin-left: 0.3vw;
+    margin-top: 3vh;
+    box-shadow: 0 0.2vh black;
+    position: relative;
+}
+.scoreMessage
+{
+    margin-bottom: 0;
+}
+.twoSmallButtons
+{
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 1.5vw;
+    cursor: pointer;
+    border: 4px solid black;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: black;
+    background-color: yellow;
+    border-radius: 15px;
+    margin-right: 0.5vw;
+    margin-left: 0.5vw;
+    margin-top: 3.5vh;
+    box-shadow: 0 0.2vh black;
+    position: relative;
+}
 .button {
     display: inline-block;
     padding: 15px 25px;
@@ -251,8 +366,6 @@ footer
 
     box-shadow: 0 0.5vh black;
     position: absolute;
-
-
 }
 
 .button:hover {background-color: yellow}
@@ -261,4 +374,62 @@ footer
     background-color: yellow;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: absolute; /* Stay in place */
+    z-index: 100; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+.modalHeader {
+    margin-top: 0;
+    background-color: red;
+    color: black;
+    font-size: large;
+}
+.modal-content {
+    background-color: #ff6600;
+    margin: 15vw auto; /* 15% from the top and centered */
+    border: 1px solid #888;
+    width: 40vw; /* Could be more or less, depending on screen size */
+    height: 30vh;
+}
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    margin-right: 0.5vw;
+    margin-top: 0;
+    padding: 0;
+}
+.modalBody {
+    padding: 2px 16px;
+    color: white;
+}
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+option {
+    font-size: small;
+}
+#input50-90::-webkit-input-placeholder {
+    font-size: small;
+
+    line-height: 3;
+}
+
+select
+{
+    display:inline-block; vertical-align:top; overflow:hidden;
 }

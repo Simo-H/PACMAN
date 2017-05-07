@@ -23,9 +23,10 @@
     <div class="divFillParent" id="menu">
         <p align="center">
          <a class="fontmenu" onclick="ShowSection('Welcome')">Welcome |</a>
-        <a class="fontmenu" onclick="ShowSection('Register')"> Register | </a>
-        <a class="fontmenu" onclick="ShowSection('Login')"> Login | </a>
-        <a class="fontmenu" onclick="ShowSection('About')">About</a>
+        <a id="registerLink" class="fontmenu" onclick="ShowSection('Register')"> Register | </a>
+        <a id="welcomeMenuText" class="fontmenu" onclick="ShowSection('Login')"> Login | </a>
+        <a class="fontmenu" onclick="openModal()">About</a>
+            <a id="LogOut" style="visibility: hidden;" class="fontmenu" onclick="clickLogout()"> | LogOut</a>
         </p>
     </div>
 </nav>
@@ -37,10 +38,22 @@
 
             <button class="button" style="left:30vw; top: 12vw; width:15vw;height: 7vw;font-size: 2.1vw;" onclick="gotoRegister()">Register</button>
 
-             <button class="button" style="left: 55vw; top: 12vw; width:15vw;height: 7vw; font-size: 2.1vw;" onclick="gotoLogin()">Login</button>
+             <button id="WelcomeLoginButton" class="button" style="left: 55vw; top: 12vw; width:15vw;height: 7vw; font-size: 2.1vw;" onclick="gotoLogin()">Login</button>
 
     </div>
+    <div id="modalDiv" class="modal" >
+        <div class="modal-content">
+             <div class="modalHeader" style="padding: 1px">
+                 <span class="close" onclick="closeModal()">&times;</span>
+                 <h2 align="center">About</h2>
+             </div>
+            <div class="modalBody">
+                <p>some text</p>
+            </div>
 
+
+        </div>
+    </div>
     <div id="Game" class="divOverlapping">
 
         <div>
@@ -51,50 +64,47 @@
 
 
         <canvas  id="mCanvas"  class="canvas"   height="390" width="540"
-                style="border:1px solid #d3d3d3; z-index: 0; top: 0;">
+                style="border:5px solid white; z-index: 0; top: 0;">
         </canvas>
         <canvas id="m2Canvas" class="canvas" height="390" width="540"
-                style="border:1px solid #d3d3d3; z-index: 10; top: 0;">
+                style=" z-index: 10; top: 0;">
         </canvas>
         <canvas id="rsg" style="background-color: transparent" class="canvas" height="390" width="540"
-                style="border:1px solid #d3d3d3; z-index: 16; top: 0;">
+                style=" z-index: 16; top: 0;">
         </canvas>
 
         <canvas id="food"  class="canvas" height="390" width="540"
-                style="border:1px solid #d3d3d3; z-index: 1; top: 0;">
+                style=" z-index: 1; top: 0;">
         </canvas>
 
         <canvas id="Bonus" class="canvas"  height="390" width="540"
-                style="border:1px solid #d3d3d3; z-index: 3; top: 0;">
+                style=" z-index: 3; top: 0;">
         </canvas>
 
         <canvas id="ghost1"  class="canvas" height="390" width="540"
-                style="border:1px solid #d3d3d3; z-index: 3; top: 0;">
+                style=" z-index: 3; top: 0;">
         </canvas>
         <canvas id="ghost2"  class="canvas" height="390" width="540"
-                style="border:1px solid #d3d3d3; z-index: 4; top: 0;">
+                style=" z-index: 4; top: 0;">
         </canvas>
         <canvas id="ghost3"  class="canvas" height="390" width="540"
-                style="border:1px solid #d3d3d3; z-index: 5; top: 0;">
+                style=" z-index: 5; top: 0;">
         </canvas>
 
 
         <canvas id="life"  class="canvas" height="390" width="660"
-                style="border:1px dashed red; z-index: 0; top: 0;">
+                style="z-index: 0; top: 0;">
 
         </canvas>
 
 
 
 
-        <div>
-            SCORE:
-            <input id="lblScore" type="text" />
-            <br/>
-            TIME:
-            <input id="lblTime" type="text" />
-            <br/>
-            <canvas id="canvas" height="600" width="600"></canvas>
+        <div style="padding: 0" id="scoreAndTime">
+            <p style="margin: 1vh">SCORE :</p>
+            <p  id="lblScore" style="margin: 1vh"></p>
+            <p style="margin: 1vh">Time :</p>
+            <p id="lblTime" style="margin: 1vh"></p>
         </div>
     </div>
 
@@ -104,10 +114,11 @@
     </div>
 
     <div id="Login" class="divOverlapping">
+
             <div class="form">
-               <input id="name" type="text" placeholder="username" />
-                <input id="password" type="password" placeholder="password"/>
-                <button onclick="ClickLogin()">Login</button>
+               <input id="name" type="text" style="width: 19vw;height: 3vh; margin-bottom: 1vh;font-size: large" placeholder="username" />
+                <input id="password" type="password" style="width: 19vw;height: 3vh;font-size: large" placeholder="password"/>
+                <button class="smallButton" onclick="ClickLogin()">Login</button>
 
             </div>
     </div>
@@ -115,29 +126,29 @@
     <div id="choice" class="divOverlapping">
         <div class="formChoice">
 
-            <h1 class="fontchice" style="font-weight: 800;">Please select your preferences:</br></h1>
+            <h1 style="font-size:1.7vh;">Please select your preferences:</br></h1>
 
-               <h2 class="fontchice">Number of ghosts:</h2>
+               <h2>Number of ghosts:</h2>
                 <form>
-                    <select  id="Numberofghosts"  size="3">
+                    <select id="Numberofghosts"  size="3">
                         <option value=1>1</option>
                         <option  value=2>2</option>
                         <option  value=3>3</option>
                     </select>
                 </form>
-            <h3 class="fontchice">Preferred playing time:</h3>
+            <h2 >Preferred playing time:</h2>
                 <form>
 
-                    <select id="timeOfGame"  size="3">
+                    <select id="timeOfGame" style="padding-left: 0.5vw" size="3">
                         <option  value=60> 60 seconds (high level)</option>
-                        <option  value=90>90 seconds (medium level)</option>
-                        <option  value=120>120 Seconds (Beginners)</option>
+                        <option  value=90> 90 seconds (medium level)</option>
+                        <option  value=120> 120 Seconds (Beginners)</option>
                     </select>
                 </form>
-            <h4 class="fontchice">Number of balls in the game:</h4>
-                <input id="50-90" type="number" placeholder="number between 50 to 90"/></br>
-                <button onclick="StartGame()">Start Play</button>
-                <button onclick="ToMenu()">Exit</button>
+            <h2>Number of balls in the game:</h2>
+                <input id="50-90" type="number" style="width: 14vw; font-size: small" placeholder="number between 50 to 90"/></br>
+                <button class="twoSmallButtons" onclick="StartGame()">Start Game</button>
+                <button class="twoSmallButtons" onclick="ToMenu()">Exit</button>
         </div>
     </div>
 
@@ -149,33 +160,32 @@
 
 
     <div id="YouLost" class="divMessages">
-        <div class="formChoice">
+        <div class="Messages">
 
-            <h1 class="fontchice" style="font-weight: 800;">You Lost</br></h1>
-
-            <button onclick="StartGame()">Play agin</button>
-            <button onclick="ToMenu()">Exit</button>
+            <h1 class="fontchice" style="font-size: x-large;">You Lost..</h1>
+            <h1 class="scoreMessage" id="point1" type="text"></h1>
+            <button class="twoSmallButtonsMessage" onclick="StartGame()">Play again</button>
+            <button class="twoSmallButtonsMessage" onclick="ToMenu()">Exit</button>
         </div>
     </div>
 
-    <div id="You can do better" class="divMessages">
-        <div class="formChoice">
+    <div id="YouCanDoBetter" class="divMessages">
+        <div class="Messages">
 
-            <h1 class="fontchice" style="font-weight: 800;">You can do better..</br></h1>
-            <text class="fontchice" id="point" type="text" />
-
-            <button onclick="StartGame()">Play agin</button>
-            <button onclick="ToMenu()">Exit</button>
+            <h1 class="fontchice" style="font-size: large;">You can do better..</h1>
+            <h1 class="scoreMessage" id="point2" type="text"></h1>
+            <button class="twoSmallButtonsMessage" onclick="StartGame()">Play again</button>
+            <button class="twoSmallButtonsMessage" onclick="ToMenu()">Exit</button>
         </div>
     </div>
 
-    <div id="We have a Winner" class="divMessages" >
-        <div class="formChoice">
+    <div id="WeHaveAWinner" class="divMessages" >
+        <div class="Messages">
 
-            <h1 class="fontchice" style="font-weight: 800;">We have a Winner!!!</br></h1>
-
-            <button onclick="StartGame()">Play agin</button>
-            <button onclick="ToMenu()">Exit</button>
+            <h1 class="fontchice" style="font-size: large">We have a Winner!!!</h1>
+            <h1 class="scoreMessage" id="point3"></h1>
+            <button class="twoSmallButtonsMessage" onclick="StartGame()">Play again</button>
+            <button class="twoSmallButtonsMessage" onclick="ToMenu()">Exit</button>
         </div>
     </div>
 

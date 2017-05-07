@@ -15,8 +15,16 @@ $(document).ready(function () {
 
     height = (document.getElementById("mCanvas").height) / 13;
     width = (document.getElementById("mCanvas").width) / 18;
+
     pageLoaded();
 });
+window.onclick = function (event) {
+    if(event.target ==  $('#modalDiv')[0])
+    {
+        $('#modalDiv').css("display","none");
+    }
+
+}
 var usernameArray=new Array();
 var passwordArray=new Array();
 var game;
@@ -26,14 +34,18 @@ var width;
 var startTime;
 var audio;
 var interval;
+var isLoggedIn = false;
 audio = new Audio('Pacman Dubstep Remix.mp3');
 var audioWin = new Audio('D.J. Khaled - All I do is Win (short version chorus).mp3');
+var audioLose = new Audio('beck-loser_cutted.mp3');
+
 
 // --------------------------- MAIN ---------------------------------------//
 
 function main(Ghosts,Balls,time) {
     game = new GAME(Ghosts,Balls,parseInt(time));
-    $("#lblTime").val(time);
+    $("#lblTime").text(time);
+
     game.INIT();
    /* ShowSection("rsg");
 
@@ -85,7 +97,7 @@ function pageLoaded() {
 
 function ShowSection(id) {
     //hide all
-    if (id!="rsg" && id!="YouLost" && id!="You can do better"&& id!="We have a Winner") {
+    if (id!="rsg" && id!="YouLost" && id!="YouCanDoBetter"&& id!="WeHaveAWinner") {
         var Welcome = document.getElementById('Welcome');
         Welcome.style.visibility = "hidden";
         var Register = document.getElementById('Register');
@@ -100,9 +112,9 @@ function ShowSection(id) {
         About.style.visibility = "hidden";
         var About = document.getElementById('rsg');
         About.style.visibility = "hidden";
-        var About = document.getElementById('We have a Winner');
+        var About = document.getElementById('WeHaveAWinner');
         About.style.visibility = "hidden";
-        var About = document.getElementById('You can do better');
+        var About = document.getElementById('YouCanDoBetter');
         About.style.visibility = "hidden";
         var About = document.getElementById('YouLost');
         About.style.visibility = "hidden";
@@ -110,12 +122,23 @@ function ShowSection(id) {
 
     //Show selected
     audio.pause();
+    audio.currentTime = 0;
     audioWin.pause();
+    audioWin.currentTime = 0;
+    audioLose.pause();
+    audioLose.currentTime = 0;
     clearInterval(interval);
+    if(isLoggedIn && id=="Login")
+    {
+        var selected = document.getElementById("choice");
+        selected.style.visibility = "visible";
+    }
+    else
+    {
+        var selected = document.getElementById(id);
+        selected.style.visibility = "visible";
 
-    var selected = document.getElementById(id);
-
-    selected.style.visibility = "visible";
+    }
 }
 
 function GetKeyPressed() {
@@ -153,7 +176,7 @@ function Update() {
             keysDown = {};
             break;
     }
-    if($("#lblTime").val() == 0)
+    if($("#lblTime").text() == 0)
     {
         //STAV END GAME
         window.clearInterval(interval);
@@ -180,8 +203,8 @@ function Update() {
     game.DrawLOGICmovingBonusBoard();
     game.CheckIfPacmanIsEaten();
     game.CheckifPacmanEatenBonus();
-    $("#lblScore").val(game.Score);
-    $("#lblTime").val(Math.floor(game.Time - (new Date()-startTime)/1000));
+    $("#lblScore").text(game.Score);
+    $("#lblTime").text(Math.floor(game.Time - (new Date()-startTime)/1000));
     game.DrawLOGICpointsBoard();
     game.DrawHearts();
 }
@@ -189,24 +212,36 @@ function Update() {
 // document.getElementById("mainlogin").onclick = function() {ClickLogin()};
 
 function ClickLogin() {
+        if (document.getElementById("name").value!="" && document.getElementById("password").value!="") {
+            var usernameLogin = document.getElementById("name").value;
+            var passwordLogin = document.getElementById("password").value;
 
-    if (document.getElementById("name").value!="" && document.getElementById("password").value!="") {
-        var usernameLogin = document.getElementById("name").value;
-        var passwordLogin = document.getElementById("password").value;
-
-        if (usernameLogin == "test2017" && passwordLogin == "test2017" || usernameLogin == "a" && passwordLogin == "a") {
-            document.getElementById("Welcome name").textContent = "Welcome " + usernameLogin;
-            ShowSection('choice');
-
+            if (usernameLogin == "test2017" && passwordLogin == "test2017" || usernameLogin == "a" && passwordLogin == "a") {
+                document.getElementById("Welcome name").textContent = "Welcome " + usernameLogin;
+                ShowSection('choice');
+                isLoggedIn = true;
+                $('#welcomeMenuText').text("Play |");
+                $('#WelcomeLoginButton').text("Play");
+                $('#LogOut').css("visibility", "visible");
+            }
+            else  {
+                alert("Invalid username or password");
+            }
         }
-        else  {
+        else{
             alert("Invalid username or password");
-        }
-    }
-    else{
-        alert("Invalid username or password");
 
-    }
+        }
+
+
+}
+
+function openModal () {
+    $('#modalDiv').css("display","block");
+}
+function closeModal() {
+    $('#modalDiv').css("display","none");
+    
 }
 
 function StartGame()
@@ -228,6 +263,14 @@ function StartGame()
     }
 }
 
+    function clickLogout()
+    {
+        isLoggedIn = false;
+        $('#welcomeMenuText').text("Login |");
+        $('#WelcomeLoginButton').text("Login");
+        $('#LogOut').css("visibility", "hidden");
+        ShowSection("Welcome");
+    }
     function ToMenu()
     {
         ShowSection("Welcome");
@@ -236,23 +279,26 @@ function StartGame()
     function gameOver(reason)
     {
         clearInterval(interval);
-        switch (reason)
+        switch ("win")
         {
             case "win":
             {
-                ShowSection("We have a Winner");
+                $("#point3").text("Score : " + game.Score);
+                ShowSection("WeHaveAWinner");
                 audioWin.play();
                 break;
             }
             case "better":
             {
-                $("#point").text(game.Score);
-                ShowSection("You can do better");
+                $("#point2").text("Score : " + game.Score);
+                ShowSection("YouCanDoBetter");
                 break;
             }
             case "lose":
             {
+                $("#point1").text("Score : " + game.Score);
                 ShowSection("YouLost");
+                audioLose.play();
                 break;
             }
 
@@ -416,26 +462,27 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
                             ball5points--;
                             counter--;
                         }
-                        else if (ball15points > 0 && this.LOGICpacmanBoard[j][i] != 2 && this.LOGICstaticBoard[j][i] == 0) {
-                            this.LOGICpointsBoard[j][i] = 7;
-                            ball15points--;
-                            counter--;
-                        }
-                        else if (bal25points > 0 && this.LOGICpacmanBoard[j][i] != 2 && this.LOGICstaticBoard[j][i] == 0) {
-                            this.LOGICpointsBoard[j][i] = 8;
-                            bal25points--;
-                            counter--;
-                        }
                         else if(specials == 2 && this.LOGICpacmanBoard[j][i] != 2 && this.LOGICstaticBoard[j][i] == 0)
                         {
                             this.LOGICpointsBoard[j][i] = 11;
                             specials--;
                             counter--;
                         }
+
+                        else if (ball15points > 0 && this.LOGICpacmanBoard[j][i] != 2 && this.LOGICstaticBoard[j][i] == 0) {
+                            this.LOGICpointsBoard[j][i] = 7;
+                            ball15points--;
+                            counter--;
+                        }
                         else if(specials == 1 && this.LOGICpacmanBoard[j][i] != 2 && this.LOGICstaticBoard[j][i] == 0 )
                         {
                             this.LOGICpointsBoard[j][i] = 22;
                             specials--;
+                            counter--;
+                        }
+                        else if (bal25points > 0 && this.LOGICpacmanBoard[j][i] != 2 && this.LOGICstaticBoard[j][i] == 0) {
+                            this.LOGICpointsBoard[j][i] = 8;
+                            bal25points--;
                             counter--;
                         }
                     }
@@ -493,8 +540,8 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
         var y;
         var bool = false;
         while (!bool) {
-            x = Math.floor((Math.random() * 17));
-            y = Math.floor((Math.random() * 12));
+            x = 4 + Math.floor((Math.random() * 10));
+            y = 3 + Math.floor((Math.random() * 7));
             if (this.LOGICstaticBoard[x][y] != 1 && this.LOGICpacmanBoard[x][y] == 0) {
                 bool = true
             }
@@ -540,14 +587,14 @@ function GAME(numberOfGhosts, numberOfPointsBalls, TimerOfGame) {
 
                     ctx.beginPath();
                     ctx.rect(ctx.x, ctx.y, canvas.width / 18, canvas.height / 13, 0);
-                    ctx.fillStyle = "blue";
+                    ctx.fillStyle = "black";
                     ctx.fill();
 
                 }
                 else if (this.LOGICstaticBoard[i][j] == 1) {
                     ctx.beginPath();
                     ctx.rect(ctx.x, ctx.y, canvas.width / 18, canvas.height / 13, 0);
-                    ctx.fillStyle = "red";
+                    ctx.fillStyle = "blue";
                     ctx.fill();
                 }
             }
