@@ -12,7 +12,8 @@ $(document).ready(function () {
     // ctx.canvas.height = windowHeight/2;
     //$(".canvas").style.height = windowHeight/2;
     //$(".canvas").style.width = windowWidth/2;
-
+   usernameArray=new Array();
+    passwordArray=new Array();
     height = (document.getElementById("mCanvas").height) / 13;
     width = (document.getElementById("mCanvas").width) / 18;
     pageLoaded();
@@ -24,17 +25,19 @@ $(document).ready(function () {
         var re = /[a-zA-Z]/;
         var letters=re.test(input.val());
         var numbers=reo.test(input.val());
-       // var lenght=$('#contact_P').length;
-        if(letters&& numbers )
+        if(letters&& numbers && p.length==8 )
         {input.removeClass("invalid").addClass("valid");}
         else{input.removeClass("valid").addClass("invalid");}
     });
 
 
+
+
     $('#contact_u').on('input', function() {
         var input=$(this);
         var is_name=input.val();
-        if(is_name){input.removeClass("invalid").addClass("valid");}
+        var bool =jQuery.inArray( is_name, usernameArray );
+        if(is_name&& bool=="-1" ){input.removeClass("invalid").addClass("valid");}
         else{input.removeClass("valid").addClass("invalid");}
     });
     // Name can't be blank
@@ -83,15 +86,20 @@ $(document).ready(function () {
         if (!error_free){
             event.preventDefault();
         }
-        else{
-            alert('No errors: Form will be submitted');
-
+        else {
+            var name= $('#contact_u');
+            name=name.val();
+            usernameArray.push(name);
+            var password= $('#contact_P');
+            password=password.val();
+            passwordArray.push(password);
+            ShowSection("Welcome");
         }
     });
 
 });
-var usernameArray=new Array();
-var passwordArray=new Array();
+var usernameArray;
+var passwordArray;
 var game;
 var bfs;
 var height;
@@ -267,8 +275,20 @@ function ClickLogin() {
     if (document.getElementById("name").value!="" && document.getElementById("password").value!="") {
         var usernameLogin = document.getElementById("name").value;
         var passwordLogin = document.getElementById("password").value;
+        if (usernameLogin != "test2017" && passwordLogin != "test2017" || usernameLogin != "a" && passwordLogin != "a")
+        {
+            var index=usernameArray.indexOf(usernameLogin);
+            if(passwordArray[index]==passwordLogin)
+            {
+                document.getElementById("Welcome name").textContent = "Welcome " + usernameLogin;
+                ShowSection('choice');
+            }
 
-        if (usernameLogin == "test2017" && passwordLogin == "test2017" || usernameLogin == "a" && passwordLogin == "a") {
+        }
+
+        else if (usernameLogin == "test2017" && passwordLogin == "test2017" || usernameLogin == "a" && passwordLogin == "a") {
+
+
             document.getElementById("Welcome name").textContent = "Welcome " + usernameLogin;
             ShowSection('choice');
 
