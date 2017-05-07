@@ -323,24 +323,33 @@ function ClickLogin() {
         if ((usernameLogin == "test2017" && passwordLogin == "test2017" )|| (usernameLogin == "a" && passwordLogin == "a")) {
             if(!isLoggedIn)
             {
-                document.getElementById("Welcome name").textContent = "Welcome " + usernameLogin;
+                document.getElementById("Welcomename").textContent =  usernameLogin;
                 ShowSection('choice');
                 isLoggedIn = true;
                 $('#welcomeMenuText').text("Play |");
                 $('#WelcomeLoginButton').text("Play");
                 $('#LogOut').css("visibility", "visible");
+                $('#name').val('');
+                $('#password').val('');
+
             }
         }
         else
         {
-            var index = usernameArray.indexOf(usernameLogin);
-            if (index != -1 && passwordArray[index] == passwordLogin) {
-                document.getElementById("Welcome name").textContent = "Welcome " + usernameLogin;
+            var place;
+            var bool=false;
+            for(var i=0;i< usernameArray.length && !bool ;i++){
+                if (passwordArray[i]==passwordLogin){bool=true; place=i;}
+            }
+           if ( passwordArray[place] == passwordLogin) {
+                document.getElementById("Welcomename").textContent =  usernameLogin;
                 ShowSection('choice');
                 isLoggedIn = true;
                 $('#welcomeMenuText').text("Play |");
                 $('#WelcomeLoginButton').text("Play");
                 $('#LogOut').css("visibility", "visible");
+                $('#name').val('');
+                $('#password').val('');
             }
             else
             {
