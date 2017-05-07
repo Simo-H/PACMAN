@@ -84,9 +84,6 @@
 
         </canvas>
 
-
-
-
         <div>
             SCORE:
             <input id="lblScore" type="text" />
@@ -99,27 +96,54 @@
     </div>
 
     <div  id="Register" class="divOverlapping">
-        <form  >
-            <fieldset>
-                <legend>Personal information:</legend>
-                <label for="name">User name*  :</label>
-                <input type="text" id="input-user" placeholder="User name"></br></br>
-                <label for="name">Password*   :</label>
-                <input type="password" id="password-input" placeholder="password"></br></br>
-                <label for="name">First name* :</label>
-                <input type="text" id="input-name" placeholder="name"></br></br>
-                <label for="name">Last name*  :</label>
-                <input type="text" id="password-Last" placeholder="Last name"></br></br>
-                <label type="email">Your e-mail*:</label>
-                <input type="email" id="input-email" placeholder="Email address"></br></br>
-                <label type="email"> Date of birth*:</label>
-                <input type="date" name="bday" max="1917-5-6" min="1900-01-01"><br><br>
-                <button id="submit" >Submit</button>
 
-            </fieldset>
+        <form id="contact" method="post" action="">
+            <!-- user Name -->
+            <div>
+                <label for="contact_u">User Name:</label>
+                <input type="text" id="contact_u" name="u"></input>
+                <span class="error">This field is required</span>
+            </div>
 
+            <!-- PASSWORD -->
+            <div>
+                <label for="contact_P">Password:</label>
+                <input type="password"   id="contact_P" name="P" maxlength="8" size="8"></input>
+                <span class="error">This field is required</span>
+            </div>
+
+
+            <!-- Name -->
+            <div>
+                <label for="contact_name">Name:</label>
+                <input type="text" id="contact_name" name="name"></input>
+                <span class="error">This field is required</span>
+            </div>
+            <!--Last Name -->
+            <div>
+                <label for="contact_lname">Last Name:</label>
+                <input type="text" id="contact_lname" name="lname"></input>
+                <span class="error">This field is required</span>
+            </div>
+
+            <!-- Email -->
+            <div>
+                <label for="contact_email">Email:</label>
+                <input type="email" id="contact_email" name="email"></input>
+                <span class="error">A valid email address is required</span>
+            </div>
+
+            <div>
+            <label for="contact_bday"> Date of birth*:</label>
+            <input type="date"id="contact_bday" name="bday" max="2017-5-6" min="1900-01-01"><br><br>
+            <span class="error">A valid date is required</span>
+            </div>
+
+            <!-- Submit Button -->
+            <div >
+                <button id="contact_submit" type="submit">Submit</button>
+            </div>
         </form>
-
     </div>
 
     <div id="Login" class="divOverlapping">

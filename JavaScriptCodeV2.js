@@ -16,6 +16,79 @@ $(document).ready(function () {
     height = (document.getElementById("mCanvas").height) / 13;
     width = (document.getElementById("mCanvas").width) / 18;
     pageLoaded();
+
+    $('#contact_P').on('input', function() {
+        var input=$(this);
+        var p=input.val();
+        var reo = /[0-9]/;
+        var re = /[a-zA-Z]/;
+        var letters=re.test(input.val());
+        var numbers=reo.test(input.val());
+       // var lenght=$('#contact_P').length;
+        if(letters&& numbers )
+        {input.removeClass("invalid").addClass("valid");}
+        else{input.removeClass("valid").addClass("invalid");}
+    });
+
+
+    $('#contact_u').on('input', function() {
+        var input=$(this);
+        var is_name=input.val();
+        if(is_name){input.removeClass("invalid").addClass("valid");}
+        else{input.removeClass("valid").addClass("invalid");}
+    });
+    // Name can't be blank
+    $('#contact_name').on('input', function() {
+        var input=$(this);
+        var is_name=input.val();
+        if(is_name){input.removeClass("invalid").addClass("valid");}
+        else{input.removeClass("valid").addClass("invalid");}
+    });
+    $('#contact_lname').on('input', function() {
+        var input=$(this);
+        var is_name=input.val();
+        if(is_name){input.removeClass("invalid").addClass("valid");}
+        else{input.removeClass("valid").addClass("invalid");}
+    });
+    $('#contact_email').on('input', function() {
+        var input=$(this);
+        var re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        var is_email=re.test(input.val());
+        if(is_email){input.removeClass("invalid").addClass("valid");}
+        else{input.removeClass("valid").addClass("invalid");}
+    });
+
+
+    $('#contact_bday').on('input', function() {
+        var input=$(this);
+        var d=input.val();
+        var bool;
+        if(d>"1900-01-01"&& d<"2017-5-6"){
+            bool=true;
+        }
+        if(bool){input.removeClass("invalid").addClass("valid");}
+        else{input.removeClass("valid").addClass("invalid");}
+    });
+
+    $("#contact_submit").click(function(event){
+        var form_data=$("#contact").serializeArray();
+        var error_free=true;
+        for (var input in form_data){
+            var element=$("#contact_"+form_data[input]['name']);
+            var valid=element.hasClass("valid");
+            var error_element=$("span", element.parent());
+            if (!valid){error_element.removeClass("error").addClass("error_show"); error_free=false;}
+            else{error_element.removeClass("error_show").addClass("error");}
+        }
+        if (!error_free){
+            event.preventDefault();
+        }
+        else{
+            alert('No errors: Form will be submitted');
+
+        }
+    });
+
 });
 var usernameArray=new Array();
 var passwordArray=new Array();
@@ -28,6 +101,7 @@ var audio;
 var interval;
 audio = new Audio('Pacman Dubstep Remix.mp3');
 var audioWin = new Audio('D.J. Khaled - All I do is Win (short version chorus).mp3');
+
 
 // --------------------------- MAIN ---------------------------------------//
 
@@ -285,15 +359,7 @@ function ReGame() {
         }
     }
 
-    function ClickRegister() {
 
-
-
-    }
-$("submit").on("click", function(){
-    var userName= $("name").val
-
-});
 // ---------------------------- CLASSES ----------------------------------  //
 
 // -----------------------  GAME CLASS  ----------------------------------- //
