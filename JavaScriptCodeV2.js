@@ -12,8 +12,8 @@ $(document).ready(function () {
     // ctx.canvas.height = windowHeight/2;
     //$(".canvas").style.height = windowHeight/2;
     //$(".canvas").style.width = windowWidth/2;
-   usernameArray=new Array();
-    passwordArray=new Array();
+    usernameArray = new Array();
+    passwordArray = new Array();
     height = (document.getElementById("mCanvas").height) / 13;
     width = (document.getElementById("mCanvas").width) / 18;
 
@@ -88,6 +88,7 @@ $(document).ready(function () {
             event.preventDefault();
         }
         else {
+            event.preventDefault();
             var name= $('#contact_u');
             name=name.val();
             usernameArray.push(name);
@@ -106,8 +107,9 @@ window.onclick = function (event) {
     }
 
 }
-var usernameArray=new Array();
-var passwordArray=new Array();
+
+
+
 var usernameArray;
 var passwordArray;
 var game;
@@ -296,38 +298,20 @@ function Update() {
 // document.getElementById("mainlogin").onclick = function() {ClickLogin()};
 
 function ClickLogin() {
-        if (document.getElementById("name").value!="" && document.getElementById("password").value!="") {
-            var usernameLogin = document.getElementById("name").value;
-            var passwordLogin = document.getElementById("password").value;
-
     if (document.getElementById("name").value!="" && document.getElementById("password").value!="") {
         var usernameLogin = document.getElementById("name").value;
         var passwordLogin = document.getElementById("password").value;
-        if (usernameLogin != "test2017" && passwordLogin != "test2017" || usernameLogin != "a" && passwordLogin != "a")
-        {
-            var index=usernameArray.indexOf(usernameLogin);
-            if(passwordArray[index]==passwordLogin)
-            {
+        if (usernameLogin != "test2017" && passwordLogin != "test2017" && usernameLogin != "a" && passwordLogin != "a") {
+            var index = usernameArray.indexOf(usernameLogin);
+            if (passwordArray[index] == passwordLogin) {
                 document.getElementById("Welcome name").textContent = "Welcome " + usernameLogin;
                 ShowSection('choice');
             }
-
         }
-
-        else if (usernameLogin == "test2017" && passwordLogin == "test2017" || usernameLogin == "a" && passwordLogin == "a") {
-
-
-            document.getElementById("Welcome name").textContent = "Welcome " + usernameLogin;
-            ShowSection('choice');
-
-        }
-        else  {
-            alert("Invalid username or password");
-        }
-    }
-    else{
-        alert("Invalid username or password");
-            if (usernameLogin == "test2017" && passwordLogin == "test2017" || usernameLogin == "a" && passwordLogin == "a") {
+        else
+        {
+            if(!isLoggedIn)
+            {
                 document.getElementById("Welcome name").textContent = "Welcome " + usernameLogin;
                 ShowSection('choice');
                 isLoggedIn = true;
@@ -335,16 +319,17 @@ function ClickLogin() {
                 $('#WelcomeLoginButton').text("Play");
                 $('#LogOut').css("visibility", "visible");
             }
-            else  {
-                alert("Invalid username or password");
+            else
+            {
+                ShowSection('choice');
             }
         }
-        else{
-            alert("Invalid username or password");
+    }
+    else
+    {
 
-        }
 
-
+    }
 }
 
 function openModal () {
@@ -379,6 +364,8 @@ function ReGame() {
 
     function clickLogout()
     {
+
+        passwordArray.push("aaaaa");
         isLoggedIn = false;
         $('#welcomeMenuText').text("Login |");
         $('#WelcomeLoginButton').text("Login");
@@ -387,6 +374,7 @@ function ReGame() {
     }
     function ToMenu()
     {
+        passwordArray.push("aaaaaaa");
         ShowSection("Welcome");
 
     }
@@ -425,6 +413,7 @@ function ReGame() {
     }
 
     function gotoRegister() {
+
         ShowSection("Register");
     }
 

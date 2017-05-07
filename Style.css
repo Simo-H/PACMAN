@@ -494,6 +494,11 @@ form
     width: auto;
 
 }
+.registerInput
+{
+    width: 100%;
+    clear: both;
+}
 textarea{
     vertical-align: top;
     height: 5em;
