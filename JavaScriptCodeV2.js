@@ -44,14 +44,25 @@ $(document).ready(function () {
     // Name can't be blank
     $('#contact_name').on('input', function() {
         var input=$(this);
-        var is_name=input.val();
-        if(is_name){input.removeClass("invalid").addClass("valid");}
+        var p=input.val();
+        var reo = /[0-9]/;
+        var re = /[a-zA-Z]/;
+        var letters=re.test(input.val());
+        var numbers=reo.test(input.val());
+        if(letters&& !numbers )
+        {input.removeClass("invalid").addClass("valid");}
         else{input.removeClass("valid").addClass("invalid");}
     });
+
     $('#contact_lname').on('input', function() {
         var input=$(this);
-        var is_name=input.val();
-        if(is_name){input.removeClass("invalid").addClass("valid");}
+        var p=input.val();
+        var reo = /[0-9]/;
+        var re = /[a-zA-Z]/;
+        var letters=re.test(input.val());
+        var numbers=reo.test(input.val());
+        if(letters&& !numbers )
+        {input.removeClass("invalid").addClass("valid");}
         else{input.removeClass("valid").addClass("invalid");}
     });
     $('#contact_email').on('input', function() {
@@ -61,7 +72,6 @@ $(document).ready(function () {
         if(is_email){input.removeClass("invalid").addClass("valid");}
         else{input.removeClass("valid").addClass("invalid");}
     });
-
 
     $('#contact_bday').on('input', function() {
         var input=$(this);
@@ -96,6 +106,13 @@ $(document).ready(function () {
             password=password.val();
             passwordArray.push(password);
             ShowSection("Welcome");
+            $('#contact_u').val(" ");
+            $('#contact_P').val("");
+            $('#contact_name').val('');
+            $('#contact_lname').val('');
+            $('#contact_email').val('');
+            $('#contact_bday').val('');
+
         }
     });
 
@@ -430,6 +447,7 @@ function ReGame() {
             }
         }
     }
+
 
 
 // ---------------------------- CLASSES ----------------------------------  //
