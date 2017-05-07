@@ -33,7 +33,7 @@
 <section>
 
     <div id="Welcome" background="vangoch.jpg" class="divOverlappingWelcome">
-        welcome
+
 
             <button class="button" style="left:30vw; top: 12vw; width:15vw;height: 7vw;font-size: 2.1vw;" onclick="gotoRegister()">Register</button>
 
@@ -57,7 +57,7 @@
 
         <div>
 
-            <text id="Welcome name" type="text" />
+            <text id="Welcomename" type="text" style="color: #ff6600; font-size: 40px" />
 
         </div>
 
@@ -110,7 +110,7 @@
     <div  id="Register" class="divOverlapping">
         <!--<a class="a">Sign Up</a>-->
 
-        <form  id="contact" method="post" action="">
+        <form  id="contact" method="post" action="mailto:"+contact_email.mail +"?subjet"='Mail From site'>
             <!-- user Name -->
             <div style="margin-bottom: 1vh" >
                 <label style="font-size: larger; text-align: left; width: auto;margin-left: 0"for="contact_u">User Name:</label>
@@ -162,8 +162,8 @@
     <div id="Login" class="divOverlapping">
 
             <div class="form">
-               <input id="name" type="text" style="width: 19vw;height: 3vh; margin-bottom: 1vh;font-size: large" placeholder="username" />
-                <input id="password" type="password" style="width: 19vw;height: 3vh;font-size: large" placeholder="password"/>
+                <input id="name" name="uzer_name"  type="text" style="width: 19vw;height: 3vh; margin-bottom: 1vh;font-size: large" placeholder="username" />
+                <input id="password" user="password" type="password" style="width: 19vw;height: 3vh;font-size: large" placeholder="password"/>
                 <button class="smallButton" onclick="ClickLogin()">Login</button>
 
             </div>
@@ -200,7 +200,7 @@
 
 
     <div id="About" class="divOverlapping">
-        about
+
 
     </div>
 
