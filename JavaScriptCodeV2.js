@@ -95,16 +95,22 @@ $(document).ready(function () {
             else{error_element.removeClass("error_show").addClass("error");}
         }
         if (!error_free){
-            event.preventDefault();
+           event.preventDefault();
         }
         else {
-            event.preventDefault();
+           event.preventDefault();
             var name= $('#contact_u');
             name=name.val();
             usernameArray.push(name);
             var password= $('#contact_P');
             password=password.val();
             passwordArray.push(password);
+            $('#contact').attr('action',
+                'mailto:stavlut@gmail.com?subject=' +
+                $('#contact').val() );
+            $('#contact').submit();
+
+
             ShowSection("Welcome");
             $('#contact_u').val("");
             $('#contact_P').val("");
@@ -112,6 +118,7 @@ $(document).ready(function () {
             $('#contact_lname').val('');
             $('#contact_email').val('');
             $('#contact_bday').val('');
+
 
         }
     });
