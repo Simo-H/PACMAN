@@ -323,7 +323,8 @@ function ClickLogin() {
         if ((usernameLogin == "test2017" && passwordLogin == "test2017" )|| (usernameLogin == "a" && passwordLogin == "a")) {
             if(!isLoggedIn)
             {
-                document.getElementById("Welcomename").textContent =  usernameLogin;
+                document.getElementById("Welcomename").textContent = "Good luck " +  usernameLogin;
+                document.getElementById("Welcomename2").textContent = "Welcome " + usernameLogin;
                 ShowSection('choice');
                 isLoggedIn = true;
                 $('#welcomeMenuText').text("Play |");
@@ -342,7 +343,8 @@ function ClickLogin() {
                 if (usernameArray[i]==usernameLogin){bool=true; place=i;}
             }
            if ( passwordArray[place] == passwordLogin) {
-                document.getElementById("Welcomename").textContent =  usernameLogin;
+                document.getElementById("Welcomename").textContent = "Good luck " + usernameLogin;
+               document.getElementById("Welcomename2").textContent = "Welcome " + usernameLogin;
                 ShowSection('choice');
                 isLoggedIn = true;
                 $('#welcomeMenuText').text("Play |");
@@ -353,7 +355,9 @@ function ClickLogin() {
             }
             else
             {
-                alert("Wrong password or username, please try again..")
+                alert("Wrong password or username, please try again.." +
+                    " (the input is case sensetive although the font is not)");
+
             }
         }
     }
@@ -400,6 +404,7 @@ function ReGame() {
         $('#welcomeMenuText').text("Login |");
         $('#WelcomeLoginButton').text("Login");
         $('#LogOut').css("visibility", "hidden");
+        document.getElementById("Welcomename2").textContent = "Welcome";
         ShowSection("Welcome");
     }
     function ToMenu()

@@ -283,7 +283,11 @@ footer
     height: auto;
     width: auto;
 }
-
+#choice
+{
+    background-image: url(2675063.jpg);
+    background-size: 100% 100%;
+}
 
 .divOverlappingWelcome{
     position: absolute;
@@ -403,10 +407,10 @@ footer
 }
 .modal-content {
     background-color: #ff6600;
-    margin: 15vw auto; /* 15% from the top and centered */
+    margin:  25vh 25vw 15vh 25vw; /* 15% from the top and centered */
     border: 1px solid #888;
-    width: 40vw; /* Could be more or less, depending on screen size */
-    height: 30vh;
+    width: auto; /* Could be more or less, depending on screen size */
+    height: auto;
 }
 .close {
     color: #aaa;
